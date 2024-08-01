@@ -11,11 +11,6 @@ from PySide6.QtCharts import QChartView, QPieSeries, QChart
 from main_window import MainWindow
 from input_widget import Input_Widget
 
-
-def load_data(filename):
-    df = pd.read_csv(filename)
-    return df
-
 if __name__ == "__main__":
     # Qt Application
     app = QApplication(sys.argv)
