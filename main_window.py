@@ -16,7 +16,7 @@ class MainWindow(QMainWindow):
 
         # default "screen" of widget is data entry 
         self.setCentralWidget(input_widget)
-
+        
         # Menu bar
         self.menu = self.menuBar()
         
