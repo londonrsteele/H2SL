@@ -1,4 +1,5 @@
 import sys
+import pandas as pd
 from PySide6.QtCore import Qt, Slot
 from PySide6.QtGui import QPainter
 from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
@@ -6,13 +7,6 @@ from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
                                QPushButton, QTableWidget, QTableWidgetItem,
                                QVBoxLayout, QWidget)
 from PySide6.QtCharts import QChartView, QPieSeries, QChart
-
-class Widget(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.items = 0
-
-
 
 class MainWindow(QMainWindow):
     def __init__(self, widget):
@@ -47,17 +41,3 @@ class MainWindow(QMainWindow):
         demo_data_action = self.data_load_data_menu.addAction("Demo Data", self.close)
 
         self.setCentralWidget(widget)
-
-
-if __name__ == "__main__":
-    # Qt Application
-    app = QApplication(sys.argv)
-    # QWidget
-    widget = Widget()
-    # QMainWindow using QWidget as central widget
-    window = MainWindow(widget)
-    window.resize(800, 600)
-    window.show()
-
-    # Execute application
-    sys.exit(app.exec())
