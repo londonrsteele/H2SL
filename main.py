@@ -15,7 +15,7 @@ from dashboard_widget import Dashboard_Widget
 if __name__ == "__main__":
     # Qt Application
     app = QApplication(sys.argv)
-    # QWidget
+
     input_widget = Input_Widget()
     dashboard_widget = Dashboard_Widget()
 

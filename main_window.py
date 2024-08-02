@@ -1,22 +1,25 @@
 import sys
 import pandas as pd
-from PySide6.QtCore import Qt, Slot
+from PySide6.QtCore import Qt, Slot, QObject
 from PySide6.QtGui import QPainter
 from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
                                QHBoxLayout, QLineEdit, QMainWindow,
                                QPushButton, QTableWidget, QTableWidgetItem,
-                               QVBoxLayout, QWidget)
+                               QVBoxLayout, QWidget, QStackedWidget)
 from PySide6.QtCharts import QChartView, QPieSeries, QChart
-
 
 class MainWindow(QMainWindow):
     def __init__(self, input_widget, dashboard_widget):
         super().__init__()
         self.setWindowTitle("Helldivers II Stats Logger")
 
+        self.stackedWidget = QStackedWidget()
+        self.stackedWidget.addWidget(input_widget)
+        self.stackedWidget.addWidget(dashboard_widget)
         # default "screen" of widget is data entry 
-        self.setCentralWidget(input_widget)
-        
+        self.stackedWidget.setCurrentWidget(input_widget)        
+        self.setCentralWidget(self.stackedWidget)
+
         # Menu bar
         self.menu = self.menuBar()
         
@@ -46,7 +49,6 @@ class MainWindow(QMainWindow):
 
 
     def load_demo_data(self):
-
         ################################################################
         # 
         # Move below chunk to be handled in dashboard_widget!!

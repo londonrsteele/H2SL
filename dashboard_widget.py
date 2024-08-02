@@ -10,3 +10,14 @@ class Dashboard_Widget(QWidget):
     def __init__(self):
         super().__init__()
         self.items = 0
+
+        
+        ################################################################
+        # 
+        # After input, show a Tab Dialog with tabs:
+        #   Mission Overview
+        #   Last 10 Missions
+        #   Career Overview
+        #   Raw Data
+        #
+        ################################################################
