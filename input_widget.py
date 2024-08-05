@@ -16,14 +16,7 @@ class Input_Widget(QWidget):
         self.grid_layout = QGridLayout()
         self.grid_layout.addWidget(self.create_EOM_data_entry_groupbox(), 0, 0, 6, 1)
         self.grid_layout.addWidget(self.create_EOM_loadout_entry_groupbox(), 0, 1, 6, 1)
-        self.submit_button = QPushButton("Save Mission Data")
-        
-        ################################################################
-        # 
-        # Get connect functionality to work!!!
-        #
-        ################################################################
-        self.submit_button.clicked.connect(self.change_view())
+        self.submit_button = QPushButton("Save Mission Data", self)
 
         self.grid_layout.addWidget(self.submit_button, 6, 0, 1, 2, Qt.AlignCenter)
         self.setLayout(self.grid_layout)
@@ -83,6 +76,3 @@ class Input_Widget(QWidget):
         self.EOM_groupbox.setLayout(self.form_layout)
         return self.EOM_groupbox
     
-    @Slot()
-    def change_view(self):
-        print("Howdy!")

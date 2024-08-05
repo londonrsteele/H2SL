@@ -20,9 +20,12 @@ class MainWindow(QMainWindow):
         self.stackedWidget.setCurrentWidget(input_widget)        
         self.setCentralWidget(self.stackedWidget)
 
+        # if submit button is clicked, save data and view dashboard
+        input_widget.submit_button.clicked.connect(self.view_dashboard)
+
         # Menu bar
         self.menu = self.menuBar()
-        
+
         # File menu
         self.file_menu = self.menu.addMenu("File")
         # File > Exit QAction
@@ -34,9 +37,9 @@ class MainWindow(QMainWindow):
         # Data > Add Data menu
         self.data_add_data_menu = self.data_menu.addMenu("Add Data")
         # Data > Add Data > Career Data QAction
-        career_data_action = self.data_add_data_menu.addAction("Career Data", self.close)
+        career_data_action = self.data_add_data_menu.addAction("Career Data", self.view_input)
         # Data > Add Data > EOM Data QAction
-        EOM_data_action = self.data_add_data_menu.addAction("EOM Data", self.close) 
+        EOM_data_action = self.data_add_data_menu.addAction("EOM Data", self.view_input) 
         # Data > Load Data menu
         self.data_load_data_menu = self.data_menu.addMenu("Load Data")
         ################################################################
@@ -46,7 +49,15 @@ class MainWindow(QMainWindow):
         ################################################################
         # Data > Load Data > Demo Data QAction
         demo_data_action = self.data_load_data_menu.addAction("Demo Data", self.load_demo_data)
+    
+    @Slot()
+    def view_input(self):
+        self.stackedWidget.setCurrentIndex(0) # input widget is at index 0
 
+    
+    @Slot()
+    def view_dashboard(self):
+        self.stackedWidget.setCurrentIndex(1) # dashboard widget is at index 1
 
     def load_demo_data(self):
         ################################################################
