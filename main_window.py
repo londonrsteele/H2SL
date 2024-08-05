@@ -1,4 +1,5 @@
 import sys
+import csv
 import pandas as pd
 from PySide6.QtCore import Qt, Slot, QObject
 from PySide6.QtGui import QPainter
@@ -20,8 +21,8 @@ class MainWindow(QMainWindow):
         self.stackedWidget.setCurrentWidget(input_widget)        
         self.setCentralWidget(self.stackedWidget)
 
-        # if submit button is clicked, save data and view dashboard
-        input_widget.submit_button.clicked.connect(self.view_dashboard)
+        # if "View EOM Data" button is clicked, view dashboard
+        input_widget.view_button.clicked.connect(self.view_dashboard)
 
         # Menu bar
         self.menu = self.menuBar()
@@ -53,10 +54,9 @@ class MainWindow(QMainWindow):
     @Slot()
     def view_input(self):
         self.stackedWidget.setCurrentIndex(0) # input widget is at index 0
-
     
     @Slot()
-    def view_dashboard(self):
+    def view_dashboard(self):        
         self.stackedWidget.setCurrentIndex(1) # dashboard widget is at index 1
 
     def load_demo_data(self):
