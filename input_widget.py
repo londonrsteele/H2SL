@@ -1,5 +1,5 @@
 import pandas as pd
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QDateTime
 from PySide6.QtWidgets import (QFormLayout, QPushButton, QWidget,
                                 QGroupBox, QDateEdit, QTimeEdit,
                                 QGridLayout, QSpinBox, QMessageBox,
@@ -18,13 +18,29 @@ class CAR_Input_Widget(QWidget):
         super().__init__()
         self.items = 0
         
-        self.grid_layout = QGridLayout()
-        self.grid_layout.addWidget(self.create_CAR_data_entry_groupbox(), 0, 0, 6, 1)
+        # Make Buttons
+        self.curr_time_button = QPushButton("Log Date and Time", self)
         self.CAR_button = QPushButton("Save Career Data", self)
-        self.grid_layout.addWidget(self.CAR_button, 6, 0, 1, 1, Qt.AlignCenter)
         self.view_button = QPushButton("View Data Dashboard", self)
-        self.grid_layout.addWidget(self.view_button, 7, 0, 1, 2)
+        
+        # Set up grid
+        self.grid_layout = QGridLayout()
+        self.grid_layout.addWidget(self.curr_time_button, 0, 0, 1, 2, Qt.AlignCenter)
+        self.grid_layout.addWidget(self.create_CAR_data_entry_groupbox(), 1, 0, 1, 1)
+        self.grid_layout.addWidget(self.CAR_button, 2, 0, 1, 1, Qt.AlignCenter)
+        self.grid_layout.addWidget(self.view_button, 3, 0, 1, 2, Qt.AlignCenter)
+
+        # Resize grid
+        self.grid_layout.setRowStretch(0,0)
+        self.grid_layout.setRowStretch(1,6)
+        self.grid_layout.setRowStretch(2,0)
+        self.grid_layout.setRowStretch(3,0)
+
+        # Apply grid to layout
         self.setLayout(self.grid_layout)
+
+        # Add functionality to "Log Date and Time" button
+        self.curr_time_button.clicked.connect(self.CURR_DATETIME)
 
         # Add functionality to "Save Career Data" button
         self.CAR_button.clicked.connect(self.CAR_form_save)
@@ -37,6 +53,13 @@ class CAR_Input_Widget(QWidget):
         self.error_popup.setWindowTitle("Save Error")
         self.error_popup.setText("Error saving data: File Already Exists!")
         # TODO: add functionality "do you want to overwrite?" etc.
+
+    ################################################################
+    # CAR_Input_Widget member function: CURR_DATETIME
+    ################################################################
+    def CURR_DATETIME(self):
+        self.CAR_date.setDate(QDateTime.currentDateTime().date())
+        self.CAR_logtime.setTime(QDateTime.currentDateTime().time())
 
     ################################################################
     # CAR_Input_Widget member function: create_CAR_data_entry_groupbox
@@ -178,16 +201,32 @@ class EOM_Input_Widget(QWidget):
         super().__init__()
         self.items = 0
 
-        self.grid_layout = QGridLayout()
-        self.grid_layout.addWidget(self.create_EOM_data_entry_groupbox(), 0, 0, 6, 1)
-        self.grid_layout.addWidget(self.create_EOM_loadout_entry_groupbox(), 0, 1, 6, 1)
+        # Make Buttons
+        self.curr_time_button = QPushButton("Log Date and Time", self)
         self.EOM_button = QPushButton("Save Mission Data", self)
         self.loadout_button = QPushButton("Save Loadout Data", self)
-        self.grid_layout.addWidget(self.EOM_button, 6, 0, 1, 1, Qt.AlignCenter)
-        self.grid_layout.addWidget(self.loadout_button, 6, 1, 1, 1, Qt.AlignCenter)
         self.view_button = QPushButton("View Data Dashboard", self)
-        self.grid_layout.addWidget(self.view_button, 7, 0, 1, 2)
+
+        # Set up grid
+        self.grid_layout = QGridLayout()
+        self.grid_layout.addWidget(self.curr_time_button, 0, 0, 1, 2, Qt.AlignCenter)
+        self.grid_layout.addWidget(self.create_EOM_data_entry_groupbox(), 1, 0, 1, 1)
+        self.grid_layout.addWidget(self.create_EOM_loadout_entry_groupbox(), 1, 1, 1, 1)
+        self.grid_layout.addWidget(self.EOM_button, 2, 0, 1, 1, Qt.AlignCenter)
+        self.grid_layout.addWidget(self.loadout_button, 2, 1, 1, 1, Qt.AlignCenter)
+        self.grid_layout.addWidget(self.view_button, 3, 0, 1, 2, Qt.AlignCenter)
+        
+        # Resize grid
+        self.grid_layout.setRowStretch(0,0)
+        self.grid_layout.setRowStretch(1,6)
+        self.grid_layout.setRowStretch(2,0)
+        self.grid_layout.setRowStretch(3,0)
+
+        # Apply grid to layout
         self.setLayout(self.grid_layout)
+
+        # Add functionality to "Log Date and Time" button
+        self.curr_time_button.clicked.connect(self.CURR_DATETIME)
 
         # Add functionality to "Save Mission Data" button
         self.EOM_button.clicked.connect(self.EOM_form_save)
@@ -206,6 +245,15 @@ class EOM_Input_Widget(QWidget):
         self.error_popup.setWindowTitle("Save Error")
         self.error_popup.setText("Error saving data: File Already Exists!\n"
                                  + "Please ensure date and time are unique.")
+
+    ################################################################
+    # EOM_Input_Widget member function: CURR_DATETIME
+    ################################################################
+    def CURR_DATETIME(self):
+        self.EOM_date.setDate(QDateTime.currentDateTime().date())
+        self.EOM_endtime.setTime(QDateTime.currentDateTime().time())
+        self.loadout_date.setDate(QDateTime.currentDateTime().date())
+        self.loadout_endtime.setTime(QDateTime.currentDateTime().time())
 
     ################################################################
     # EOM_Input_Widget member function: create_EOM_data_entry_groupbox
