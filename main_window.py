@@ -65,37 +65,16 @@ class MainWindow(QMainWindow):
         # if "View Mission Data" button is clicked, view dashboard
         EOM_input_widget.view_button.clicked.connect(self.view_dashboard)
 
-        # Status bar
-        self.status = QStatusBar()
-        self.setStatusBar(self.status)
-        self.status_message = QLabel()
-        self.status.addWidget(self.status_message)
-        self.status_message.setText("Welcome!")
-
-
-    ################################################################
-    # 
-    # MainWindow Slots
-    #
-    ################################################################
-    @Slot()
-    def view_CAR_input(self):
-        self.stackedWidget.setCurrentIndex(0) # Career Data Input Widget is at index 0
-        self.status_message.setText("Viewing Career Data Input Form")
-
-
-    @Slot()
-    def view_EOM_input(self):
-        self.stackedWidget.setCurrentIndex(1) # EOM Data input widget is at index 1
-        self.status_message.setText("Viewing End of Mission Data Input Form")
-
-    @Slot()
-    def view_dashboard(self):        
-        self.stackedWidget.setCurrentIndex(2) # Dashboard widget is at index 2
-        self.status_message.setText("Viewing Dashboard")
-
     ################################################################
     # 
     # MainWindow member functions
     #
     ################################################################
+    def view_CAR_input(self):
+        self.stackedWidget.setCurrentIndex(0) # Career Data Input Widget is at index 0
+
+    def view_EOM_input(self):
+        self.stackedWidget.setCurrentIndex(1) # EOM Data input widget is at index 1
+
+    def view_dashboard(self):        
+        self.stackedWidget.setCurrentIndex(2) # Dashboard widget is at index 2
