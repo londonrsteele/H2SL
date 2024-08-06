@@ -9,7 +9,21 @@ from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
 from PySide6.QtCharts import QChartView, QPieSeries, QChart
 from main_window import MainWindow
 
-class Input_Widget(QWidget):
+class CAR_Input_Widget(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.items = 0
+        
+        ################################################################
+        # 
+        # Add functionality here: career data input form
+        #
+        ################################################################
+
+
+
+
+class EOM_Input_Widget(QWidget):
     def __init__(self):
         super().__init__()
         self.items = 0
@@ -107,7 +121,7 @@ class Input_Widget(QWidget):
         EOM_df = pd.DataFrame(data=EOM_data, index=[0])
 
         # Create csv file
-        file_path = "./" + eom_day_formatted + "_" + eom_time_formatted + "_EOM_savefile.csv"
+        file_path = "./save_files/" + eom_day_formatted + "_" + eom_time_formatted + "_EOM_savefile.csv"
         try:
             with open(file_path, "x") as file:
                 file.close()
