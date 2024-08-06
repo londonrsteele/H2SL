@@ -10,41 +10,158 @@ from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
                                QLabel)
 from PySide6.QtCharts import QChartView, QPieSeries, QChart
 
+################################################################
+# 
+# Dashboard_Widget class
+#
+################################################################
 class Dashboard_Widget(QDialog):
     ################################################################
-    # 
     # Dashboard_Widget initialization
-    #
     ################################################################
     def __init__(self):
         super().__init__()
         self.items = 0
-
-        # save files directory
-        self.savefile_dir = "./save_files/"
         
         # Make Tab Widget
         self.tab_widget = QTabWidget()
-        self.tab_widget.addTab(Mission_Tab(self), "Mission Overview")
-        self.tab_widget.addTab(Last10_Tab(self), "Last 10 Missions")
-        self.tab_widget.addTab(Career_Tab(self), "Career Overview")
-        self.tab_widget.addTab(RawData_Tab(self), "Raw Data")
+
+        # Make Tabs
+        self.Mission_Tab = Mission_Tab(self)
+        self.Last10_Tab = Last10_Tab(self)
+        self.Career_Tab = Career_Tab(self)
+        self.RawData_Tab = RawData_Tab(self)
+
+        # Add Tabs to Tab Widget
+        self.tab_widget.addTab(self.Mission_Tab, "Mission Overview")
+        self.tab_widget.addTab(self.Last10_Tab, "Last 10 Missions")
+        self.tab_widget.addTab(self.Career_Tab, "Career Overview")
+        self.tab_widget.addTab(self.RawData_Tab, "Raw Data")
 
         # Add Tab Widget to layout
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.tab_widget)
         self.setLayout(self.layout)
 
-        ################################################################
-        # 
-        # After input, show a Tab Dialog with tabs:
-        #   Mission Overview
-        #   Last 10 Missions
-        #   Career Overview
-        #   Raw Data
-        #
-        ################################################################
+    ################################################################
+    # Dashboard_Widget member function: get_savefile_dir
+    ################################################################
+    def get_savefile_dir(self):
+        return self.savefile_dir
+    
+    ################################################################
+    # Dashboard_Widget member function: load_EOM_data
+    ################################################################
+    def load_EOM_data(self):
+        EOM_df = self.Mission_Tab.load_data("EOM")
+        print("End of Mission Data loaded successfully")
+        self.Mission_Tab.display_data(EOM_df)
 
+    ################################################################
+    # Dashboard_Widget member function: load_CAR_data
+    ################################################################
+    def load_CAR_data(self):
+        print("Career Data loaded successfully")
+
+    ################################################################
+    # Dashboard_Widget member function: load_demo_data
+    ################################################################
+    def load_demo_data(self):
+        print("Demo Data loaded successfully")
+
+################################################################
+# 
+# Mission_Tab class
+#
+################################################################
+class Mission_Tab(QWidget):
+    ################################################################
+    # Mission_Tab initialization
+    ################################################################
+    def __init__(self, parent: QWidget):
+        super().__init__(parent)
+        
+        # save savefile_dir
+        self.savefile_dir = "./save_files/"
+
+        # Set up layout
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+
+        # load most recent EOM data
+        EOM_df = self.load_data("EOM")
+
+        # display data
+        self.display_data(EOM_df)
+
+    ################################################################
+    # Mission_Tab member function: load_data
+    ################################################################
+    def load_data(self, data_class):
+        # sort data_class files in directory by modified time
+        filepaths = sorted(Path(self.savefile_dir).iterdir(), key=os.path.getmtime)
+        
+        most_recent_file_path = ""
+        # find most recent data_class (EOM, CAR, loadout) file (closest to index 0)
+        for filepath in filepaths:
+            if filepath.name.startswith(data_class):
+                most_recent_file_path = filepath
+                break
+        
+        # if most_recent_file_path is empty, no save file exists for that data_class
+        if most_recent_file_path == "":
+            print("No save file exists!")
+            # return empty df
+            return pd.DataFrame()
+        else:
+            # load data from most recent file into dataframe
+            df = pd.read_csv(most_recent_file_path)
+            return df
+        
+    ################################################################
+    # Mission_Tab member function: display_data
+    ################################################################
+    def display_data(self, EOM_df):
+        # see if data loaded correctly
+        if EOM_df.empty:
+            # data did not load
+            error_label = QLabel("No Mission Save Files Loaded")
+            self.layout.addWidget(error_label, Qt.AlignCenter)
+        else:
+            # data loaded successfully
+            print(EOM_df.head())
+            success_label = QLabel("Yippee! Data Loaded!")
+            self.layout.addWidget(success_label, Qt.AlignCenter)
+
+
+################################################################
+# 
+# Last10_Tab class
+#
+################################################################
+class Last10_Tab(QWidget):
+    ################################################################
+    # Last10_Tab initialization
+    ################################################################
+    def __init__(self, parent: QWidget):
+        super().__init__(parent)
+        
+        # save savefile_dir
+        self.savefile_dir = "./save_files/"
+
+        # Set up layout
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+        
+        # get dictionary with 10 (or less) DataFrames
+        df_dict = self.load_10_data("EOM")
+
+        # see if any data loaded
+        self.display_data(df_dict)
+    
+    ################################################################
+    # Last10_Tab member function: load_data
+    ################################################################
     def load_data(self, data_class):
         # sort data_class files in directory by modified time
         filepaths = sorted(Path(self.savefile_dir).iterdir(), key=os.path.getmtime)
@@ -66,6 +183,9 @@ class Dashboard_Widget(QDialog):
             df = pd.read_csv(most_recent_file_path)
             return df
 
+    ################################################################
+    # Last10_Tab member function: load_10_data
+    ################################################################
     def load_10_data(self, data_class):
         # sort files in directory by modified time
         filepaths = sorted(Path(self.savefile_dir).iterdir(), key=os.path.getmtime)
@@ -82,78 +202,98 @@ class Dashboard_Widget(QDialog):
         
         # return dictionary of dataframes
         return dict_of_dfs
-
-class Mission_Tab(QWidget):
-    def __init__(self, parent: QWidget):
-        super().__init__(parent)
-        
-        # Set up layout
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-
-        # load most recent EOM data
-        EOM_df = parent.load_data("EOM")
-        # see if data loaded correctly
-        if EOM_df.empty:
-            # data did not load
-            error_label = QLabel("No Mission Save Files Loaded")
-            layout.addWidget(error_label, Qt.AlignCenter)
-        else:
-            # data loaded successfully
-            print(EOM_df.head())
-            success_label = QLabel("Yippee! Data Loaded!")
-            layout.addWidget(success_label, Qt.AlignCenter)
-
-
-class Last10_Tab(QWidget):
-    def __init__(self, parent: QWidget):
-        super().__init__(parent)
-
-        # Set up layout
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-        
-        # get dictionary with 10 (or less) DataFrames
-        df_dict = parent.load_10_data("EOM")
-
-        # see if any data loaded
+    
+    ################################################################
+    # Last10_Tab member function: display_data
+    ################################################################
+    def display_data(self, df_dict):
         if len(df_dict) == 0:
             # data did not load
             error_label = QLabel("No Mission Save Files Loaded")
-            layout.addWidget(error_label, Qt.AlignCenter)
+            self.layout.addWidget(error_label, Qt.AlignCenter)
         else:
             # get number of Missions returned
             print("# of Missions Loaded: " + str(len(df_dict)))
             success_label = QLabel(str(len(df_dict)) + " Missions Loaded")
-            layout.addWidget(success_label, Qt.AlignCenter)
+            self.layout.addWidget(success_label, Qt.AlignCenter)
 
-
+################################################################
+# 
+# Career_Tab class
+#
+################################################################
 class Career_Tab(QWidget):
+    ################################################################
+    # Career_Tab initialization
+    ################################################################
     def __init__(self, parent: QWidget):
         super().__init__(parent)
+        
+        # save savefile_dir
+        self.savefile_dir = "./save_files/"
 
         # Set up layout
-        layout = QVBoxLayout()
-        self.setLayout(layout)
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
 
         # load most recent EOM data
-        CAR_df = parent.load_data("career")
+        CAR_df = self.load_data("career")
+
         # see if data loaded correctly
+        self.load_data(CAR_df)
+
+    ################################################################
+    # Career_Tab member function: load_data
+    ################################################################
+    def load_data(self, data_class):
+        # sort data_class files in directory by modified time
+        filepaths = sorted(Path(self.savefile_dir).iterdir(), key=os.path.getmtime)
+        
+        most_recent_file_path = ""
+        # find most recent data_class (EOM, CAR, loadout) file (closest to index 0)
+        for filepath in filepaths:
+            if filepath.name.startswith(data_class):
+                most_recent_file_path = filepath
+                break
+        
+        # if most_recent_file_path is empty, no save file exists for that data_class
+        if most_recent_file_path == "":
+            print("No save file exists!")
+            # return empty df
+            return pd.DataFrame()
+        else:
+            # load data from most recent file into dataframe
+            df = pd.read_csv(most_recent_file_path)
+            return df
+
+    ################################################################
+    # Career_Tab member function: display_data
+    ################################################################
+    def display_data(self, CAR_df):
         if CAR_df.empty:
             # data did not load
             error_label = QLabel("No Career Save Files Loaded")
-            layout.addWidget(error_label, Qt.AlignCenter)
+            self.layout.addWidget(error_label, Qt.AlignCenter)
         else:
             # data loaded successfully
             print(CAR_df.head())
             success_label = QLabel("Yippee! Data Loaded!")
-            layout.addWidget(success_label, Qt.AlignCenter)
+            self.layout.addWidget(success_label, Qt.AlignCenter)
 
-
+################################################################
+# 
+# RawData_Tab class
+#
+################################################################
 class RawData_Tab(QWidget):
+    ################################################################
+    # RawData_Tab initialization
+    ################################################################    
     def __init__(self, parent: QWidget):
         super().__init__(parent)
-
+        
+        # save savefile_dir
+        self.savefile_dir = "./save_files/"
 
     # def load_demo_data(self):
     #     layout = QVBoxLayout()
@@ -179,17 +319,3 @@ class RawData_Tab(QWidget):
     #     for row in range(len(EOM_np)):
     #         for col in range(len(EOM_np[row])):
     #             self.table_widget.setItem(row, col, QTableWidgetItem(str(EOM_np[row][col])))
-
-    ################################################################
-    # 
-    # Dashboard_Widget member functions
-    #
-    ################################################################
-    def load_CAR_data(self):
-        print("Career Data loaded successfully")
-
-    def load_EOM_data(self):
-        print("End of Mission Data loaded successfully")
-
-    def load_demo_data(self):
-        print("Demo Data loaded successfully")
