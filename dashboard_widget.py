@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
                                QVBoxLayout, QDialog, QWidget, QTabWidget,
                                QLabel)
 from PySide6.QtCharts import QChartView, QPieSeries, QChart
+from graphing import run_dash
 
 ################################################################
 # 
@@ -67,6 +68,7 @@ class Dashboard_Widget(QDialog):
     # Dashboard_Widget member function: load_demo_data
     ################################################################
     def load_demo_data(self):
+        run_dash()
         print("Demo Data loaded successfully")
 
 ################################################################
