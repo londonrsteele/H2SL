@@ -67,6 +67,7 @@ class MainWindow(QMainWindow):
 
         # if "View Mission Data" button is clicked, view dashboard
         EOM_input_widget.view_button.clicked.connect(self.view_dashboard)
+        CAR_input_widget.view_button.clicked.connect(self.view_dashboard)
 
     ################################################################
     # MainWindow member function: view_CAR_input
