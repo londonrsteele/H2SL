@@ -1,29 +1,17 @@
-import sys
-import csv
-import pandas as pd
-from PySide6.QtCore import Qt, Slot, QObject
-from PySide6.QtGui import QPainter
-from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
-                               QHBoxLayout, QLineEdit, QMainWindow,
-                               QPushButton, QTableWidget, QTableWidgetItem,
-                               QVBoxLayout, QWidget, QStackedWidget)
-from PySide6.QtCharts import QChartView, QPieSeries, QChart
+from PySide6.QtCore import Slot
+from PySide6.QtGui import QAction
+from PySide6.QtWidgets import (QMainWindow, QStackedWidget, QStatusBar, QLabel)
 
 class MainWindow(QMainWindow):
-    def __init__(self, input_widget, dashboard_widget):
+    ################################################################
+    # 
+    # MainWindow initialization
+    #
+    ################################################################
+    def __init__(self, CAR_input_widget, EOM_input_widget, dashboard_widget):
         super().__init__()
         self.setWindowTitle("Helldivers II Stats Logger")
-
-        self.stackedWidget = QStackedWidget()
-        self.stackedWidget.addWidget(input_widget)
-        self.stackedWidget.addWidget(dashboard_widget)
-        # default "screen" of widget is data entry 
-        self.stackedWidget.setCurrentWidget(input_widget)        
-        self.setCentralWidget(self.stackedWidget)
-
-        # if "View EOM Data" button is clicked, view dashboard
-        input_widget.view_button.clicked.connect(self.view_dashboard)
-
+        
         # Menu bar
         self.menu = self.menuBar()
 
@@ -35,58 +23,79 @@ class MainWindow(QMainWindow):
 
         # Data menu
         self.data_menu = self.menu.addMenu("Data")
+
         # Data > Add Data menu
         self.data_add_data_menu = self.data_menu.addMenu("Add Data")
         # Data > Add Data > Career Data QAction
-        career_data_action = self.data_add_data_menu.addAction("Career Data", self.view_input)
-        # Data > Add Data > EOM Data QAction
-        EOM_data_action = self.data_add_data_menu.addAction("EOM Data", self.view_input) 
+        career_data_action = self.data_add_data_menu.addAction("Career Data", self.view_CAR_input)
+        # Data > Add Data > Misison Data QAction
+        EOM_data_action = self.data_add_data_menu.addAction("Mission Data", self.view_EOM_input) 
+
         # Data > Load Data menu
         self.data_load_data_menu = self.data_menu.addMenu("Load Data")
-        ################################################################
-        # 
-        # Add functionality here: List of Save/Load files in dropdown (10 most recent)
-        #
-        ################################################################
+        # Data > Load Data > Career Data QAction
+        CAR_data_action = QAction("Career Data", self)
+        CAR_data_action.triggered.connect(dashboard_widget.load_CAR_data)
+        CAR_data_action.triggered.connect(self.view_dashboard)
+        self.data_load_data_menu.addAction(CAR_data_action)
+
+        # Data > Load Data > Mission Data QAction
+        EOM_data_action = QAction("Mission Data", self)
+        EOM_data_action.triggered.connect(dashboard_widget.load_EOM_data)
+        EOM_data_action.triggered.connect(self.view_dashboard)
+        self.data_load_data_menu.addAction(EOM_data_action)
+
         # Data > Load Data > Demo Data QAction
-        demo_data_action = self.data_load_data_menu.addAction("Demo Data", self.load_demo_data)
-    
+        self.data_load_data_menu.addSeparator()
+        demo_data_action = QAction("Demo Data", self)
+        demo_data_action.triggered.connect(dashboard_widget.load_demo_data)
+        demo_data_action.triggered.connect(self.view_dashboard)
+        self.data_load_data_menu.addAction(demo_data_action)
+        
+        # Central Widget
+        self.stackedWidget = QStackedWidget()
+        self.stackedWidget.addWidget(CAR_input_widget)
+        self.stackedWidget.addWidget(EOM_input_widget)
+        self.stackedWidget.addWidget(dashboard_widget)
+        
+        # default "screen" of widget is EOM data entry 
+        self.stackedWidget.setCurrentWidget(EOM_input_widget)        
+        self.setCentralWidget(self.stackedWidget)
+
+        # if "View Mission Data" button is clicked, view dashboard
+        EOM_input_widget.view_button.clicked.connect(self.view_dashboard)
+
+        # Status bar
+        self.status = QStatusBar()
+        self.setStatusBar(self.status)
+        self.status_message = QLabel()
+        self.status.addWidget(self.status_message)
+        self.status_message.setText("Welcome!")
+
+
+    ################################################################
+    # 
+    # MainWindow Slots
+    #
+    ################################################################
     @Slot()
-    def view_input(self):
-        self.stackedWidget.setCurrentIndex(0) # input widget is at index 0
-    
+    def view_CAR_input(self):
+        self.stackedWidget.setCurrentIndex(0) # Career Data Input Widget is at index 0
+        self.status_message.setText("Viewing Career Data Input Form")
+
+
+    @Slot()
+    def view_EOM_input(self):
+        self.stackedWidget.setCurrentIndex(1) # EOM Data input widget is at index 1
+        self.status_message.setText("Viewing End of Mission Data Input Form")
+
     @Slot()
     def view_dashboard(self):        
-        self.stackedWidget.setCurrentIndex(1) # dashboard widget is at index 1
+        self.stackedWidget.setCurrentIndex(2) # Dashboard widget is at index 2
+        self.status_message.setText("Viewing Dashboard")
 
-    def load_demo_data(self):
-        ################################################################
-        # 
-        # Move below chunk to be handled in dashboard_widget!!
-        #
-        ################################################################
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-        self.table_widget = QTableWidget()
-        layout.addWidget(self.table_widget)
-        self.setCentralWidget(self.table_widget)
-
-        # load into pandas dataframe for convenience
-        EOM_df = pd.read_csv("./demo_EOM_data.csv")
-        CAR_df = pd.read_csv("./demo_CAR_data.csv")
-
-        # set bounds of table
-        self.table_widget.setRowCount(len(EOM_df))
-        self.table_widget.setColumnCount(len(EOM_df.columns))
-        self.table_widget.setHorizontalHeaderLabels(list(EOM_df.columns))
-
-        # convert to numpy array for speed (iteration)
-        EOM_np = EOM_df.to_numpy()
-        CAR_np = EOM_df.to_numpy()
-
-        # fill table with data
-        for row in range(len(EOM_np)):
-            for col in range(len(EOM_np[row])):
-                self.table_widget.setItem(row, col, QTableWidgetItem(str(EOM_np[row][col])))
-
-
+    ################################################################
+    # 
+    # MainWindow member functions
+    #
+    ################################################################
