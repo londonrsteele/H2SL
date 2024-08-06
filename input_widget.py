@@ -2,7 +2,8 @@ import pandas as pd
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QFormLayout, QPushButton, QWidget,
                                 QGroupBox, QDateEdit, QTimeEdit,
-                                QGridLayout, QSpinBox, QMessageBox)
+                                QGridLayout, QSpinBox, QMessageBox,
+                                QFrame)
 
 ################################################################
 # 
@@ -44,9 +45,15 @@ class CAR_Input_Widget(QWidget):
         self.CAR_groupbox = QGroupBox("Career Stats Entry")
         self.form_layout = QFormLayout()
 
+        # Create a line separator
+        self.line = QFrame()
+        self.line.setFrameShape(QFrame.HLine)
+        self.line.setFrameShadow(QFrame.Sunken)
+
         # Create Entry Boxes
         self.CAR_date = QDateEdit()
         self.CAR_logtime = QTimeEdit()
+        # line separator goes here in layout
         self.CAR_enemy_kills = QSpinBox(minimum=0, maximum=1000000000)
         self.CAR_terminid_kills = QSpinBox(minimum=0, maximum=1000000000)
         self.CAR_automaton_kills = QSpinBox(minimum=0, maximum=1000000000)
@@ -74,6 +81,7 @@ class CAR_Input_Widget(QWidget):
         # Add Entry Boxes to layout
         self.form_layout.addRow(("Career Log Date: "), self.CAR_date)
         self.form_layout.addRow(("Career Log Time: "), self.CAR_logtime)
+        self.form_layout.addRow(self.line)
         self.form_layout.addRow(("Enemy Kills: "), self.CAR_enemy_kills)
         self.form_layout.addRow(("Terminid Kills: "), self.CAR_terminid_kills)
         self.form_layout.addRow(("Automaton Kills: "), self.CAR_automaton_kills)
@@ -144,7 +152,7 @@ class CAR_Input_Widget(QWidget):
         try:
             with open(file_path, "x") as file:
                 file.close()
-                
+
             # Write DataFrame to file
             CAR_df.to_csv(file_path, index=False)
 
@@ -206,10 +214,15 @@ class EOM_Input_Widget(QWidget):
         self.EOM_groupbox = QGroupBox(("End of Mission Stats Entry"))
         self.form_layout = QFormLayout()
 
+        # Create a line separator
+        self.line = QFrame()
+        self.line.setFrameShape(QFrame.HLine)
+        self.line.setFrameShadow(QFrame.Sunken)
+
         # Create Entry Boxes
         self.EOM_date = QDateEdit()
         self.EOM_endtime = QTimeEdit()
-        # TODO: make above update automatically
+        # line goes here in layout
         self.EOM_accuracy = QSpinBox(minimum=0, maximum=1000000000)
         self.EOM_shots_fired = QSpinBox(minimum=0, maximum=1000000000)
         self.EOM_shots_hit = QSpinBox(minimum=0, maximum=1000000000)
@@ -226,6 +239,7 @@ class EOM_Input_Widget(QWidget):
         # Add Entry Boxes to layout
         self.form_layout.addRow(("Date: "), self.EOM_date)
         self.form_layout.addRow(("End Time: "), self.EOM_endtime)
+        self.form_layout.addRow(self.line)
         self.form_layout.addRow(("Accuracy: "), self.EOM_accuracy)
         self.form_layout.addRow(("Shots Fired: "), self.EOM_shots_fired)
         self.form_layout.addRow(("Shots Hit: "), self.EOM_shots_hit)
@@ -250,14 +264,23 @@ class EOM_Input_Widget(QWidget):
         self.EOM_groupbox = QGroupBox("Mission Loadout Entry")
         self.form_layout = QFormLayout()
 
+        # Create a line separator
+        self.line = QFrame()
+        self.line.setFrameShape(QFrame.HLine)
+        self.line.setFrameShadow(QFrame.Sunken)
+
         # Create Entry Boxes
         self.loadout_date = QDateEdit()
         self.loadout_endtime = QTimeEdit()
-        
+        # line goes here in layout
+
+
         # Add Entry Boxes to layout
         self.form_layout.addRow(("Date: "), self.loadout_date)
         self.form_layout.addRow(("End Time: "), self.loadout_endtime)
-        
+        self.form_layout.addRow(self.line)
+
+
         # Return groupbox to grid layout
         self.EOM_groupbox.setLayout(self.form_layout)
         return self.EOM_groupbox
