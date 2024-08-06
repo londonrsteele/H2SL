@@ -27,30 +27,30 @@ class Dashboard_Widget(QWidget):
         #
         ################################################################
     
-    def load_demo_data(self):
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-        self.table_widget = QTableWidget()
-        layout.addWidget(self.table_widget)
-        self.setCentralWidget(self.table_widget)
+    # def load_demo_data(self):
+    #     layout = QVBoxLayout()
+    #     self.setLayout(layout)
+    #     self.table_widget = QTableWidget()
+    #     layout.addWidget(self.table_widget)
+    #     self.setCentralWidget(self.table_widget)
 
-        # load into pandas dataframe for convenience
-        EOM_df = pd.read_csv("./demo_EOM_data.csv")
-        CAR_df = pd.read_csv("./demo_CAR_data.csv")
+    #     # load into pandas dataframe for convenience
+    #     EOM_df = pd.read_csv("./demo_EOM_data.csv")
+    #     CAR_df = pd.read_csv("./demo_CAR_data.csv")
 
-        # set bounds of table
-        self.table_widget.setRowCount(len(EOM_df))
-        self.table_widget.setColumnCount(len(EOM_df.columns))
-        self.table_widget.setHorizontalHeaderLabels(list(EOM_df.columns))
+    #     # set bounds of table
+    #     self.table_widget.setRowCount(len(EOM_df))
+    #     self.table_widget.setColumnCount(len(EOM_df.columns))
+    #     self.table_widget.setHorizontalHeaderLabels(list(EOM_df.columns))
 
-        # convert to numpy array for speed (iteration)
-        EOM_np = EOM_df.to_numpy()
-        CAR_np = EOM_df.to_numpy()
+    #     # convert to numpy array for speed (iteration)
+    #     EOM_np = EOM_df.to_numpy()
+    #     CAR_np = EOM_df.to_numpy()
 
-        # fill table with data
-        for row in range(len(EOM_np)):
-            for col in range(len(EOM_np[row])):
-                self.table_widget.setItem(row, col, QTableWidgetItem(str(EOM_np[row][col])))
+    #     # fill table with data
+    #     for row in range(len(EOM_np)):
+    #         for col in range(len(EOM_np[row])):
+    #             self.table_widget.setItem(row, col, QTableWidgetItem(str(EOM_np[row][col])))
 
     ################################################################
     # 

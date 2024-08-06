@@ -2,11 +2,14 @@ from PySide6.QtCore import Slot
 from PySide6.QtGui import QAction
 from PySide6.QtWidgets import (QMainWindow, QStackedWidget, QStatusBar, QLabel)
 
+################################################################
+# 
+# MainWindow class
+#
+################################################################
 class MainWindow(QMainWindow):
     ################################################################
-    # 
     # MainWindow initialization
-    #
     ################################################################
     def __init__(self, CAR_input_widget, EOM_input_widget, dashboard_widget):
         super().__init__()
@@ -66,15 +69,19 @@ class MainWindow(QMainWindow):
         EOM_input_widget.view_button.clicked.connect(self.view_dashboard)
 
     ################################################################
-    # 
-    # MainWindow member functions
-    #
+    # MainWindow member function: view_CAR_input
     ################################################################
     def view_CAR_input(self):
         self.stackedWidget.setCurrentIndex(0) # Career Data Input Widget is at index 0
 
+    ################################################################
+    # MainWindow member function: view_EOM_input
+    ################################################################
     def view_EOM_input(self):
         self.stackedWidget.setCurrentIndex(1) # EOM Data input widget is at index 1
 
+    ################################################################
+    # MainWindow member function: view_dashboard
+    ################################################################
     def view_dashboard(self):        
         self.stackedWidget.setCurrentIndex(2) # Dashboard widget is at index 2

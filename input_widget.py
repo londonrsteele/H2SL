@@ -1,15 +1,18 @@
 import pandas as pd
-from PySide6.QtCore import Qt, Slot, Signal
-from PySide6.QtGui import QPainter
-from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
-                               QHBoxLayout, QLineEdit, QMainWindow,
-                               QPushButton, QTableWidget, QTableWidgetItem,
-                               QVBoxLayout, QWidget, QGroupBox, QDateEdit, QTimeEdit,
-                               QGridLayout, QSpinBox, QButtonGroup, QStackedWidget)
-from PySide6.QtCharts import QChartView, QPieSeries, QChart
-from main_window import MainWindow
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (QFormLayout, QPushButton, QWidget,
+                                QGroupBox, QDateEdit, QTimeEdit,
+                                QGridLayout, QSpinBox, QMessageBox)
 
+################################################################
+# 
+# CAR_Input_Widget class
+#
+################################################################
 class CAR_Input_Widget(QWidget):
+    ################################################################
+    # CAR_Input_Widget initialization
+    ################################################################
     def __init__(self):
         super().__init__()
         self.items = 0
@@ -22,8 +25,15 @@ class CAR_Input_Widget(QWidget):
 
 
 
-
+################################################################
+# 
+# EOM_Input_Widget class
+#
+################################################################
 class EOM_Input_Widget(QWidget):
+    ################################################################
+    # EOM_Input_Widget initialization
+    ################################################################
     def __init__(self):
         super().__init__()
         self.items = 0
@@ -31,16 +41,35 @@ class EOM_Input_Widget(QWidget):
         self.grid_layout = QGridLayout()
         self.grid_layout.addWidget(self.create_EOM_data_entry_groupbox(), 0, 0, 6, 1)
         self.grid_layout.addWidget(self.create_EOM_loadout_entry_groupbox(), 0, 1, 6, 1)
-        self.submit_button = QPushButton("Save Mission Data", self)
-        self.view_button = QPushButton("View Mission Data", self)
-        self.grid_layout.addWidget(self.submit_button, 6, 0, 1, 1, Qt.AlignCenter)
-        self.grid_layout.addWidget(self.view_button, 6, 1, 1, 1, Qt.AlignCenter)
+        self.EOM_button = QPushButton("Save Mission Data", self)
+        self.loadout_button = QPushButton("Save Loadout Data", self)
+        self.grid_layout.addWidget(self.EOM_button, 6, 0, 1, 1, Qt.AlignCenter)
+        self.grid_layout.addWidget(self.loadout_button, 6, 1, 1, 1, Qt.AlignCenter)
+        self.view_button = QPushButton("View Data Dashboard", self)
+        self.grid_layout.addWidget(self.view_button, 7, 0, 1, 2)
         self.setLayout(self.grid_layout)
 
         # Add functionality to "Save Mission Data" button
-        self.submit_button.clicked.connect(self.EOM_form_save)
+        self.EOM_button.clicked.connect(self.EOM_form_save)
 
+        # Add functionality to "Save Loadout Data" button
+        self.loadout_button.clicked.connect(self.loadout_form_save)
 
+        # QMessageBoxes for Popup windows to confirm saving
+        self.EOM_popup = QMessageBox()
+        self.EOM_popup.setWindowTitle("EOM Form")
+        self.EOM_popup.setText("End of Mission data saved successfully!")
+        self.loadout_popup = QMessageBox()
+        self.loadout_popup.setWindowTitle("Loadout Form")
+        self.loadout_popup.setText("Loadout data save successfully!")
+        self.error_popup = QMessageBox()
+        self.error_popup.setWindowTitle("Save Error")
+        self.error_popup.setText("Error saving data: File Already Exists!\n"
+                                 + "Please ensure date and time are unique.")
+
+    ################################################################
+    # EOM_Input_Widget member function: create_EOM_data_entry_groupbox
+    ################################################################
     def create_EOM_data_entry_groupbox(self):
         self.EOM_groupbox = QGroupBox(("End of Mission Stats Entry"))
         self.form_layout = QFormLayout()
@@ -81,6 +110,9 @@ class EOM_Input_Widget(QWidget):
         self.EOM_groupbox.setLayout(self.form_layout)
         return self.EOM_groupbox
     
+    ################################################################
+    # EOM_Input_Widget member function: create_EOM_loadout_entry_groupbox
+    ################################################################
     def create_EOM_loadout_entry_groupbox(self):
         self.EOM_groupbox = QGroupBox("Mission Loadout Entry")
         self.form_layout = QFormLayout()
@@ -90,13 +122,21 @@ class EOM_Input_Widget(QWidget):
         # Add functionality here: loadout entry boxes
         #
         ################################################################
-
-
+        # Create Entry Boxes
+        self.loadout_date = QDateEdit()
+        self.loadout_endtime = QTimeEdit()
+        
+        # Add Entry Boxes to layout
+        self.form_layout.addRow(("Date: "), self.loadout_date)
+        self.form_layout.addRow(("End Time: "), self.loadout_endtime)
+        
         # Return groupbox to grid layout
         self.EOM_groupbox.setLayout(self.form_layout)
         return self.EOM_groupbox
     
-    
+    ################################################################
+    # EOM_Input_Widget member function: EOM_form_save
+    ################################################################
     def EOM_form_save(self):
         # Convert DateTimes to filename-friendly formats
         eom_day_formatted = self.EOM_date.date().toString("MMMM_d_yyyy")
@@ -121,18 +161,44 @@ class EOM_Input_Widget(QWidget):
         EOM_df = pd.DataFrame(data=EOM_data, index=[0])
 
         # Create csv file
-        file_path = "./save_files/" + eom_day_formatted + "_" + eom_time_formatted + "_EOM_savefile.csv"
+        file_path = "./save_files/EOM_savefile_" + eom_day_formatted + "_" + eom_time_formatted + ".csv"
         try:
             with open(file_path, "x") as file:
                 file.close()
+            # Write DataFrame to file
+            EOM_df.to_csv(file_path, index=False)
+
+            # Display popup confirming data saved
+            self.EOM_popup.exec_()
         except FileExistsError:
             print("File already exists.")
+            self.error_popup.exec_()
 
-        # Write DataFrame to file
-        EOM_df.to_csv(file_path, index=False)
+    ################################################################
+    # EOM_Input_Widget member function: loadout_form_save
+    ################################################################
+    def loadout_form_save(self):
+        # Convert DateTimes to filename-friendly formats
+        loadout_day_formatted = self.loadout_date.date().toString("MMMM_d_yyyy")
+        loadout_time_formatted = self.loadout_endtime.time().toString("H_m")
 
-        ################################################################
-        # 
-        # Add functionality here: send "Data saved" to status bar, popup!
-        #
-        ################################################################
+        # Put data from form into Pandas DataFrame
+        loadout_data = {"loadout_day":self.loadout_date.text(),
+                    "loadout_time":self.loadout_endtime.text()
+                    }
+        loadout_df = pd.DataFrame(data=loadout_data, index=[0])
+
+        # Create csv file
+        file_path = "./save_files/loadout_savefile_" + loadout_day_formatted + "_" + loadout_time_formatted + ".csv"
+        try:
+            with open(file_path, "x") as file:
+                file.close()
+
+            # Write DataFrame to file
+            loadout_df.to_csv(file_path, index=False)
+
+            # Display popup confirming data saved
+            self.loadout_popup.exec_()
+        except FileExistsError:
+            print("File already exists.")
+            self.error_popup.exec_()
