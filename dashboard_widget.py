@@ -54,14 +54,14 @@ class Dashboard_Widget(QDialog):
     ################################################################
     def load_EOM_data(self):
         EOM_df = self.Mission_Tab.load_data("EOM")
-        print("End of Mission Data loaded successfully")
         self.Mission_Tab.display_data(EOM_df)
 
     ################################################################
     # Dashboard_Widget member function: load_CAR_data
     ################################################################
     def load_CAR_data(self):
-        print("Career Data loaded successfully")
+        CAR_df = self.Career_Tab.load_data("career")
+        self.Career_Tab.display_data(CAR_df)
 
     ################################################################
     # Dashboard_Widget member function: load_demo_data
@@ -92,7 +92,8 @@ class Mission_Tab(QWidget):
         EOM_df = self.load_data("EOM")
 
         # display data
-        self.display_data(EOM_df)
+        display_label = self.display_data(EOM_df)
+        self.layout.addWidget(display_label, Qt.AlignCenter)
 
     ################################################################
     # Mission_Tab member function: load_data
@@ -126,13 +127,12 @@ class Mission_Tab(QWidget):
         if EOM_df.empty:
             # data did not load
             error_label = QLabel("No Mission Save Files Loaded")
-            self.layout.addWidget(error_label, Qt.AlignCenter)
+            return error_label
         else:
             # data loaded successfully
             print(EOM_df.head())
             success_label = QLabel("Yippee! Data Loaded!")
-            self.layout.addWidget(success_label, Qt.AlignCenter)
-
+            return success_label
 
 ################################################################
 # 
@@ -157,7 +157,8 @@ class Last10_Tab(QWidget):
         df_dict = self.load_10_data("EOM")
 
         # see if any data loaded
-        self.display_data(df_dict)
+        display_label = self.display_data(df_dict)
+        self.layout.addWidget(display_label, Qt.AlignCenter)
     
     ################################################################
     # Last10_Tab member function: load_data
@@ -210,12 +211,12 @@ class Last10_Tab(QWidget):
         if len(df_dict) == 0:
             # data did not load
             error_label = QLabel("No Mission Save Files Loaded")
-            self.layout.addWidget(error_label, Qt.AlignCenter)
+            return error_label
         else:
             # get number of Missions returned
             print("# of Missions Loaded: " + str(len(df_dict)))
             success_label = QLabel(str(len(df_dict)) + " Missions Loaded")
-            self.layout.addWidget(success_label, Qt.AlignCenter)
+            return success_label
 
 ################################################################
 # 
@@ -240,7 +241,8 @@ class Career_Tab(QWidget):
         CAR_df = self.load_data("career")
 
         # see if data loaded correctly
-        self.load_data(CAR_df)
+        display_label = self.display_data(CAR_df)
+        self.layout.addWidget(display_label, Qt.AlignCenter)
 
     ################################################################
     # Career_Tab member function: load_data
@@ -273,12 +275,12 @@ class Career_Tab(QWidget):
         if CAR_df.empty:
             # data did not load
             error_label = QLabel("No Career Save Files Loaded")
-            self.layout.addWidget(error_label, Qt.AlignCenter)
+            return error_label
         else:
             # data loaded successfully
             print(CAR_df.head())
             success_label = QLabel("Yippee! Data Loaded!")
-            self.layout.addWidget(success_label, Qt.AlignCenter)
+            return success_label
 
 ################################################################
 # 
