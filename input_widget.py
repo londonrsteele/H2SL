@@ -17,11 +17,67 @@ class CAR_Input_Widget(QWidget):
         super().__init__()
         self.items = 0
         
-        ################################################################
-        # 
-        # Add functionality here: career data input form
-        #
-        ################################################################
+        self.grid_layout = QGridLayout()
+        self.grid_layout.addWidget(self.create_CAR_data_entry_groupbox(), 0, 0, 6, 1)
+        self.CAR_button = QPushButton("Save Career Data", self)
+        self.grid_layout.addWidget(self.CAR_button, 6, 0, 1, 1, Qt.AlignCenter)
+        self.view_button = QPushButton("View Data Dashboard", self)
+        self.grid_layout.addWidget(self.view_button, 7, 0, 1, 2)
+        self.setLayout(self.grid_layout)
+
+        # Add functionality to "Save Career Data" button
+        self.CAR_button.clicked.connect(self.CAR_form_save)
+
+        # QMessageBoxes for Popup windows to confirm saving
+        self.CAR_popup = QMessageBox()
+        self.CAR_popup.setWindowTitle("Caereer Form")
+        self.CAR_popup.setText("Career data saved successfully!")
+        self.error_popup = QMessageBox()
+        self.error_popup.setWindowTitle("Save Error")
+        self.error_popup.setText("Error saving data: File Already Exists!")
+        # TODO: add functionality "do you want to overwrite?" etc.
+
+    ################################################################
+    # CAR_Input_Widget member function: create_CAR_data_entry_groupbox
+    ################################################################
+    def create_CAR_data_entry_groupbox(self):
+        self.CAR_groupbox = QGroupBox("Career Stats Entry")
+        self.form_layout = QFormLayout()
+
+        # Create Entry Boxes
+        self.CAR_enemy_kills = QSpinBox(minimum=0, maximum=1000000000)
+
+        # Add Entry Boxes to layout
+        self.form_layout.addRow(("Enemy Kills: "), self.CAR_enemy_kills)
+
+        # Return groupbox to grid layout
+        self.CAR_groupbox.setLayout(self.form_layout)
+        return self.CAR_groupbox
+
+    ################################################################
+    # CAR_Input_Widget member function: CAR_form_save
+    ################################################################
+    def CAR_form_save(self):
+        # Put data from form into Pandas DataFrame
+        CAR_data = {"CAR_enemy_kills":self.CAR_enemy_kills.text()
+                    }
+        CAR_df = pd.DataFrame(data=CAR_data, index=[0])
+
+        # Create csv file
+        file_path = "./save_files/career_savefile.csv"
+        try:
+            with open(file_path, "x") as file:
+                file.close()
+
+            # Write DataFrame to file
+            CAR_df.to_csv(file_path, index=False)
+
+            # Display popup confirming data saved
+            self.CAR_popup.exec_()
+        except FileExistsError:
+            print("File already exists.")
+            self.error_popup.exec_()
+
 
 
 
@@ -77,6 +133,7 @@ class EOM_Input_Widget(QWidget):
         # Create Entry Boxes
         self.EOM_date = QDateEdit()
         self.EOM_endtime = QTimeEdit()
+        # TODO: make above update automatically
         self.EOM_accuracy = QSpinBox(minimum=0, maximum=1000000000)
         self.EOM_shots_fired = QSpinBox(minimum=0, maximum=1000000000)
         self.EOM_shots_hit = QSpinBox(minimum=0, maximum=1000000000)
@@ -117,11 +174,6 @@ class EOM_Input_Widget(QWidget):
         self.EOM_groupbox = QGroupBox("Mission Loadout Entry")
         self.form_layout = QFormLayout()
 
-        ################################################################
-        # 
-        # Add functionality here: loadout entry boxes
-        #
-        ################################################################
         # Create Entry Boxes
         self.loadout_date = QDateEdit()
         self.loadout_endtime = QTimeEdit()
