@@ -1,16 +1,17 @@
 import os, fnmatch
 from pathlib import Path
 import pandas as pd
-from PySide6.QtCore import Qt, Slot
+from PySide6.QtCore import Qt
 from PySide6.QtGui import QPainter
 from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
                                QHBoxLayout, QLineEdit, QMainWindow,
                                QPushButton, QTableWidget, QTableWidgetItem,
                                QVBoxLayout, QDialog, QWidget, QTabWidget,
-                               QLabel)
+                               QLabel, QMessageBox, QFileDialog)
 from PySide6.QtCharts import QChartView, QPieSeries, QChart
 import webbrowser
 import subprocess
+import stylesheets
 
 ################################################################
 # 
@@ -77,42 +78,75 @@ class Mission_Tab(QWidget):
     def __init__(self, parent: QWidget):
         super().__init__(parent)
         
-        # save savefile_dir
-        self.savefile_dir = "./save_files/"
+        # create buttons
+        self.setStyleSheet(stylesheets.EOM_Load_QPushButton_style)
+        self.Load_MR_EOM_button = QPushButton("Load Most Recent Mission Data")
+        self.Load_OLD_EOM_button = QPushButton("Load Older Mission Data")
 
         # Set up layout
-        self.layout = QVBoxLayout()
+        self.layout = QHBoxLayout()
+        self.layout.addWidget(self.Load_MR_EOM_button)
+        self.layout.addWidget(self.Load_OLD_EOM_button)
         self.setLayout(self.layout)
 
-        # load most recent EOM data
-        EOM_df = self.load_data("EOM")
+        # connect buttons
+        self.Load_MR_EOM_button.clicked.connect(self.show_MR_data)
+        self.Load_OLD_EOM_button.clicked.connect(self.show_OLD_data)
 
-        # display data
-        display_label = self.display_data(EOM_df)
-        self.layout.addWidget(display_label, Qt.AlignCenter)
+    ################################################################
+    # Mission_Tab member function: show_MR_data (most recent)
+    ################################################################
+    def show_MR_data(self):
+        EOM_df = self.load_data("most recent")
+        self.display_data(EOM_df)
+
+    ################################################################
+    # Mission_Tab member function: show_OLD_data
+    ################################################################
+    def show_OLD_data(self):
+        # open a file explorer window
+        file_explorer = QFileDialog(self, "Choose a Mission Data File", "./save_files/")
+        file_explorer.setFileMode(QFileDialog.ExistingFile)
+        # show only EOM files
+        file_explorer.setNameFilter("EOM_savefile_*.csv")
+        filenames = []
+        if file_explorer.exec_():
+            # get selected filename(s)
+            filenames = file_explorer.selectedFiles()
+        # check if filenames is empty
+        if filenames:
+            #load the first filename only
+            EOM_df = self.load_data(filenames[0])
+            self.display_data(EOM_df)
 
     ################################################################
     # Mission_Tab member function: load_data
     ################################################################
-    def load_data(self, data_class):
-        # sort data_class files in directory by modified time
-        filepaths = sorted(Path(self.savefile_dir).iterdir(), key=os.path.getmtime)
-        
-        most_recent_file_path = ""
-        # find most recent data_class (EOM, CAR, loadout) file (closest to index 0)
-        for filepath in filepaths:
-            if filepath.name.startswith(data_class):
-                most_recent_file_path = filepath
-                break
-        
-        # if most_recent_file_path is empty, no save file exists for that data_class
-        if most_recent_file_path == "":
-            print("No save file exists!")
+    def load_data(self, arg1):
+        # variable to hold the filepath of the EOM data file
+        datafile = ""
+
+        # arg1 is either "most recent" or a filepath
+        if arg1 == "most recent":
+            # sort data_class files in directory by modified time
+            filepaths = sorted(Path("./save_files/").iterdir(), key=os.path.getmtime)
+            
+            # find most recent EOM file (closest to index 0)
+            for filepath in filepaths:
+                    if filepath.name.startswith("EOM"):
+                        datafile = filepath
+                        break
+        else:
+            datafile = arg1
+
+        # if datafile is empty, no save EOM file exists
+        if datafile == "":
+            print("No EOM save file exists!")
             # return empty df
             return pd.DataFrame()
         else:
             # load data from most recent file into dataframe
-            df = pd.read_csv(most_recent_file_path)
+            df = pd.read_csv(datafile)
             return df
         
     ################################################################
@@ -122,13 +156,13 @@ class Mission_Tab(QWidget):
         # see if data loaded correctly
         if EOM_df.empty:
             # data did not load
-            error_label = QLabel("No Mission Save Files Loaded")
-            return error_label
+            self.error_popup = QMessageBox()
+            self.error_popup.setWindowTitle("Data Not Loaded")
+            self.error_popup.setText("No Mission Save Files Loaded!")
         else:
             # data loaded successfully
+            # TODO: OPEN INSIGHTS PAGE
             print(EOM_df.head())
-            success_label = QLabel("Yippee! Data Loaded!")    
-            return success_label
     
     def display_insights(self, EOM_df):
         subprocess.Popen("python browser_mw.py")
