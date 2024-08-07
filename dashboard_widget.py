@@ -9,7 +9,8 @@ from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
                                QVBoxLayout, QDialog, QWidget, QTabWidget,
                                QLabel)
 from PySide6.QtCharts import QChartView, QPieSeries, QChart
-from graphing import run_dash
+import webbrowser
+import subprocess
 
 ################################################################
 # 
@@ -43,32 +44,25 @@ class Dashboard_Widget(QDialog):
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.tab_widget)
         self.setLayout(self.layout)
-
-    ################################################################
-    # Dashboard_Widget member function: get_savefile_dir
-    ################################################################
-    def get_savefile_dir(self):
-        return self.savefile_dir
     
     ################################################################
-    # Dashboard_Widget member function: load_EOM_data
+    # Dashboard_Widget member function: load_EOM_data : connected to MainWindow
     ################################################################
     def load_EOM_data(self):
         EOM_df = self.Mission_Tab.load_data("EOM")
         self.Mission_Tab.display_data(EOM_df)
 
     ################################################################
-    # Dashboard_Widget member function: load_CAR_data
+    # Dashboard_Widget member function: load_CAR_data : connected to MainWindow
     ################################################################
     def load_CAR_data(self):
         CAR_df = self.Career_Tab.load_data("career")
         self.Career_Tab.display_data(CAR_df)
 
     ################################################################
-    # Dashboard_Widget member function: load_demo_data
+    # Dashboard_Widget member function: load_demo_data : connected to MainWindow
     ################################################################
     def load_demo_data(self):
-        run_dash()
         print("Demo Data loaded successfully")
 
 ################################################################
@@ -133,8 +127,12 @@ class Mission_Tab(QWidget):
         else:
             # data loaded successfully
             print(EOM_df.head())
-            success_label = QLabel("Yippee! Data Loaded!")
+            success_label = QLabel("Yippee! Data Loaded!")    
             return success_label
+    
+    def display_insights(self, EOM_df):
+        subprocess.Popen("python browser_mw.py")
+
 
 ################################################################
 # 
