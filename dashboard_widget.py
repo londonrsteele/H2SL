@@ -130,8 +130,6 @@ class Mission_Tab(QWidget):
         if arg1 == "most recent":
             # sort data_class files in directory by modified time
             filepaths = sorted(Path("./save_files/").iterdir(), key=os.path.getmtime, reverse=True)
-            
-            print(filepaths)
 
             # find most recent EOM file (closest to index 0)
             for filepath in filepaths:
