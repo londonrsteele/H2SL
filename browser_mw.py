@@ -26,7 +26,8 @@ if __name__ == "__main__":
     window.resize(800, 600)
     window.show()
 
-    subprocess.Popen("python graphing.py")
+    # sys.argv argv1 is filepath for graphing df
+    subprocess.Popen("python graphing.py " + str(sys.argv[1]))
 
     # Execute Qt application
     sys.exit(app.exec())

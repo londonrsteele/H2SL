@@ -116,8 +116,8 @@ class Mission_Tab(QWidget):
         # check if filenames is empty
         if filenames:
             #load the first filename only
-            EOM_df = self.load_data(filenames[0])
-            self.display_data(EOM_df)
+            EOM_df_filepath = self.load_data(filenames[0])
+            self.display_data(EOM_df_filepath)
 
     ################################################################
     # Mission_Tab member function: load_data
@@ -129,8 +129,10 @@ class Mission_Tab(QWidget):
         # arg1 is either "most recent" or a filepath
         if arg1 == "most recent":
             # sort data_class files in directory by modified time
-            filepaths = sorted(Path("./save_files/").iterdir(), key=os.path.getmtime)
+            filepaths = sorted(Path("./save_files/").iterdir(), key=os.path.getmtime, reverse=True)
             
+            print(filepaths)
+
             # find most recent EOM file (closest to index 0)
             for filepath in filepaths:
                     if filepath.name.startswith("EOM"):
@@ -142,30 +144,24 @@ class Mission_Tab(QWidget):
         # if datafile is empty, no save EOM file exists
         if datafile == "":
             print("No EOM save file exists!")
-            # return empty df
-            return pd.DataFrame()
-        else:
-            # load data from most recent file into dataframe
-            df = pd.read_csv(datafile)
-            return df
+        
+        return datafile
         
     ################################################################
     # Mission_Tab member function: display_data
     ################################################################
-    def display_data(self, EOM_df):
+    def display_data(self, EOM_df_filepath):
         # see if data loaded correctly
-        if EOM_df.empty:
+        if EOM_df_filepath == "":
             # data did not load
             self.error_popup = QMessageBox()
             self.error_popup.setWindowTitle("Data Not Loaded")
             self.error_popup.setText("No Mission Save Files Loaded!")
         else:
             # data loaded successfully
-            # TODO: OPEN INSIGHTS PAGE
-            print(EOM_df.head())
-    
-    def display_insights(self, EOM_df):
-        subprocess.Popen("python browser_mw.py")
+            print("Save File: " + str(EOM_df_filepath))
+            # run browser.py with EOM_df_filepath as argv1
+            subprocess.Popen("python browser_mw.py " + str(EOM_df_filepath))
 
 
 ################################################################
