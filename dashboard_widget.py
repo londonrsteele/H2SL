@@ -159,8 +159,8 @@ class Mission_Tab(QWidget):
             # data loaded successfully
             print("Save File: " + str(EOM_df_filepath))
             # run browser.py with EOM_df_filepath as argv1
-            subprocess.Popen("python browser_mw.py " + str(EOM_df_filepath))
-
+            #subprocess.Popen("python browser_mw.py " + str(EOM_df_filepath))
+            subprocess.Popen("python dashboard_app.py " + str(EOM_df_filepath) + " EOM")
 
 ################################################################
 # 
