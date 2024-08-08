@@ -15,7 +15,7 @@ df = pd.read_csv(sys.argv[1])
 print(df.head())
 # dff = pd.DataFrame([["Shots Fired", df["eom_shots_fired"][0]], ["Shots Hit", df["eom_shots_hit"][0]]], columns=["Stat", "Value"])
 
-dashapp.layout = [html.Div(children="Poop")]
+dashapp.layout = [html.Div(children="Hello")]
 
 
 # Set up functions to close Dash app on "X" click
@@ -33,4 +33,4 @@ def display_page(pathname):
 
 # Run Dash app
 if __name__ == "__main__":
-    dashapp.run(debug=False,port=8050)
+    dashapp.run(debug=True,port=8050)
