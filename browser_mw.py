@@ -2,8 +2,6 @@ import sys
 import subprocess
 from PySide6.QtWidgets import (QApplication, QMainWindow)
 from PySide6.QtWebEngineWidgets import QWebEngineView
-import dashapp
-
 
 class BrowserMW(QMainWindow):
     def __init__(self):
@@ -23,7 +21,7 @@ if __name__ == "__main__":
 
     # QMainWindow using QWidget as central widget
     window = BrowserMW()
-    window.resize(800, 600)
+    window.showMaximized()
     window.show()
 
     # sys.argv argv1 is filepath for graphing df

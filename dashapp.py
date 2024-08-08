@@ -4,6 +4,7 @@ import pandas as pd
 from dash import *
 import dash_bootstrap_components as dbc
 import graphing.accuracy as accuracy
+import graphing.survivor as survivor
 
 # Create Dash app
 dashapp = Dash()
@@ -13,6 +14,7 @@ EOM_df = pd.read_csv(sys.argv[1])
 
 # Create figures
 accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)
+survivor_fig = survivor.Create_Survivor_Graph(EOM_df)
 
 # Create dashboard layout 
 dashapp.layout = dbc.Container([
@@ -25,6 +27,9 @@ dashapp.layout = dbc.Container([
         ], width=6),
         dbc.Col([
             dcc.Graph(figure=accuracy_fig, id="accuracy-graph")
+        ], width=6),
+        dbc.Col([
+            dcc.Graph(figure=survivor_fig, id="survivor-graph")
         ], width=6),
     ]),
 ], fluid=True)

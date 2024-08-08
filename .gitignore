@@ -5,3 +5,4 @@ __pycache__/graphing.cpython-311.pyc
 __pycache__/stylesheets.cpython-311.pyc
 __pycache__/dashapp.cpython-311.pyc
 graphing/__pycache__/accuracy.cpython-311.pyc
+graphing/__pycache__/survivor.cpython-311.pyc
