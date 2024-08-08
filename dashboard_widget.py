@@ -97,8 +97,9 @@ class Mission_Tab(QWidget):
     # Mission_Tab member function: show_MR_data (most recent)
     ################################################################
     def show_MR_data(self):
-        EOM_df = self.load_data("most recent")
-        self.display_data(EOM_df)
+        EOM_df = self.load_EOM_data("most recent")
+        CAR_df = self.load_CAR_data("most recent")
+        self.display_data(EOM_df, CAR_df)
 
     ################################################################
     # Mission_Tab member function: show_OLD_data
@@ -120,9 +121,9 @@ class Mission_Tab(QWidget):
             self.display_data(EOM_df_filepath)
 
     ################################################################
-    # Mission_Tab member function: load_data
+    # Mission_Tab member function: load_EOM_data
     ################################################################
-    def load_data(self, arg1):
+    def load_EOM_data(self, arg1):
         # variable to hold the filepath of the EOM data file
         datafile = ""
 
@@ -146,20 +147,52 @@ class Mission_Tab(QWidget):
         return datafile
         
     ################################################################
+    # Mission_Tab member function: load_CAR_data
+    ################################################################
+    def load_CAR_data(self, arg1):
+        # variable to hold the filepath of the EOM data file
+        datafile = ""
+
+        # arg1 is either "most recent" or a filepath
+        if arg1 == "most recent":
+            # sort data_class files in directory by modified time
+            filepaths = sorted(Path("./save_files/").iterdir(), key=os.path.getmtime, reverse=True)
+
+            # find most recent EOM file (closest to index 0)
+            for filepath in filepaths:
+                    if filepath.name.startswith("career"):
+                        datafile = filepath
+                        break
+        else:
+            datafile = arg1
+
+        # if datafile is empty, no save EOM file exists
+        if datafile == "":
+            print("No CAR save file exists!")
+        
+        return datafile
+        
+    ################################################################
     # Mission_Tab member function: display_data
     ################################################################
-    def display_data(self, EOM_df_filepath):
+    def display_data(self, EOM_df_filepath, CAR_df_filepath):
         # see if data loaded correctly
         if EOM_df_filepath == "":
             # data did not load
             self.error_popup = QMessageBox()
             self.error_popup.setWindowTitle("Data Not Loaded")
             self.error_popup.setText("No Mission Save Files Loaded!")
+        elif CAR_df_filepath == "":
+            # data did not load
+            self.error_popup = QMessageBox()
+            self.error_popup.setWindowTitle("Data Not Loaded")
+            self.error_popup.setText("No Career Save Files Loaded!")
         else:
             # data loaded successfully
-            print("Save File: " + str(EOM_df_filepath))
+            print("EOM Save File: " + str(EOM_df_filepath))
+            print("CAR Save File: " + str(CAR_df_filepath))
             # run browser.py with EOM_df_filepath as argv1
-            subprocess.Popen("python browser_mw.py " + str(EOM_df_filepath))
+            subprocess.Popen("python browser_mw.py " + str(EOM_df_filepath) + " " + str(CAR_df_filepath))
             # subprocess.Popen("python dashboard_app.py " + str(EOM_df_filepath) + " EOM")
 
 ################################################################

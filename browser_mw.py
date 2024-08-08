@@ -25,7 +25,7 @@ if __name__ == "__main__":
     window.show()
 
     # sys.argv argv1 is filepath for graphing df
-    subprocess.Popen("python dashapp.py " + str(sys.argv[1]))
+    subprocess.Popen("python dashapp.py " + str(sys.argv[1]) + " " + str(sys.argv[2]))
 
     # Execute Qt application
     sys.exit(app.exec())

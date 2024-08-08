@@ -5,34 +5,35 @@ from dash import *
 import dash_bootstrap_components as dbc
 import graphing.accuracy as accuracy
 import graphing.survivor as survivor
+import graphing.kill as kill
 
 # Create Dash app
-dashapp = Dash()
+dashapp = Dash(suppress_callback_exceptions=True)
 
 # Get data from sys.argv[1] and sys.arvg[2]
 EOM_df = pd.read_csv(sys.argv[1])
+CAR_df = pd.read_csv(sys.argv[2])
 
 # Create figures
 accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)
 survivor_fig = survivor.Create_Survivor_Graph(EOM_df)
+kills_fig = kill.Create_Kill_Graph(CAR_df)
 
 # Create dashboard layout 
-dashapp.layout = dbc.Container([
-    dbc.Row([
-        html.Div("Last Mission Data")
-    ]),
-    dbc.Row([
-        dbc.Col([
-            dash_table.DataTable(data=EOM_df.to_dict("records"))
-        ], width=6),
-        dbc.Col([
-            dcc.Graph(figure=accuracy_fig, id="accuracy-graph")
-        ], width=6),
-        dbc.Col([
-            dcc.Graph(figure=survivor_fig, id="survivor-graph")
-        ], width=6),
-    ]),
-], fluid=True)
+dashapp.layout = html.Div([
+
+    html.Div( children = "Most Recent Mission Stats" ),
+
+    html.Div( children= [
+        dcc.Graph(id="accuracy-graph",
+                  figure=accuracy_fig),
+        dcc.Graph(id="survivor-graph",
+                  figure=survivor_fig),
+        dcc.Graph(id="kills-graph",
+                  figure=kills_fig)
+    ])
+
+], style={"display":"flex", "flexDirection":"row"})
 
 # Set up functions to close Dash app on "X" click
 def shutdown():
