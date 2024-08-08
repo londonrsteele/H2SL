@@ -2,7 +2,7 @@ import sys
 import subprocess
 from PySide6.QtWidgets import (QApplication, QMainWindow)
 from PySide6.QtWebEngineWidgets import QWebEngineView
-import graphing
+import dashapp
 
 
 class BrowserMW(QMainWindow):
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     window.show()
 
     # sys.argv argv1 is filepath for graphing df
-    subprocess.Popen("python graphing.py " + str(sys.argv[1]))
+    subprocess.Popen("python dashapp.py " + str(sys.argv[1]))
 
     # Execute Qt application
     sys.exit(app.exec())
