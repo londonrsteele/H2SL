@@ -23,7 +23,7 @@ An app created by LostGamma13
 ## Versions
 PySide - 6.7.2  (Aug 01, 2024)  
 QtCore - 6.7.2  (Aug 01, 2024)  
-Plotly - 5.23.0 (Aug 06, 2024)
+Plotly - 5.23.0 (Aug 06, 2024)  
 Dash   - 2.17.1 (Aug 06, 2024)
 
 ## License
