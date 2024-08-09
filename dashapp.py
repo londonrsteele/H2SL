@@ -22,18 +22,42 @@ kills_fig = kill.Create_Kill_Graph(CAR_df)
 # Create dashboard layout 
 dashapp.layout = html.Div([
 
-    html.Div( children = "Most Recent Mission Stats" ),
+    # Div Level 1 - Title
+    html.Div( children = "Most Recent Mission Stats", className="app-Div--title" ),
 
-    html.Div( children= [
-        dcc.Graph(id="accuracy-graph",
-                  figure=accuracy_fig),
-        dcc.Graph(id="survivor-graph",
-                  figure=survivor_fig),
-        dcc.Graph(id="kills-graph",
-                  figure=kills_fig)
-    ])
+    # Div Level 1 - Main body
+    html.Div( children = [
+        
+        # Div Level 2 - Left column
+        html.Div( children= [
+            dcc.Graph(id="accuracy-graph",
+                        figure=accuracy_fig),
+            dcc.Graph(id="survivor-graph",
+                        figure=survivor_fig),
+            dcc.Graph(id="kills-graph",
+                        figure=kills_fig)
+        ]),
+        
+        # Div Level 2 - Right column
+        html.Div( children = [
 
-], style={"display":"flex", "flexDirection":"row"})
+            # Div Level 3 - Right column top row
+            html.Div( children = [
+
+                # Div Level 4 - Right column top row left column 
+                html.Div( children = "RCTRLC"),
+
+                # Div Level 4 - Right column top row right column
+                html.Div( children = "RCTRRC")
+            
+            ], style={"display":"flex", "flexDirection":"row"}),
+
+            # Div Level 3 - Right column bottom row
+            html.Div( children = "right column bottom row")
+
+        ], style={"display":"flex", "flexDirection":"column"})
+    ], style={"display":"flex", "flexDirection":"row"})
+], style={"display":"flex", "flexDirection":"column"})
 
 # Set up functions to close Dash app on "X" click
 def shutdown():
