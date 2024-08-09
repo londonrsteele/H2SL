@@ -7,7 +7,8 @@ import graphing.accuracy as accuracy
 import graphing.survivor as survivor
 import graphing.kill as kill
 import graphing.stratagems as stratagems
-
+import graphing.metadata as metadata
+import graphing.big_graph as big__graph
 # Create Dash app
 dashapp = Dash(suppress_callback_exceptions=True)
 
@@ -20,6 +21,12 @@ accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)
 survivor_fig = survivor.Create_Survivor_Graph(EOM_df)
 kills_fig = kill.Create_Kill_Graph(CAR_df)
 stratagems_fig = stratagems.Create_Stratagem_Graph(CAR_df)
+# TODO: RC-TR-RC (top right square)
+
+# Create dropdown for bottom right graph ("big_graph")
+dropdown = dcc.Dropdown(metadata.list_of_strats, "Total Kills", clearable=False)
+# make skeleton of big_graph
+big_graph = dcc.Graph()
 
 # Create dashboard layout 
 dashapp.layout = html.Div([
@@ -58,11 +65,19 @@ dashapp.layout = html.Div([
             ], style={"display":"flex", "flexDirection":"row"}),
 
             # Div Level 3 - Right column bottom row
-            html.Div( children = "right column bottom row")
-
+            html.Div( children = [
+                html.H4("Big Graph"), dropdown, big_graph
+            ], style={"display":"flex", "flexDirection":"column"})
         ], style={"display":"flex", "flexDirection":"column"})
     ], style={"display":"flex", "flexDirection":"row"})
 ], style={"display":"flex", "flexDirection":"column"})
+
+
+# Set up function to handle dropdown and big_graph
+@dashapp.callback(Output(big_graph, "figure"), Input(dropdown, "value"))
+def update_big_graph(stat):
+    fig = big__graph.Create_big_graph(stat)
+    return fig
 
 # Set up functions to close Dash app on "X" click
 def shutdown():
@@ -71,6 +86,7 @@ def shutdown():
         raise RuntimeError("Not running with the Wekzeug Server")
     func()
 
+# this callback handles Flask redirecting to the /kill url
 @dashapp.callback([Input("url", "pathname")])
 def display_page(pathname):
     if pathname == "/kill":
