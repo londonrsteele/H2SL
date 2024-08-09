@@ -358,7 +358,7 @@ def create_Stims_Used_graph():
 ################################################################
 # create_Total_Stratagems_graph()
 ################################################################
-def create_Total_Strategms_graph():
+def create_Total_Stratagems_graph():
     dict_of_dfs = get_last10_df("career")
     TSs_df = {}
     for i in range(0, len(dict_of_dfs)):
@@ -375,7 +375,7 @@ def create_Total_Strategms_graph():
 ################################################################
 # create_Defensive_Stratagems_graph()
 ################################################################
-def create_Defensive_Strategms_graph():
+def create_Defensive_Stratagems_graph():
     dict_of_dfs = get_last10_df("career")
     DSs_df = {}
     for i in range(0, len(dict_of_dfs)):
@@ -392,7 +392,7 @@ def create_Defensive_Strategms_graph():
 ################################################################
 # create_Eagle_Stratagems_graph()
 ################################################################
-def create_Eagle_Strategms_graph():
+def create_Eagle_Stratagems_graph():
     dict_of_dfs = get_last10_df("career")
     ESs_df = {}
     for i in range(0, len(dict_of_dfs)):
@@ -409,7 +409,7 @@ def create_Eagle_Strategms_graph():
 ################################################################
 # create_Supply_Stratagems_graph()
 ################################################################
-def create_Supply_Strategms_graph():
+def create_Supply_Stratagems_graph():
     dict_of_dfs = get_last10_df("career")
     SSs_df = {}
     for i in range(0, len(dict_of_dfs)):
@@ -426,7 +426,7 @@ def create_Supply_Strategms_graph():
 ################################################################
 # create_Reinforce_Stratagems_graph()
 ################################################################
-def create_Reinforce_Strategms_graph():
+def create_Reinforce_Stratagems_graph():
     dict_of_dfs = get_last10_df("career")
     RSs_df = {}
     for i in range(0, len(dict_of_dfs)):
