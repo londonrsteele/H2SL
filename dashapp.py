@@ -6,6 +6,7 @@ import dash_bootstrap_components as dbc
 import graphing.accuracy as accuracy
 import graphing.survivor as survivor
 import graphing.kill as kill
+import graphing.stratagems as stratagems
 
 # Create Dash app
 dashapp = Dash(suppress_callback_exceptions=True)
@@ -18,6 +19,7 @@ CAR_df = pd.read_csv(sys.argv[2])
 accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)
 survivor_fig = survivor.Create_Survivor_Graph(EOM_df)
 kills_fig = kill.Create_Kill_Graph(CAR_df)
+stratagems_fig = stratagems.Create_Stratagem_Graph(CAR_df)
 
 # Create dashboard layout 
 dashapp.layout = html.Div([
@@ -45,7 +47,10 @@ dashapp.layout = html.Div([
             html.Div( children = [
 
                 # Div Level 4 - Right column top row left column 
-                html.Div( children = "RCTRLC"),
+                html.Div( children = [
+                    dcc.Graph(id="stratagem-graph",
+                              figure=stratagems_fig)
+                ]),
 
                 # Div Level 4 - Right column top row right column
                 html.Div( children = "RCTRRC")
