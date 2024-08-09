@@ -1,6 +1,6 @@
-from PySide6.QtCore import Slot
-from PySide6.QtGui import QAction
-from PySide6.QtWidgets import (QMainWindow, QStackedWidget, QStatusBar, QLabel)
+from PySide6.QtWidgets import (QMainWindow, QStackedWidget)
+from MyWidgets import (Welcome_widget, Log_data_widget, EOM_input_widget,
+                       CAR_input_widget, Load_data_widget, View_data_widget)
 
 ################################################################
 # 
@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
     ################################################################
     # MainWindow initialization
     ################################################################
-    def __init__(self, CAR_input_widget, EOM_input_widget, dashboard_widget):
+    def __init__(self):
         super().__init__()
         self.setWindowTitle("Helldivers II Stats Logger")
         
@@ -20,69 +20,80 @@ class MainWindow(QMainWindow):
 
         # File menu
         self.file_menu = self.menu.addMenu("File")
+        # File > Home QAction    
+        home_action = self.file_menu.addAction("Home", self.view_Welcome)
         # File > Exit QAction
         exit_action = self.file_menu.addAction("Exit", self.close)
         exit_action.setShortcut("Ctrl+Q")
 
-        # Data menu
-        self.data_menu = self.menu.addMenu("Data")
+        # Create widgets
+        Welcome = Welcome_widget.Welcome_widget()
+        Log_data = Log_data_widget.Log_data_widget()
+        EOM_input = EOM_input_widget.EOM_input_widget()
+        CAR_input = CAR_input_widget.CAR_input_widget()
+        Load_data = Load_data_widget.Load_data_widget()
+        View_data = View_data_widget.View_data_widget()
 
-        # Data > Add Data menu
-        self.data_add_data_menu = self.data_menu.addMenu("Add Data")
-        # Data > Add Data > Career Data QAction
-        career_data_action = self.data_add_data_menu.addAction("Career Data", self.view_CAR_input)
-        # Data > Add Data > Misison Data QAction
-        EOM_data_action = self.data_add_data_menu.addAction("Mission Data", self.view_EOM_input) 
-
-        # Data > Load Data menu
-        self.data_load_data_menu = self.data_menu.addMenu("Load Data")
-        # Data > Load Data > Career Data QAction
-        CAR_data_action = QAction("Career Data", self)
-        CAR_data_action.triggered.connect(dashboard_widget.load_CAR_data)
-        CAR_data_action.triggered.connect(self.view_dashboard)
-        self.data_load_data_menu.addAction(CAR_data_action)
-
-        # Data > Load Data > Mission Data QAction
-        EOM_data_action = QAction("Mission Data", self)
-        EOM_data_action.triggered.connect(dashboard_widget.load_EOM_data)
-        EOM_data_action.triggered.connect(self.view_dashboard)
-        self.data_load_data_menu.addAction(EOM_data_action)
-
-        # Data > Load Data > Demo Data QAction
-        self.data_load_data_menu.addSeparator()
-        demo_data_action = QAction("Demo Data", self)
-        demo_data_action.triggered.connect(dashboard_widget.load_demo_data)
-        demo_data_action.triggered.connect(self.view_dashboard)
-        self.data_load_data_menu.addAction(demo_data_action)
-        
         # Central Widget
         self.stackedWidget = QStackedWidget()
-        self.stackedWidget.addWidget(CAR_input_widget)
-        self.stackedWidget.addWidget(EOM_input_widget)
-        self.stackedWidget.addWidget(dashboard_widget)
+        self.stackedWidget.addWidget(Welcome)   # index 0
+        self.stackedWidget.addWidget(Log_data)  # index 1
+        self.stackedWidget.addWidget(EOM_input) # index 2
+        self.stackedWidget.addWidget(CAR_input) # index 3
+        self.stackedWidget.addWidget(Load_data) # index 4
+        self.stackedWidget.addWidget(View_data) # index 5
         
-        # default "screen" of widget is EOM data entry 
-        self.stackedWidget.setCurrentWidget(EOM_input_widget)        
+        # opening "screen"/widget is Welcome 
+        self.stackedWidget.setCurrentWidget(Welcome)        
         self.setCentralWidget(self.stackedWidget)
 
-        # if "View Mission Data" button is clicked, view dashboard
-        EOM_input_widget.view_button.clicked.connect(self.view_dashboard)
-        CAR_input_widget.view_button.clicked.connect(self.view_dashboard)
+        # Set up button functionality
+        # Welcome buttons
+        Welcome.Log_data_button.clicked.connect(self.view_Log_data)
+        Welcome.View_data_button.clicked.connect(self.view_View_data)
+        # Log_data buttons
+        Log_data.Log_EOM_data.clicked.connect(self.view_EOM_input)
+        Log_data.Log_CAR_data.clicked.connect(self.view_CAR_input)
+
 
     ################################################################
-    # MainWindow member function: view_CAR_input
+    # MainWindow member function: view_Welcome
+    ################################################################    
+    def view_Welcome(self):
+        self.setWindowTitle("Helldivers 2 Stats Logger: Welcome")
+        self.stackedWidget.setCurrentIndex(0)
+
     ################################################################
-    def view_CAR_input(self):
-        self.stackedWidget.setCurrentIndex(0) # Career Data Input Widget is at index 0
+    # MainWindow member function: view_Log_data
+    ################################################################    
+    def view_Log_data(self):
+        self.setWindowTitle("Helldivers 2 Stats Logger: Log Data")
+        self.stackedWidget.setCurrentIndex(1)
 
     ################################################################
     # MainWindow member function: view_EOM_input
-    ################################################################
+    ################################################################    
     def view_EOM_input(self):
-        self.stackedWidget.setCurrentIndex(1) # EOM Data input widget is at index 1
+        self.setWindowTitle("Helldivers 2 Stats Logger: Log Mission Data")
+        self.stackedWidget.setCurrentIndex(2)
 
     ################################################################
-    # MainWindow member function: view_dashboard
+    # MainWindow member function: view_CAR_input
+    ################################################################    
+    def view_CAR_input(self):
+        self.setWindowTitle("Helldivers 2 Stats Logger: Log Career Data")
+        self.stackedWidget.setCurrentIndex(3)
+
     ################################################################
-    def view_dashboard(self):        
-        self.stackedWidget.setCurrentIndex(2) # Dashboard widget is at index 2
+    # MainWindow member function: view_Load_data
+    ################################################################    
+    def view_Load_data(self):
+        self.setWindowTitle("Helldivers 2 Stats Logger: Load Data")
+        self.stackedWidget.setCurrentIndex(4)
+
+    ################################################################
+    # MainWindow member function: view_View_data
+    ################################################################    
+    def view_View_data(self):
+        self.setWindowTitle("Helldivers 2 Stats Logger: View Data")
+        self.stackedWidget.setCurrentIndex(5)

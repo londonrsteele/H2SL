@@ -2,7 +2,6 @@ import sys
 from flask import request
 import pandas as pd
 from dash import *
-import dash_bootstrap_components as dbc
 import graphing.accuracy as accuracy
 import graphing.survivor as survivor
 import graphing.kill as kill

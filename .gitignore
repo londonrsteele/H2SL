@@ -10,3 +10,10 @@ graphing/__pycache__/kill.cpython-311.pyc
 graphing/__pycache__/stratagems.cpython-311.pyc
 graphing/__pycache__/metadata.cpython-311.pyc
 graphing/__pycache__/big_graph.cpython-311.pyc
+MyWidgets/__pycache__/CAR_input_widget.cpython-311.pyc
+MyWidgets/__pycache__/EOM_input_widget.cpython-311.pyc
+MyWidgets/__pycache__/Load_data_widget.cpython-311.pyc
+MyWidgets/__pycache__/Log_data_widget.cpython-311.pyc
+MyWidgets/__pycache__/View_data_widget.cpython-311.pyc
+MyWidgets/__pycache__/Welcome_widget.cpython-311.pyc
+assets/__pycache__/stylesheets.cpython-311.pyc
