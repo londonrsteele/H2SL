@@ -11,7 +11,7 @@ def Create_Kill_Graph(CAR_df):
     # CAR eagle kills
     # CAR shot kills = CAR total kills - CAR grenade kills - CAR melee kills - CAR eagle kills
     CAR_total_kills = CAR_df["CAR_enemy_kills"][0] + CAR_df["CAR_friendly_kills"][0]
-    CAR_shot_kills = CAR_total_kills - CAR_df["CAR_grenade_kills"] - CAR_df["CAR_melee_kills"] - CAR_df["CAR_eagle_kills"]
+    CAR_shot_kills = CAR_total_kills - CAR_df["CAR_grenade_kills"][0] - CAR_df["CAR_melee_kills"][0] - CAR_df["CAR_eagle_kills"][0]
 
     kills_data = {
         "x_labels" : ["Total Kills", "Enemy Kills", "Terminid Kills", 
@@ -24,11 +24,10 @@ def Create_Kill_Graph(CAR_df):
                 ]
     }
 
-    print(kills_data)
-
     fig = pltxp.bar(kills_data, x="x_labels", y="stats",
                     labels={"x_labels":"Stat", "stats":"Count"},
                     text_auto=True)
+
     return fig
 
     
