@@ -37,8 +37,8 @@ class Dashboard_Widget(QDialog):
 
         # Add Tabs to Tab Widget
         self.tab_widget.addTab(self.Mission_Tab, "Mission Overview")
-        self.tab_widget.addTab(self.Last10_Tab, "Last 10 Missions")
-        self.tab_widget.addTab(self.Career_Tab, "Career Overview")
+        # self.tab_widget.addTab(self.Last10_Tab, "Last 10 Missions")
+        # self.tab_widget.addTab(self.Career_Tab, "Career Overview")
         self.tab_widget.addTab(self.RawData_Tab, "Raw Data")
 
         # Add Tab Widget to layout
