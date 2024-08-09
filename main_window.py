@@ -54,6 +54,9 @@ class MainWindow(QMainWindow):
         # Log_data buttons
         Log_data.Log_EOM_data.clicked.connect(self.view_EOM_input)
         Log_data.Log_CAR_data.clicked.connect(self.view_CAR_input)
+        # EOM_input buttons
+        EOM_input.view_button.clicked.connect(self.view_Load_data)
+        # CAR_input popup buttons
 
 
     ################################################################

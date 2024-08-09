@@ -3,7 +3,9 @@ from PySide6.QtCore import Qt, QDateTime
 from PySide6.QtWidgets import (QFormLayout, QPushButton, QWidget,
                                 QGroupBox, QDateEdit, QTimeEdit,
                                 QGridLayout, QSpinBox, QMessageBox,
-                                QFrame)
+                                QFrame, QComboBox)
+from graphing import metadata
+from assets import stylesheets
 ################################################################
 # 
 # EOM_input_widget class
@@ -19,9 +21,13 @@ class EOM_input_widget(QWidget):
 
         # Make Buttons
         self.curr_time_button = QPushButton("Log Date and Time", self)
+        self.curr_time_button.setStyleSheet(stylesheets.Log_Time_Buttons)
         self.EOM_button = QPushButton("Save Mission Data", self)
+        self.EOM_button.setStyleSheet(stylesheets.Big_Buttons)
         self.loadout_button = QPushButton("Save Loadout Data", self)
-        self.view_button = QPushButton("View Data Dashboard", self)
+        self.loadout_button.setStyleSheet(stylesheets.Big_Buttons)
+        self.view_button = QPushButton("View Data", self)
+        self.view_button.setStyleSheet(stylesheets.Big_Buttons)
 
         # Set up grid
         self.grid_layout = QGridLayout()
@@ -86,6 +92,8 @@ class EOM_input_widget(QWidget):
         # Create Entry Boxes
         self.EOM_date = QDateEdit()
         self.EOM_endtime = QTimeEdit()
+        self.EOM_mission_type = QComboBox()
+        self.EOM_mission_type.addItems(metadata.list_of_missions)
         # line goes here in layout
         self.EOM_accuracy = QSpinBox(minimum=0, maximum=1000000000)
         self.EOM_shots_fired = QSpinBox(minimum=0, maximum=1000000000)
@@ -103,6 +111,7 @@ class EOM_input_widget(QWidget):
         # Add Entry Boxes to layout
         self.form_layout.addRow(("Date: "), self.EOM_date)
         self.form_layout.addRow(("End Time: "), self.EOM_endtime)
+        self.form_layout.addRow(("Mission Type: "), self.EOM_mission_type),
         self.form_layout.addRow(self.line)
         self.form_layout.addRow(("Accuracy: "), self.EOM_accuracy)
         self.form_layout.addRow(("Shots Fired: "), self.EOM_shots_fired)
@@ -137,13 +146,13 @@ class EOM_input_widget(QWidget):
         self.loadout_date = QDateEdit()
         self.loadout_endtime = QTimeEdit()
         # line goes here in layout
-
+        # TODO: add more entry boxes
 
         # Add Entry Boxes to layout
         self.form_layout.addRow(("Date: "), self.loadout_date)
         self.form_layout.addRow(("End Time: "), self.loadout_endtime)
         self.form_layout.addRow(self.line)
-
+        # TODO: add rest of entry boxes to layout
 
         # Return groupbox to grid layout
         self.EOM_groupbox.setLayout(self.form_layout)
@@ -160,6 +169,7 @@ class EOM_input_widget(QWidget):
         # Put data from form into Pandas DataFrame
         EOM_data = {"eom_day":self.EOM_date.text(),
                     "eom_time":self.EOM_endtime.text(),
+                    "eom_mission":self.EOM_mission_type.currentText(),
                     "eom_accuracy":self.EOM_accuracy.text(),
                     "eom_shots_fired":self.EOM_shots_fired.text(),
                     "eom_shots_hit":self.EOM_shots_hit.text(),
@@ -200,6 +210,7 @@ class EOM_input_widget(QWidget):
         # Put data from form into Pandas DataFrame
         loadout_data = {"loadout_day":self.loadout_date.text(),
                     "loadout_time":self.loadout_endtime.text()
+                    # TODO: add rest of entry box values here
                     }
         loadout_df = pd.DataFrame(data=loadout_data, index=[0])
 
