@@ -94,6 +94,8 @@ class EOM_input_widget(QWidget):
         self.EOM_endtime = QTimeEdit()
         self.EOM_mission_type = QComboBox()
         self.EOM_mission_type.addItems(metadata.list_of_missions)
+        self.EOM_faction_fought = QComboBox()
+        self.EOM_faction_fought.addItems(["Automatons", "Terminids"])
         # line goes here in layout
         self.EOM_accuracy = QSpinBox(minimum=0, maximum=1000000000)
         self.EOM_shots_fired = QSpinBox(minimum=0, maximum=1000000000)
@@ -111,7 +113,8 @@ class EOM_input_widget(QWidget):
         # Add Entry Boxes to layout
         self.form_layout.addRow(("Date: "), self.EOM_date)
         self.form_layout.addRow(("End Time: "), self.EOM_endtime)
-        self.form_layout.addRow(("Mission Type: "), self.EOM_mission_type),
+        self.form_layout.addRow(("Mission Type: "), self.EOM_mission_type)
+        self.form_layout.addRow(("Faction fought:"), self.EOM_faction_fought)
         self.form_layout.addRow(self.line)
         self.form_layout.addRow(("Accuracy: "), self.EOM_accuracy)
         self.form_layout.addRow(("Shots Fired: "), self.EOM_shots_fired)
@@ -170,6 +173,7 @@ class EOM_input_widget(QWidget):
         EOM_data = {"eom_day":self.EOM_date.text(),
                     "eom_time":self.EOM_endtime.text(),
                     "eom_mission":self.EOM_mission_type.currentText(),
+                    "eom_faction":self.EOM_faction_fought.currentText(),
                     "eom_accuracy":self.EOM_accuracy.text(),
                     "eom_shots_fired":self.EOM_shots_fired.text(),
                     "eom_shots_hit":self.EOM_shots_hit.text(),
