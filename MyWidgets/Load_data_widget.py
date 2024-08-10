@@ -251,7 +251,8 @@ class Load_data_widget(QWidget):
 
         # handle "View Dashboard" button
         self.View_Data_mw.Mission_Tab.view_dashboard_button.clicked.connect(self.view_EOM_dashboard)
-    
+        self.View_Data_mw.Career_Tab.view_dashboard_button.clicked.connect(self.view_CAR_dashboard)
+
     ################################################################
     # Load_data_widget member function: view_EOM_dashboard
     ################################################################
@@ -286,7 +287,7 @@ class Load_data_widget(QWidget):
 
         # open new browser window (for Dash)
         # argv1 = EOM/CAR/BOTH, argv2 = datafile
-        subprocess.Popen("python browser_mw.py EOM " + str(CAR_datafile))
+        subprocess.Popen("python browser_mw.py CAR " + str(CAR_datafile))
 
     ################################################################
     # Load_data_widget member function: view_dashboard
