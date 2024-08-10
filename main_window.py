@@ -1,4 +1,4 @@
-from PySide6.QtGui import QAction, QIcon
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QMainWindow, QStackedWidget)
 from MyWidgets import (Welcome_widget, Log_data_widget, EOM_input_widget,
                        CAR_input_widget, Load_data_widget)
