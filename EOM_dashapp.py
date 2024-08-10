@@ -2,20 +2,20 @@ import sys
 from flask import request
 import pandas as pd
 from dash import *
-import graphing.accuracy as accuracy
-import graphing.survivor as survivor
-import graphing.kill as kill
-import graphing.stratagems as stratagems
-import graphing.metadata as metadata
+from graphing import (accuracy, survivor, kill, stratagems, metadata, stat_scraper)
 import graphing.big_graph as big__graph
+
 # Create Dash app
 EOM_dashapp = Dash()
 
-# TODO: handle either file == "ERROR"
-EOM_datafile = sys.argv[1]
+# Create Stat_Scraper
+scraper = stat_scraper.Stat_Scraper()
 
-# Get data from sys.argv[1] and sys.arvg[2]
-EOM_df = pd.read_csv("./save_files/"+EOM_datafile)
+EOM_df = scraper.load_file(sys.argv[1])
+
+# If _df is empty, don't run Dash
+if (EOM_df.empty):
+    sys.exit("Empty dataframe at Dash initialization")
 
 # Create figures
 accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)

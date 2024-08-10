@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (QVBoxLayout, QHBoxLayout, QPushButton, QWidget,
                                 QGroupBox, QLabel, QLineEdit, QFileDialog)
 from MyWidgets import Data_mw
 from assets import stylesheets
+from graphing import stat_scraper
 ################################################################
 # 
 # Load_data_widget class
@@ -126,19 +127,12 @@ class Load_data_widget(QWidget):
     # Load_data_widget member function: load_MR_EOM_data
     ################################################################
     def load_MR_EOM_datafile(self):
-        # variable to hold the filepath of the EOM data file
-        datafile = ""
+        # use Stat_Scraper to get most recent filename
+        scraper = stat_scraper.Stat_Scraper()
+        datafile = scraper.get_MR_filename("career")
 
-        # sort data_class files in directory by modified time
-        filepaths = sorted(Path("./save_files/").iterdir(), key=os.path.getmtime, reverse=True)
-
-        # find most recent EOM file (closest to index 0)
-        for filepath in filepaths:
-                if filepath.name.startswith("EOM"):
-                    datafile = filepath
-                    break
-        # if datafile is empty, no save EOM file exists
-        if datafile == "":
+        # check if an appropriate save file is returned
+        if datafile == "Error: No File Loaded":
             self.EOM_filename_box.setText("Error: No File Loaded")
         else:
             filename = os.path.basename(datafile)
@@ -148,40 +142,21 @@ class Load_data_widget(QWidget):
     # Load_data_widget member function: load_OLD_EOM_data
     ################################################################
     def load_OLD_EOM_datafile(self):
-        # open a file explorer window
-        file_explorer = QFileDialog(self, "Choose a Mission Data File", "./save_files/")
-        file_explorer.setFileMode(QFileDialog.ExistingFile)
-        # show only EOM files
-        file_explorer.setNameFilter("EOM_savefile_*.csv")
-        filenames = []
-        if file_explorer.exec_():
-            # get selected filename(s)
-            filenames = file_explorer.selectedFiles()
-        # check if filenames is empty
-        if filenames:
-            #load the first filename only
-            filename = os.path.basename(filenames[0])
-            self.EOM_filename_box.setText(str(filename))
-        else:
-            self.EOM_filename_box.setText("Error: No File Loaded")
+        # use Stat_Scraper to get old filename
+        scraper = stat_scraper.Stat_Scraper()
+        datafile = scraper.get_OLD_filename("EOM")
+        self.EOM_filename_box.setText(datafile)
     
     ################################################################
     # Load_data_widget member function: load_MR_CAR_data
     ################################################################
     def load_MR_CAR_datafile(self):
-        # variable to hold the filepath of the EOM data file
-        datafile = ""
+        # use Stat_Scraper to get most recent filename
+        scraper = stat_scraper.Stat_Scraper()
+        datafile = scraper.get_MR_filename("career")
 
-        # sort data_class files in directory by modified time
-        filepaths = sorted(Path("./save_files/").iterdir(), key=os.path.getmtime, reverse=True)
-
-        # find most recent EOM file (closest to index 0)
-        for filepath in filepaths:
-                if filepath.name.startswith("career"):
-                    datafile = filepath
-                    break
-        # if datafile is empty, no save EOM file exists
-        if datafile == "":
+        # check if an appropriate save file is returned
+        if datafile == "Error: No File Loaded":
             self.CAR_filename_box.setText("Error: No File Loaded")
         else:
             filename = os.path.basename(datafile)
@@ -191,22 +166,10 @@ class Load_data_widget(QWidget):
     # Load_data_widget member function: load_OLD_CAR_data
     ################################################################
     def load_OLD_CAR_datafile(self):
-        # open a file explorer window
-        file_explorer = QFileDialog(self, "Choose a Career Data File", "./save_files/")
-        file_explorer.setFileMode(QFileDialog.ExistingFile)
-        # show only EOM files
-        file_explorer.setNameFilter("Career_savefile_*.csv")
-        filenames = []
-        if file_explorer.exec_():
-            # get selected filename(s)
-            filenames = file_explorer.selectedFiles()
-        # check if filenames is empty
-        if filenames:
-            #load the first filename only
-            filename = os.path.basename(filenames[0])
-            self.CAR_filename_box.setText(str(filename))
-        else:
-            self.CAR_filename_box.setText("Error: No File Loaded")
+        # use Stat_Scraper to get old filename
+        scraper = stat_scraper.Stat_Scraper()
+        datafile = scraper.get_OLD_filename("CAR")
+        self.CAR_filename_box.setText(datafile)
 
     ################################################################
     # Load_data_widget member function: restrict_buttons
