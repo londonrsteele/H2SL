@@ -18,6 +18,8 @@ An app created by LostGamma13
 - `dashboard_widget.py`: Qt widget for loading data
 
 
+## Icons
+<a href="https://www.flaticon.com/free-icons/ui" title="ui icons">Ui icons created by Freepik - Flaticon</a>
 
 
 ## Versions
