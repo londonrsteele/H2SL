@@ -1,3 +1,6 @@
+Text = """
+font-size: 12pt;
+"""
 
 Big_Buttons = """
 QPushButton {

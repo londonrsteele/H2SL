@@ -245,6 +245,7 @@ class Load_data_widget(QWidget):
 
         # open new data view window
         self.View_Data_mw = Data_mw.Data_mw(EOM_datafile, CAR_datafile)
+        self.View_Data_mw.setStyleSheet(stylesheets.Text)
         self.View_Data_mw.resize(800, 600)
         self.View_Data_mw.show()
 
