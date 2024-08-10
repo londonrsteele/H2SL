@@ -3,15 +3,10 @@ from pathlib import Path
 import pandas as pd
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPainter
-from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView,
-                               QHBoxLayout, QLineEdit, QMainWindow,
-                               QPushButton, QTableWidget, QTableWidgetItem,
+from PySide6.QtWidgets import (QHBoxLayout, QPushButton,
                                QVBoxLayout, QDialog, QWidget, QTabWidget,
                                QLabel, QMessageBox, QFileDialog)
-from PySide6.QtCharts import QChartView, QPieSeries, QChart
-import webbrowser
 import subprocess
-import stylesheets
 
 ################################################################
 # 
