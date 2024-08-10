@@ -1,8 +1,10 @@
 import os
 from pathlib import Path
+import subprocess
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QVBoxLayout, QHBoxLayout, QPushButton, QWidget,
                                 QGroupBox, QLabel, QLineEdit, QFileDialog)
+from MyWidgets import Data_mw
 from assets import stylesheets
 ################################################################
 # 
@@ -108,6 +110,11 @@ class Load_data_widget(QWidget):
         self.EOM_filename_box.textChanged.connect(self.restrict_buttons)
         self.CAR_filename_box.textChanged.connect(self.restrict_buttons)
 
+        # If buttons available, connect them!
+        self.view_EOM_button.clicked.connect(self.view_data)
+        self.view_CAR_button.clicked.connect(self.view_data)
+        self.view_BOTH_button.clicked.connect(self.view_dashboard)
+
         # Set up outer layout
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.Title)
@@ -201,6 +208,9 @@ class Load_data_widget(QWidget):
         else:
             self.CAR_filename_box.setText("Error: No File Loaded")
 
+    ################################################################
+    # Load_data_widget member function: restrict_buttons
+    ################################################################
     def restrict_buttons(self):
         # restrict View EOM Button pressing
         if (self.EOM_filename_box.text() == "") | (self.EOM_filename_box.text() == "Error: No File Loaded"):
@@ -221,3 +231,27 @@ class Load_data_widget(QWidget):
             self.view_BOTH_button.setDisabled(True)
         else:
             self.view_BOTH_button.setEnabled(True)
+
+    ################################################################
+    # Load_data_widget member function: view_data
+    ################################################################
+    def view_data(self):
+        # get paths for appropriate save files
+        EOM_datafile = self.EOM_filename_box.text()
+        CAR_datafile = self.CAR_filename_box.text()
+        # open new data view window
+        self.View_Data_mw = Data_mw.Data_mw(EOM_datafile, CAR_datafile)
+        self.View_Data_mw.resize(800, 600)
+        self.View_Data_mw.show()
+
+    ################################################################
+    # Load_data_widget member function: view_dashboard
+    ################################################################
+    def view_dashboard(self):
+        # get paths for appropriate save files
+        EOM_datafile = self.EOM_filename_box.text()
+        CAR_datafile = self.CAR_filename_box.text()
+        # open new browser window (for Dash)
+        # argv1 = EOM_datafile, argv2 = CAR_datafile
+        subprocess.Popen("python browser_mw.py " + str(EOM_datafile) + " " + str(CAR_datafile))
+
