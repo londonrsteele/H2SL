@@ -24,13 +24,23 @@ class Mission_Tab(QWidget):
         self.layout = QGridLayout()
         self.setLayout(self.layout)
 
+        # Add View Dashboard Button
+        self.view_dashboard_button = QPushButton("View Mission Dashboard")
+
         # validate datafile
         if (datafile == "") | (datafile == "Error: No File Loaded"):
             # Create warning label
             Warning_Label = QLabel("Warning: No Misison file loaded")
             self.layout.addWidget(Warning_Label)
             print("Warning: No Mission file loaded")
+            
+            # If no datafile loaded, make "View Dashboard" button disabled
+            self.view_dashboard_button.setDisabled(True)
+
         else:
+            # If datafile loaded, make "View Dashboard" button disabled
+            self.view_dashboard_button.setEnabled(True)
+            
             # load data
             self.data = pd.read_csv("./save_files/"+datafile)
 
@@ -62,9 +72,10 @@ class Mission_Tab(QWidget):
             self.layout.addWidget(Friendly_Fire_Dmg, 4, 1, 1, 1)
             self.layout.addWidget(Distance_Traveled, 5, 1, 1, 1)
 
-            # Add View Dashboard Button
-            self.view_dashboard_button = QPushButton("View Mission Dashboard")
-            self.layout.addWidget(self.view_dashboard_button, 6, 0, 1, 2)
+        # Add view dashboard button to layout last
+        self.layout.addWidget(self.view_dashboard_button, 6, 0, 1, 2)
+
+
 
 ################################################################
 # 
@@ -81,13 +92,23 @@ class Career_Tab(QWidget):
         self.layout = QGridLayout()
         self.setLayout(self.layout)
 
+        # Add View Dashboard Button
+        self.view_dashboard_button = QPushButton("View Career Dashboard")
+        
         # validate datafile
         if (datafile == "") | (datafile == "Error: No File Loaded"):
             # Create warning label
             Warning_Label = QLabel("Warning: No Career file loaded")
             self.layout.addWidget(Warning_Label)
             print("Warning: No Career file loaded")
+
+            # If no datafile loaded, make "View Dashboard" button disabled
+            self.view_dashboard_button.setDisabled(True)
+
         else:
+            # If datafile loaded, make "View Dashboard" button disabled
+            self.view_dashboard_button.setEnabled(True)
+            
             # load data
             self.data = pd.read_csv("./save_files/"+datafile)
             print(self.data)
@@ -97,3 +118,8 @@ class Career_Tab(QWidget):
 
             # Add data labels
             self.layout.addWidget(Accuracy)
+        
+        # Add view dashboard button to layout last
+        self.layout.addWidget(self.view_dashboard_button, 6, 0, 1, 2)
+
+        
