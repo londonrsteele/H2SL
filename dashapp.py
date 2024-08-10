@@ -93,8 +93,9 @@ def shutdown():
     func()
 
 # this callback handles Flask redirecting to the /kill url
-@dashapp.callback([Input("url", "pathname")])
+@dashapp.server.route("/kill", methods=["POST"])
 def display_page(pathname):
+    print("Killing Dash...")
     if pathname == "/kill":
         shutdown()
 

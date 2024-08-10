@@ -33,7 +33,7 @@ if __name__ == "__main__":
         elif sys.argv[1] == "CAR":
             subprocess.Popen("python CAR_dashapp.py " + str(sys.argv[2]))
     elif len(sys.argv) == 4:
-        # sys.argv argv1 is EOM/CAR/BOTH, argv2 is datafile, argv3 is datafile
+        # sys.argv argv1 is BOTH, argv2 is datafile, argv3 is datafile
         subprocess.Popen("python dashapp.py " + str(sys.argv[2]) + " " + str(sys.argv[3]))
 
     # Execute Qt application

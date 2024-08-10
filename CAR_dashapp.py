@@ -9,7 +9,7 @@ import graphing.stratagems as stratagems
 import graphing.metadata as metadata
 import graphing.big_graph as big__graph
 # Create Dash app
-dashapp = Dash(suppress_callback_exceptions=True)
+CAR_dashapp = Dash(suppress_callback_exceptions=True)
 
 # TODO: handle either file == "ERROR"
 CAR_datafile = sys.argv[2]
@@ -23,7 +23,7 @@ stratagems_fig = stratagems.Create_Stratagem_Graph(CAR_df)
 # TODO: RC-TR-RC (top right square)
 
 # Create dashboard layout 
-dashapp.layout = html.Div([
+CAR_dashapp.layout = html.Div([
 
     # Div Level 1 - Title
     html.Div( children = "Most Recent Mission Stats", className="app-Div--title" ),
@@ -71,11 +71,12 @@ def shutdown():
     func()
 
 # this callback handles Flask redirecting to the /kill url
-@dashapp.callback([Input("url", "pathname")])
+@CAR_dashapp.server.route("/kill", methods=["POST"])
 def display_page(pathname):
+    print("Killing Dash...")
     if pathname == "/kill":
         shutdown()
 
 # Run Dash app
 if __name__ == "__main__":
-    dashapp.run(debug=True,port=8050)
+    CAR_dashapp.run(debug=True,port=8050)

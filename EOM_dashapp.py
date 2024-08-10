@@ -9,7 +9,7 @@ import graphing.stratagems as stratagems
 import graphing.metadata as metadata
 import graphing.big_graph as big__graph
 # Create Dash app
-dashapp = Dash(suppress_callback_exceptions=True)
+EOM_dashapp = Dash()
 
 # TODO: handle either file == "ERROR"
 EOM_datafile = sys.argv[1]
@@ -22,7 +22,7 @@ accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)
 survivor_fig = survivor.Create_Survivor_Graph(EOM_df)
 
 # Create dashboard layout 
-dashapp.layout = html.Div([
+EOM_dashapp.layout = html.Div([
 
     # Div Level 1 - Title
     html.Div( children = "Most Recent Mission Stats", className="app-Div--title" ),
@@ -71,11 +71,13 @@ def shutdown():
     func()
 
 # this callback handles Flask redirecting to the /kill url
-@dashapp.callback([Input("url", "pathname")])
+# @EOM_dashapp.callback([Input("url", "pathname")]) <- this didn't work
+@EOM_dashapp.server.route("/kill", methods=["POST"])
 def display_page(pathname):
+    print("Killing Dash...")
     if pathname == "/kill":
         shutdown()
 
 # Run Dash app
 if __name__ == "__main__":
-    dashapp.run(debug=True,port=8050)
+    EOM_dashapp.run(debug=True,port=8050)
