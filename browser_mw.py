@@ -25,8 +25,16 @@ if __name__ == "__main__":
     window.setWindowTitle("Helldivers 2 Stats Logger Dashboard")
     window.show()
 
-    # sys.argv argv1 is filepath for graphing df
-    subprocess.Popen("python dashapp.py " + str(sys.argv[1]) + " " + str(sys.argv[2]))
+    # how many args are passed?
+    if len(sys.argv) == 3:
+        # sys.argv argv1 is EOM/CAR/BOTH, argv2 is datafile
+        if sys.argv[1] == "EOM":
+            subprocess.Popen("python EOM_dashapp.py " + str(sys.argv[2]))
+        elif sys.argv[1] == "CAR":
+            subprocess.Popen("python CAR_dashapp.py " + str(sys.argv[2]))
+    elif len(sys.argv) == 4:
+        # sys.argv argv1 is EOM/CAR/BOTH, argv2 is datafile, argv3 is datafile
+        subprocess.Popen("python dashapp.py " + str(sys.argv[2]) + " " + str(sys.argv[3]))
 
     # Execute Qt application
     sys.exit(app.exec())
