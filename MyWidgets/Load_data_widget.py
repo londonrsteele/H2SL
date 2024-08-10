@@ -74,10 +74,10 @@ class Load_data_widget(QWidget):
         self.CAR_box.setLayout(self.CAR_box_layout)
 
         # Connect internal buttons
-        self.EOM_MR_button.clicked.connect(self.load_MR_EOM_data)
-        self.EOM_OLD_button.clicked.connect(self.load_OLD_EOM_data)
-        self.CAR_MR_button.clicked.connect(self.load_MR_CAR_data)
-        self.CAR_OLD_button.clicked.connect(self.load_OLD_CAR_data)
+        self.EOM_MR_button.clicked.connect(self.load_MR_EOM_datafile)
+        self.EOM_OLD_button.clicked.connect(self.load_OLD_EOM_datafile)
+        self.CAR_MR_button.clicked.connect(self.load_MR_CAR_datafile)
+        self.CAR_OLD_button.clicked.connect(self.load_OLD_CAR_datafile)
 
         # Set up inner layout
         self.Qboxes_box = QGroupBox()
@@ -125,7 +125,7 @@ class Load_data_widget(QWidget):
     ################################################################
     # Load_data_widget member function: load_MR_EOM_data
     ################################################################
-    def load_MR_EOM_data(self):
+    def load_MR_EOM_datafile(self):
         # variable to hold the filepath of the EOM data file
         datafile = ""
 
@@ -147,7 +147,7 @@ class Load_data_widget(QWidget):
     ################################################################
     # Load_data_widget member function: load_OLD_EOM_data
     ################################################################
-    def load_OLD_EOM_data(self):
+    def load_OLD_EOM_datafile(self):
         # open a file explorer window
         file_explorer = QFileDialog(self, "Choose a Mission Data File", "./save_files/")
         file_explorer.setFileMode(QFileDialog.ExistingFile)
@@ -168,7 +168,7 @@ class Load_data_widget(QWidget):
     ################################################################
     # Load_data_widget member function: load_MR_CAR_data
     ################################################################
-    def load_MR_CAR_data(self):
+    def load_MR_CAR_datafile(self):
         # variable to hold the filepath of the EOM data file
         datafile = ""
 
@@ -190,7 +190,7 @@ class Load_data_widget(QWidget):
     ################################################################
     # Load_data_widget member function: load_OLD_CAR_data
     ################################################################
-    def load_OLD_CAR_data(self):
+    def load_OLD_CAR_datafile(self):
         # open a file explorer window
         file_explorer = QFileDialog(self, "Choose a Career Data File", "./save_files/")
         file_explorer.setFileMode(QFileDialog.ExistingFile)
@@ -239,6 +239,10 @@ class Load_data_widget(QWidget):
         # get paths for appropriate save files
         EOM_datafile = self.EOM_filename_box.text()
         CAR_datafile = self.CAR_filename_box.text()
+        print("EOM datafile: " + EOM_datafile)
+        print("CAR datafile: " + CAR_datafile)
+        print("Opening Data Viewer...")
+
         # open new data view window
         self.View_Data_mw = Data_mw.Data_mw(EOM_datafile, CAR_datafile)
         self.View_Data_mw.resize(800, 600)
@@ -251,6 +255,10 @@ class Load_data_widget(QWidget):
         # get paths for appropriate save files
         EOM_datafile = self.EOM_filename_box.text()
         CAR_datafile = self.CAR_filename_box.text()
+        print("EOM datafile: " + EOM_datafile)
+        print("CAR datafile: " + CAR_datafile)
+        print("Opening Dashboard...")
+
         # open new browser window (for Dash)
         # argv1 = EOM_datafile, argv2 = CAR_datafile
         subprocess.Popen("python browser_mw.py " + str(EOM_datafile) + " " + str(CAR_datafile))
