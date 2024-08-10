@@ -1,3 +1,4 @@
+from PySide6.QtGui import QAction, QIcon
 from PySide6.QtWidgets import (QMainWindow, QStackedWidget)
 from MyWidgets import (Welcome_widget, Log_data_widget, EOM_input_widget,
                        CAR_input_widget, Load_data_widget)
@@ -25,6 +26,11 @@ class MainWindow(QMainWindow):
         # File > Exit QAction
         exit_action = self.file_menu.addAction("Exit", self.close)
         exit_action.setShortcut("Ctrl+Q")
+
+        # Back button
+        back_action = self.menu.addAction("Back", self.go_back_action)
+        back_icon = QIcon("./assets/left.png")
+        back_action.setIcon(back_icon)
 
         # Create widgets
         Welcome = Welcome_widget.Welcome_widget()
@@ -99,3 +105,7 @@ class MainWindow(QMainWindow):
     def view_View_data(self):
         self.setWindowTitle("Helldivers 2 Stats Logger: View Data")
         self.stackedWidget.setCurrentIndex(4)
+
+    def go_back_action(self):
+        if self.stackedWidget.currentIndex() != 0:
+            self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex()-1)
