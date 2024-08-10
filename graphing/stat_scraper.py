@@ -8,6 +8,8 @@ class Stat_Scraper():
        self.filenames = sorted(Path("./save_files/").iterdir(), key=os.path.getmtime, reverse=True)
 
     def get_MR_filename(self, type):
+        if type == "CAR":
+            type = "career"
         for filename in self.filenames:
             if filename.name.startswith(type):
                 datafile = filename
