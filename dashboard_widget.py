@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (QHBoxLayout, QPushButton,
                                QVBoxLayout, QDialog, QWidget, QTabWidget,
                                QLabel, QMessageBox, QFileDialog)
 import subprocess
+from assets import stylesheets
 
 ################################################################
 # 
