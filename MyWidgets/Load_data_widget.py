@@ -129,7 +129,7 @@ class Load_data_widget(QWidget):
     def load_MR_EOM_datafile(self):
         # use Stat_Scraper to get most recent filename
         scraper = stat_scraper.Stat_Scraper()
-        datafile = scraper.get_MR_filename("career")
+        datafile = scraper.get_MR_filename("EOM")
 
         # check if an appropriate save file is returned
         if datafile == "Error: No File Loaded":
@@ -153,7 +153,7 @@ class Load_data_widget(QWidget):
     def load_MR_CAR_datafile(self):
         # use Stat_Scraper to get most recent filename
         scraper = stat_scraper.Stat_Scraper()
-        datafile = scraper.get_MR_filename("career")
+        datafile = scraper.get_MR_filename("CAR")
 
         # check if an appropriate save file is returned
         if datafile == "Error: No File Loaded":
