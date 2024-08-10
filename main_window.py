@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import (QMainWindow, QStackedWidget)
 from MyWidgets import (Welcome_widget, Log_data_widget, EOM_input_widget,
-                       CAR_input_widget, Load_data_widget, View_data_widget)
+                       CAR_input_widget, Load_data_widget)
 
 ################################################################
 # 
@@ -32,7 +32,6 @@ class MainWindow(QMainWindow):
         EOM_input = EOM_input_widget.EOM_input_widget()
         CAR_input = CAR_input_widget.CAR_input_widget()
         Load_data = Load_data_widget.Load_data_widget()
-        View_data = View_data_widget.View_data_widget()
 
         # Central Widget
         self.stackedWidget = QStackedWidget()
@@ -41,7 +40,6 @@ class MainWindow(QMainWindow):
         self.stackedWidget.addWidget(EOM_input) # index 2
         self.stackedWidget.addWidget(CAR_input) # index 3
         self.stackedWidget.addWidget(Load_data) # index 4
-        self.stackedWidget.addWidget(View_data) # index 5
         
         # opening "screen"/widget is Welcome 
         self.stackedWidget.setCurrentWidget(Welcome)        
@@ -59,11 +57,6 @@ class MainWindow(QMainWindow):
         # CAR_input buttons
         CAR_input.view_button.clicked.connect(self.view_Load_data)
         # Load_data buttons
-        Load_data.view_EOM_button.clicked.connect(self.view_View_data)
-        Load_data.view_CAR_button.clicked.connect(self.view_View_data)
-        Load_data.view_BOTH_button.clicked.connect(self.view_View_data)
-        # View_data buttons
-
 
     ################################################################
     # MainWindow member function: view_Welcome
@@ -105,4 +98,4 @@ class MainWindow(QMainWindow):
     ################################################################    
     def view_View_data(self):
         self.setWindowTitle("Helldivers 2 Stats Logger: View Data")
-        self.stackedWidget.setCurrentIndex(5)
+        self.stackedWidget.setCurrentIndex(4)
