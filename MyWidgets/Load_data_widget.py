@@ -249,6 +249,45 @@ class Load_data_widget(QWidget):
         self.View_Data_mw.resize(800, 600)
         self.View_Data_mw.show()
 
+        # handle "View Dashboard" button
+        self.View_Data_mw.Mission_Tab.view_dashboard_button.clicked.connect(self.view_EOM_dashboard)
+    
+    ################################################################
+    # Load_data_widget member function: view_EOM_dashboard
+    ################################################################
+    def view_EOM_dashboard(self):
+        # get paths for appropriate save files
+        EOM_datafile = self.EOM_filename_box.text()
+        
+        # If empty strings, add "ERROR" to string so still pass a second argv argument
+        if EOM_datafile == "":
+            EOM_datafile = "ERROR"
+        
+        print("EOM datafile: " + EOM_datafile)
+        print("Opening EOM Dashboard...")
+
+        # open new browser window (for Dash)
+        # argv1 = EOM/CAR/BOTH, argv2 = datafile
+        subprocess.Popen("python browser_mw.py EOM " + str(EOM_datafile))
+
+    ################################################################
+    # Load_data_widget member function: view_CAR_dashboard
+    ################################################################
+    def view_CAR_dashboard(self):
+        # get paths for appropriate save files
+        CAR_datafile = self.CAR_filename_box.text()
+        
+        # If empty strings, add "ERROR" to string so still pass a second argv argument
+        if CAR_datafile == "":
+            CAR_datafile = "ERROR"
+        
+        print("CAR datafile: " + CAR_datafile)
+        print("Opening CAR Dashboard...")
+
+        # open new browser window (for Dash)
+        # argv1 = EOM/CAR/BOTH, argv2 = datafile
+        subprocess.Popen("python browser_mw.py EOM " + str(CAR_datafile))
+
     ################################################################
     # Load_data_widget member function: view_dashboard
     ################################################################
@@ -256,11 +295,18 @@ class Load_data_widget(QWidget):
         # get paths for appropriate save files
         EOM_datafile = self.EOM_filename_box.text()
         CAR_datafile = self.CAR_filename_box.text()
+        
+        # If empty strings, add "ERROR" to string so still pass a second argv argument
+        if EOM_datafile == "":
+            EOM_datafile = "ERROR"
+        if CAR_datafile == "":
+            CAR_datafile = "ERROR"
+        
         print("EOM datafile: " + EOM_datafile)
         print("CAR datafile: " + CAR_datafile)
         print("Opening Dashboard...")
 
         # open new browser window (for Dash)
-        # argv1 = EOM_datafile, argv2 = CAR_datafile
-        subprocess.Popen("python browser_mw.py " + str(EOM_datafile) + " " + str(CAR_datafile))
+        #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
+        subprocess.Popen("python browser_mw.py BOTH " + str(EOM_datafile) + " " + str(CAR_datafile))
 
