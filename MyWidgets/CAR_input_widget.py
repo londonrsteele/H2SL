@@ -4,7 +4,7 @@ from PySide6.QtWidgets import (QFormLayout, QPushButton, QWidget,
                                 QGroupBox, QDateEdit, QTimeEdit,
                                 QGridLayout, QSpinBox, QMessageBox,
                                 QFrame)
-
+from assets import stylesheets
 ################################################################
 # 
 # CAR_input_widget class
@@ -20,8 +20,11 @@ class CAR_input_widget(QWidget):
         
         # Make Buttons
         self.curr_time_button = QPushButton("Log Date and Time", self)
+        self.curr_time_button.setStyleSheet(stylesheets.Log_Time_Buttons)
         self.CAR_button = QPushButton("Save Career Data", self)
+        self.CAR_button.setStyleSheet(stylesheets.Big_Buttons)
         self.view_button = QPushButton("View Data Dashboard", self)
+        self.view_button.setStyleSheet(stylesheets.Big_Buttons)
         
         # Set up grid
         self.grid_layout = QGridLayout()
