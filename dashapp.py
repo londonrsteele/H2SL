@@ -11,9 +11,16 @@ import graphing.big_graph as big__graph
 # Create Dash app
 dashapp = Dash(suppress_callback_exceptions=True)
 
+# TODO: handle either file == "ERROR"
+EOM_datafile = sys.argv[1]
+CAR_datafile = sys.argv[2]
+
 # Get data from sys.argv[1] and sys.arvg[2]
-EOM_df = pd.read_csv(sys.argv[1])
-CAR_df = pd.read_csv(sys.argv[2])
+EOM_df = pd.read_csv("./save_files/"+EOM_datafile)
+CAR_df = pd.read_csv("./save_files/"+CAR_datafile)
+
+print("EOM_df = " + EOM_datafile)
+print("CAR_df = " + CAR_datafile)
 
 # Create figures
 accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)
