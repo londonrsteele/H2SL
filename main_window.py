@@ -106,6 +106,9 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Helldivers 2 Stats Logger: View Data")
         self.stackedWidget.setCurrentIndex(4)
 
+    ################################################################
+    # MainWindow member function: go_back_action
+    ################################################################
     def go_back_action(self):
         if self.stackedWidget.currentIndex() != 0:
             self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex()-1)
