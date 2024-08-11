@@ -1,22 +1,21 @@
 import sys
-from flask import request
-import pandas as pd
 from dash import *
 from graphing import (accuracy, survivor, kill, stratagems, metadata, stat_scraper)
 import graphing.big_graph as big__graph
 
 # Create Dash app
-dashapp = Dash(suppress_callback_exceptions=True)
+dashapp = Dash()
 
 # Create Stat_Scraper
 scraper = stat_scraper.Stat_Scraper()
 
+# Use Stat_Scraper to load desired focus EOM_df and CAR_df
 EOM_df = scraper.load_file(sys.argv[1])
 CAR_df = scraper.load_file(sys.argv[2])
 
-# If either _df is empty, don't run Dash
+# If _df is empty, don't run Dash
 if (EOM_df.empty) | (CAR_df.empty):
-    sys.exit("Empty dataframe at Dash initialization")
+    raise RuntimeError("Empty dataframe(s) at Dash initialization")
 
 # Create figures
 accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)
@@ -81,20 +80,10 @@ def update_big_graph(stat):
     fig = big__graph.Create_big_graph(stat)
     return fig
 
-# Set up functions to close Dash app on "X" click
-def shutdown():
-    func = request.environ.get("wekzeug.server.shutdown")
-    if func is None:
-        raise RuntimeError("Not running with the Wekzeug Server")
-    func()
-
-# this callback handles Flask redirecting to the /kill url
-@dashapp.server.route("/kill", methods=["POST"])
-def display_page(pathname):
-    print("Killing Dash...")
-    if pathname == "/kill":
-        shutdown()
-
-# Run Dash app
+################################################################
+################################################################
+# Execution: dashapp.py __main__
+################################################################
+################################################################
 if __name__ == "__main__":
     dashapp.run(debug=True,port=8050)
