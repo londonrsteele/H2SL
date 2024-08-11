@@ -9,7 +9,7 @@ class Data_mw(QMainWindow):
     ################################################################
     # Data_mw initialization
     ################################################################
-    def __init__(self, EOM_datafile, CAR_datafile):
+    def __init__(self, EOM_datafile, CAR_datafile, open_on_view):
         super().__init__()
         self.setWindowTitle("Helldivers II Stats Logger: Data Viewer")
         
@@ -32,4 +32,12 @@ class Data_mw(QMainWindow):
         # Set Tab Widget as Central Widget 
         self.setCentralWidget(self.Tab_Widget)
 
+        # Open on the tab specified (open_on_view)
+        if open_on_view == "EOM":
+            self.Tab_Widget.setCurrentIndex(0)
+        elif open_on_view == "CAR":
+            self.Tab_Widget.setCurrentIndex(1)
+        else:
+            raise RuntimeError("Data_mw: Invalid Tab Index")
+        
         # TODO: view dashboard

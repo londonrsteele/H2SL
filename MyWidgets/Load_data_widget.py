@@ -112,8 +112,8 @@ class Load_data_widget(QWidget):
         self.CAR_filename_box.textChanged.connect(self.restrict_buttons)
 
         # If buttons available, connect them!
-        self.view_EOM_button.clicked.connect(self.view_data)
-        self.view_CAR_button.clicked.connect(self.view_data)
+        self.view_EOM_button.clicked.connect(self.view_EOM_data)
+        self.view_CAR_button.clicked.connect(self.view_CAR_data)
         self.view_BOTH_button.clicked.connect(self.view_dashboard)
 
         # Set up outer layout
@@ -153,7 +153,7 @@ class Load_data_widget(QWidget):
     def load_MR_CAR_datafile(self):
         # use Stat_Scraper to get most recent filename
         scraper = stat_scraper.Stat_Scraper()
-        datafile = scraper.get_MR_filename("CAR")
+        datafile = scraper.get_MR_filename("career")
 
         # check if an appropriate save file is returned
         if datafile == "Error: No File Loaded":
@@ -188,17 +188,17 @@ class Load_data_widget(QWidget):
             self.view_CAR_button.setEnabled(True)
         
         # restrict View Both Button pressing
-        if (self.EOM_filename_box.text() == "") | (self.CAR_filename_box.text() == ""):
+        if (self.EOM_filename_box.text() == "") | (self.EOM_filename_box.text() == "Error: No File Loaded"):
             self.view_BOTH_button.setDisabled(True)
-        elif (self.EOM_filename_box.text() == "Error: No File Loaded") | (self.CAR_filename_box.text() == "Error: No File Loaded"):
+        elif (self.CAR_filename_box.text() == "") | (self.CAR_filename_box.text() == "Error: No File Loaded"):
             self.view_BOTH_button.setDisabled(True)
         else:
             self.view_BOTH_button.setEnabled(True)
 
     ################################################################
-    # Load_data_widget member function: view_data
+    # Load_data_widget member function: view_EOM_data
     ################################################################
-    def view_data(self):
+    def view_EOM_data(self):
         # get paths for appropriate save files
         EOM_datafile = self.EOM_filename_box.text()
         CAR_datafile = self.CAR_filename_box.text()
@@ -207,7 +207,28 @@ class Load_data_widget(QWidget):
         print("Opening Data Viewer...")
 
         # open new data view window
-        self.View_Data_mw = Data_mw.Data_mw(EOM_datafile, CAR_datafile)
+        self.View_Data_mw = Data_mw.Data_mw(EOM_datafile, CAR_datafile, "EOM")
+        self.View_Data_mw.setStyleSheet(stylesheets.Text)
+        self.View_Data_mw.resize(800, 600)
+        self.View_Data_mw.show()
+
+        # handle "View Dashboard" button
+        self.View_Data_mw.Mission_Tab.view_dashboard_button.clicked.connect(self.view_EOM_dashboard)
+        self.View_Data_mw.Career_Tab.view_dashboard_button.clicked.connect(self.view_CAR_dashboard)
+
+    ################################################################
+    # Load_data_widget member function: view_EOM_data
+    ################################################################
+    def view_CAR_data(self):
+        # get paths for appropriate save files
+        EOM_datafile = self.EOM_filename_box.text()
+        CAR_datafile = self.CAR_filename_box.text()
+        print("EOM datafile: " + EOM_datafile)
+        print("CAR datafile: " + CAR_datafile)
+        print("Opening Data Viewer...")
+
+        # open new data view window
+        self.View_Data_mw = Data_mw.Data_mw(EOM_datafile, CAR_datafile, "CAR")
         self.View_Data_mw.setStyleSheet(stylesheets.Text)
         self.View_Data_mw.resize(800, 600)
         self.View_Data_mw.show()
@@ -222,35 +243,43 @@ class Load_data_widget(QWidget):
     def view_EOM_dashboard(self):
         # get paths for appropriate save files
         EOM_datafile = self.EOM_filename_box.text()
+        CAR_datafile = self.CAR_filename_box.text()
         
         # If empty strings, add "ERROR" to string so still pass a second argv argument
         if EOM_datafile == "":
             EOM_datafile = "ERROR"
+        if CAR_datafile == "":
+            CAR_datafile = "ERROR"
         
         print("EOM datafile: " + EOM_datafile)
-        print("Opening EOM Dashboard...")
+        print("CAR datafile: " + CAR_datafile)
+        print("Opening Dashboard...")
 
         # open new browser window (for Dash)
-        # argv1 = EOM/CAR/BOTH, argv2 = datafile
-        subprocess.Popen("python browser_mw.py EOM " + str(EOM_datafile))
+        #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
+        subprocess.Popen("python browser_mw.py EOM " + str(EOM_datafile) + " " + str(CAR_datafile))
 
     ################################################################
     # Load_data_widget member function: view_CAR_dashboard
     ################################################################
     def view_CAR_dashboard(self):
         # get paths for appropriate save files
+        EOM_datafile = self.EOM_filename_box.text()
         CAR_datafile = self.CAR_filename_box.text()
         
         # If empty strings, add "ERROR" to string so still pass a second argv argument
+        if EOM_datafile == "":
+            EOM_datafile = "ERROR"
         if CAR_datafile == "":
             CAR_datafile = "ERROR"
         
+        print("EOM datafile: " + EOM_datafile)
         print("CAR datafile: " + CAR_datafile)
-        print("Opening CAR Dashboard...")
+        print("Opening Dashboard...")
 
         # open new browser window (for Dash)
-        # argv1 = EOM/CAR/BOTH, argv2 = datafile
-        subprocess.Popen("python browser_mw.py CAR " + str(CAR_datafile))
+        #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
+        subprocess.Popen("python browser_mw.py CAR " + str(EOM_datafile) + " " + str(CAR_datafile))
 
     ################################################################
     # Load_data_widget member function: view_dashboard
