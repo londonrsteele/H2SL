@@ -58,7 +58,7 @@ class Stat_Scraper():
             return str("Error: No File Loaded")
 
     def load_file(self, filename):
-        if filename != "Error: No File Loaded":
+        if (filename != "Error: No File Loaded") & (filename != "ERROR"):
             return pd.read_csv("./save_files/"+filename)
         else:
             return pd.DataFrame()
