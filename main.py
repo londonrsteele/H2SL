@@ -2,7 +2,11 @@ import sys
 from PySide6.QtWidgets import QApplication
 from main_window import MainWindow
 from assets import stylesheets
-
+################################################################
+################################################################
+# Execution: main.py __main__
+################################################################
+################################################################
 if __name__ == "__main__":
     # Qt Application
     app = QApplication(sys.argv)  

@@ -1,14 +1,5 @@
-import os, fnmatch
-from pathlib import Path
 import pandas as pd
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QPainter
-from PySide6.QtWidgets import (QGridLayout, QPushButton,
-                               QVBoxLayout, QDialog, QWidget, QTabWidget,
-                               QLabel, QMessageBox, QFileDialog)
-import subprocess
-from assets import stylesheets
-
+from PySide6.QtWidgets import (QGridLayout, QPushButton, QWidget, QLabel)
 ################################################################
 # 
 # Mission_Tab class
@@ -74,8 +65,6 @@ class Mission_Tab(QWidget):
 
         # Add view dashboard button to layout last
         self.layout.addWidget(self.view_dashboard_button, 6, 0, 1, 2)
-
-
 
 ################################################################
 # 

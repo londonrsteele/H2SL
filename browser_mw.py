@@ -1,12 +1,18 @@
 import sys
-import time
 import os
 import signal
 import subprocess
 from PySide6.QtWidgets import (QApplication, QMainWindow)
 from PySide6.QtWebEngineWidgets import QWebEngineView
-
+################################################################
+# 
+# Browser_mw class
+#
+################################################################
 class BrowserMW(QMainWindow):
+    ################################################################
+    # Browser_mw initialization
+    ################################################################
     def __init__(self):
         super().__init__()
         self.browser = QWebEngineView()
@@ -14,10 +20,16 @@ class BrowserMW(QMainWindow):
         self.setCentralWidget(self.browser)
         self.show()
 
+    ################################################################
+    # Browser_me member function: set_Pid
+    ################################################################
     def set_Pid(self, pid):
         print("Dash running on pid " + str(pid))
         self.pid = pid
 
+    ################################################################
+    # Browser_mw (overloaded) member function: closeEvent 
+    ################################################################
     def closeEvent(self, event):
         print("Killing Dash...")
         try:
@@ -27,6 +39,12 @@ class BrowserMW(QMainWindow):
             print(f"Failed to send SIGTERM signal to process {self.pid}")
         event.accept()
 
+
+################################################################
+################################################################
+# Execution: browser_mw.py __main__
+################################################################
+################################################################
 if __name__ == "__main__":
     # Qt Application
     app = QApplication(sys.argv)

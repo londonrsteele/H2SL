@@ -1,9 +1,8 @@
 import os
-from pathlib import Path
 import subprocess
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QVBoxLayout, QHBoxLayout, QPushButton, QWidget,
-                                QGroupBox, QLabel, QLineEdit, QFileDialog)
+                                QGroupBox, QLabel, QLineEdit)
 from MyWidgets import Data_mw
 from assets import stylesheets
 from graphing import stat_scraper
