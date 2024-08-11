@@ -201,8 +201,7 @@ class Load_data_widget(QWidget):
         # get paths for appropriate save files
         EOM_datafile = self.EOM_filename_box.text()
         CAR_datafile = self.CAR_filename_box.text()
-        print("EOM datafile: " + EOM_datafile)
-        print("CAR datafile: " + CAR_datafile)
+        
         print("Opening Data Viewer...")
 
         # open new data view window
@@ -222,8 +221,7 @@ class Load_data_widget(QWidget):
         # get paths for appropriate save files
         EOM_datafile = self.EOM_filename_box.text()
         CAR_datafile = self.CAR_filename_box.text()
-        print("EOM datafile: " + EOM_datafile)
-        print("CAR datafile: " + CAR_datafile)
+
         print("Opening Data Viewer...")
 
         # open new data view window
@@ -249,14 +247,12 @@ class Load_data_widget(QWidget):
             EOM_datafile = "ERROR"
         if CAR_datafile == "":
             CAR_datafile = "ERROR"
-        
-        print("EOM datafile: " + EOM_datafile)
-        print("CAR datafile: " + CAR_datafile)
+    
         print("Opening Dashboard...")
 
         # open new browser window (for Dash)
         #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
-        subprocess.Popen("python browser_mw.py EOM " + str(EOM_datafile) + " " + str(CAR_datafile))
+        subprocess.Popen(["python browser_mw.py", "EOM", str(EOM_datafile), str(CAR_datafile)])
 
     ################################################################
     # Load_data_widget member function: view_CAR_dashboard
@@ -272,13 +268,11 @@ class Load_data_widget(QWidget):
         if CAR_datafile == "":
             CAR_datafile = "ERROR"
         
-        print("EOM datafile: " + EOM_datafile)
-        print("CAR datafile: " + CAR_datafile)
         print("Opening Dashboard...")
 
         # open new browser window (for Dash)
         #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
-        subprocess.Popen("python browser_mw.py CAR " + str(EOM_datafile) + " " + str(CAR_datafile))
+        subprocess.Popen(["python browser_mw.py", "CAR", str(EOM_datafile), str(CAR_datafile)])
 
     ################################################################
     # Load_data_widget member function: view_dashboard
@@ -294,11 +288,9 @@ class Load_data_widget(QWidget):
         if CAR_datafile == "":
             CAR_datafile = "ERROR"
         
-        print("EOM datafile: " + EOM_datafile)
-        print("CAR datafile: " + CAR_datafile)
         print("Opening Dashboard...")
 
         # open new browser window (for Dash)
         #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
-        subprocess.Popen("python browser_mw.py BOTH " + str(EOM_datafile) + " " + str(CAR_datafile))
+        subprocess.Popen(["python browser_mw.py", "BOTH", str(EOM_datafile), str(CAR_datafile)])
 
