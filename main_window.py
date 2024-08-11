@@ -62,7 +62,6 @@ class MainWindow(QMainWindow):
         EOM_input.view_button.clicked.connect(self.view_Load_data)
         # CAR_input buttons
         CAR_input.view_button.clicked.connect(self.view_Load_data)
-        # Load_data buttons
 
     ################################################################
     # MainWindow member function: view_Welcome
