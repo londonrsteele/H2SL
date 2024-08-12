@@ -1,4 +1,4 @@
-list_of_strats = [
+list_of_ALL_strats = [
     # Kills
     "Total Kills", # curated
     "Enemy Kills",
@@ -34,6 +34,62 @@ list_of_strats = [
     "In-Misison Time",
     "Distance Traveled",
     "Total XP Earned"
+]
+
+list_of_CAR_strats = [
+    # Kills
+    "Total Kills", # curated
+    "Enemy Kills",
+    "Terminid Kills",
+    "Automaton Kills",
+    "Grenade Kills",
+    "Melee Kills", 
+    "Eagle Kills",
+    "Team Kills", 
+    "Shot Kills", # curated
+    # Accuracy
+    "Shots Fired",
+    "Shots Hit",
+    # Survivor
+    "Deaths",
+    # Stratagems
+    "Total Stratagems Used",
+    "Defensive Stratagems Used",
+    "Eagle Stratagems Used",
+    "Supply Stratagems Used",
+    "Reinforce Stratagems Used",
+    # Other
+    "Orbitals Used",
+    # Game
+    "Successful Extractions",
+    "Samples Collected",
+    "Objectives Completed",
+    "Missions Played",
+    "Missions Won",
+    "In-Misison Time",
+    "Distance Traveled",
+    "Total XP Earned"
+]
+
+list_of_EOM_strats = [
+    # Kills
+    "Team Kills",
+    "Melee Kills",
+    # Accuracy
+    "Accuracy",
+    "Shots Fired",
+    "Shots Hit",
+    # Survivor
+    "Deaths",
+    "Stims Used",
+    #Stratagems
+    "Stratagems Used",
+    # Other
+    "Times Reinforcing",
+    "Friendly Fire Damage",
+    # Game
+    "Samples Extracted",
+    "Distance Traveled"
 ]
 
 list_of_missions = [
