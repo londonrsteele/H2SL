@@ -1,6 +1,6 @@
 import sys
 from dash import *
-from graphing import (accuracy, survivor, kill, stratagems, metadata, stat_scraper)
+from graphing import (stat_scraper, accuracy, survivor, dotplot)
 import graphing.big_graph as big__graph
 
 # Create Dash app
@@ -23,14 +23,24 @@ list_of_old_filenames = scraper.get_last10_filenames("EOM", sys.argv[1])
 list_of_10_dfs = scraper.load_files(list_of_old_filenames)
 
 # Use Stat_Scraper to get the max stats of last 10 missions
-max_last10 = scraper.get_max_stats_last10(list_of_10_dfs, "EOM")
+min_last10, max_last10 = scraper.get_min_and_max_stats_last10(list_of_10_dfs, "EOM")
 
-# Use Stat_Scraper to get the max stats of all time
-max_alltime = scraper.get_max_stats_alltime("EOM")
+# Use Stat_Scraper to get the min and  max stats of all time
+min_alltime, max_alltime = scraper.get_min_and_max_stats_alltime("EOM")
+
+# Use Stat_Scraper to get the last10 minmax normalized numeric stats (list)
+last10_minmax_EOM_list = scraper.minmax_normalize(min_last10, max_last10, EOM_df, "EOM")
+
+# Use Stat_Scraper to get the alltime minmax normalized numeric stats (list)
+alltime_minmax_EOM_list = scraper.minmax_normalize(min_alltime, max_alltime, EOM_df, "EOM")
+
+
+
 
 # Create figures
 accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)
 survivor_fig = survivor.Create_Survivor_Graph(EOM_df)
+dotplot_fig = dotplot.Create_EOM_Dotplot(alltime_minmax_EOM_list)
 
 # Create dashboard layout 
 EOM_dashapp.layout = html.Div([
@@ -51,24 +61,9 @@ EOM_dashapp.layout = html.Div([
         
         # Div Level 2 - Right column
         html.Div( children = [
-
-            # Div Level 3 - Right column top row
-            html.Div( children = [
-
-                # Div Level 4 - Right column top row left column 
-                html.Div( children = [
-
-                ]),
-
-                # Div Level 4 - Right column top row right column
-                html.Div( children = "RCTRRC")
-            
-            ], style={"display":"flex", "flexDirection":"row"}),
-
-            # Div Level 3 - Right column bottom row
-            html.Div( children = [
-
-            ], style={"display":"flex", "flexDirection":"column"})
+            dcc.Graph(id="dotplot-graph",
+                      figure=dotplot_fig),
+ 
         ], style={"display":"flex", "flexDirection":"column"})
     ], style={"display":"flex", "flexDirection":"row"})
 ], style={"display":"flex", "flexDirection":"column"})

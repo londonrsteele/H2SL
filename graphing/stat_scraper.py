@@ -12,7 +12,8 @@ class Stat_Scraper():
     # Stat_Scraper initialization
     ################################################################
     def __init__(self):
-       self.filenames = sorted(Path("./save_files/").iterdir(), key=os.path.getmtime, reverse=True)
+       self.filenames = sorted(Path("./save_files/").iterdir(), key=os.path.basename, reverse=True)
+       print(self.filenames)
 
     ################################################################
     # Stat_Scraper member function: get_files_of_type
@@ -136,7 +137,7 @@ class Stat_Scraper():
     ################################################################
     # Stat_Scraper member function: get_max_stats_last10
     ################################################################
-    def get_max_stats_last10(self, dfs, type):
+    def get_min_and_max_stats_last10(self, dfs, type):
         # dfs is list of dfs to iterate through to find max stats
         # skip past the non-numeric data entries at beginning of save files
         if type == "EOM":
@@ -146,23 +147,29 @@ class Stat_Scraper():
         if type == "loadout":
             start_index = 2
 
-        # copy most recent dataframe into max_df
+        # create min_df and max_df
+        min_df = pd.DataFrame.copy(dfs[0])
         max_df = pd.DataFrame.copy(dfs[0])
 
         # iterate through each df
         for df in dfs:
             # iterate through each stat
             for i in range(start_index, len(df.columns)):
-                # if value in df[column][0] > max_df[column][0]
-                if df[df.columns[i]][0] > max_df[df.columns[i]][0]:
+                # if value in df[column][0] < min_df[column][0]
+                if df[df.columns[i]][0] < min_df[df.columns[i]][0]:
+                    # set new max_stat to max_df
+                    min_df[df.columns[i]] = df[df.columns[i]][0]
+                # elif value in df[column][0] > max_df[column][0]
+                elif df[df.columns[i]][0] > max_df[df.columns[i]][0]:
                     # set new max_stat to max_df
                     max_df[df.columns[i]] = df[df.columns[i]][0]
-        return max_df
+        
+        return min_df, max_df
     
     ################################################################
-    # Stat_Scraper member function: get_max_stats_alltime
+    # Stat_Scraper member function: get_minmax_stats_alltime
     ################################################################
-    def get_max_stats_alltime(self, type):
+    def get_min_and_max_stats_alltime(self, type):
         # get all filenames of file type
         files_of_type = self.get_files_of_type(type)
         # load all files into dfs
@@ -176,16 +183,49 @@ class Stat_Scraper():
         if type == "loadout":
             start_index = 2
 
-        # copy most recent dataframe into max_df
+        # create min_df and max_df
+        min_df = pd.DataFrame.copy(dfs[0])
         max_df = pd.DataFrame.copy(dfs[0])
 
         # iterate through each df
         for df in dfs:
             # iterate through each stat
             for i in range(start_index, len(df.columns)):
-                # if value in df[column][0] > max_df[column][0]
-                if df[df.columns[i]][0] > max_df[df.columns[i]][0]:
+                # if value in df[column][0] < min_df[column][0]
+                if df[df.columns[i]][0] < min_df[df.columns[i]][0]:
+                    # set new max_stat to max_df
+                    min_df[df.columns[i]] = df[df.columns[i]][0]
+                # elif value in df[column][0] > max_df[column][0]
+                elif df[df.columns[i]][0] > max_df[df.columns[i]][0]:
                     # set new max_stat to max_df
                     max_df[df.columns[i]] = df[df.columns[i]][0]
-        return max_df
-    
+        
+        return min_df, max_df
+
+    ################################################################
+    # Stat_Scraper member function: minmax (normalization)
+    ################################################################
+    def minmax_normalize(self, min_df, max_df, x_df, type):
+        # skip past the non-numeric data entries at beginning of save files
+        if type == "EOM":
+            start_index = 4
+        if type == "career":
+            start_index = 2
+        if type == "loadout":
+            start_index = 2
+
+        # Create a minmax list to update
+        minmax_list = []
+
+        # iterate through each stat, note: min_df and max_df are same structure
+        for i in range(start_index, len(min_df.columns)):
+            # calculate minmax
+            # minmax = (x - min) / (max - min)
+            min = min_df.iloc[0,i]
+            max = max_df.iloc[0,i]
+            x = x_df.iloc[0,i]
+            minmax = (x-min)/(max-min)
+            # update minmax_df
+            minmax_list.append(minmax)
+
+        return minmax_list
