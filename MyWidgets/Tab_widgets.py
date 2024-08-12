@@ -45,7 +45,7 @@ class Mission_Tab(QWidget):
             Stratagems_Used = QLabel("Stratagems Used: " + str(self.data["eom_stratagems_used"][0]))
             Melee_Kills = QLabel("Melee Kills: " + str(self.data["eom_melee_kills"][0]))
             Times_Reinforcing = QLabel("Times Reinforcing: " + str(self.data["eom_times_reinforcing"][0]))
-            Accidentals = QLabel("Accidentals: " + str(self.data["eom_accidentals"][0]))
+            Accidentals = QLabel("Accidentals: " + str(self.data["eom_team_kills"][0]))
             Friendly_Fire_Dmg = QLabel("Friendly Fire Damage: " + str(self.data["eom_friendly_fire_dmg"][0]))
             Distance_Traveled = QLabel("Distance Traveled: " + str(self.data["eom_distance_traveled"][0]))
 
