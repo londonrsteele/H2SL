@@ -7,8 +7,8 @@ list_of_strats = [
     "Grenade Kills",
     "Melee Kills", 
     "Eagle Kills",
-    "Team Kills",
-    "Shot Kills",
+    "Team Kills", 
+    "Shot Kills", # curated
     # Accuracy
     "Accuracy",
     "Shots Fired",
