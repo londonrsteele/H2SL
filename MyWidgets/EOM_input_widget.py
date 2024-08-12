@@ -174,17 +174,23 @@ class EOM_input_widget(QWidget):
                     "eom_time":self.EOM_endtime.text(),
                     "eom_mission":self.EOM_mission_type.currentText(),
                     "eom_faction":self.EOM_faction_fought.currentText(),
+                    # Kills
+                    "eom_team_kills":self.EOM_accidentals.text(),
+                    "eom_melee_kills":self.EOM_melee_kills.text(),
+                    # Accuracy
                     "eom_accuracy":self.EOM_accuracy.text(),
                     "eom_shots_fired":self.EOM_shots_fired.text(),
                     "eom_shots_hit":self.EOM_shots_hit.text(),
+                    # Survivor
                     "eom_deaths":self.EOM_deaths.text(),
                     "eom_stims_used":self.EOM_stims_used.text(),
-                    "eom_accidentals":self.EOM_accidentals.text(),
-                    "eom_samples_extracted":self.EOM_samples_extracted.text(),
+                    # Stratagems
                     "eom_stratagems_used":self.EOM_stratagems_used.text(),
-                    "eom_melee_kills":self.EOM_melee_kills.text(),
+                    # Other
                     "eom_times_reinforcing":self.EOM_times_reinforcing.text(),
                     "eom_friendly_fire_dmg":self.EOM_friendly_fire_dmg.text(),
+                    # Game
+                    "eom_samples_extracted":self.EOM_samples_extracted.text(),
                     "eom_distance_traveled":self.EOM_distance_traveled.text()
                     }
         EOM_df = pd.DataFrame(data=EOM_data, index=[0])

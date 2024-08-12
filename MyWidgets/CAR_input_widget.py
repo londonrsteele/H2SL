@@ -151,30 +151,36 @@ class CAR_input_widget(QWidget):
         # Put data from form into Pandas DataFrame
         CAR_data = {"CAR_date":self.CAR_date.text(),
                     "CAR_logtime":self.CAR_logtime.text(),
+                    # Kills
                     "CAR_total_kills":CAR_total_kills,
                     "CAR_enemy_kills":self.CAR_enemy_kills.text(),
                     "CAR_terminid_kills":self.CAR_terminid_kills.text(),
                     "CAR_automaton_kills":self.CAR_automaton_kills.text(),
-                    "CAR_friendly_kills":self.CAR_friendly_kills.text(),
                     "CAR_grenade_kills":self.CAR_grenade_kills.text(),
                     "CAR_melee_kills":self.CAR_melee_kills.text(),
                     "CAR_eagle_kills":self.CAR_eagle_kills.text(),
+                    "CAR_team_kills":self.CAR_friendly_kills.text(),
                     "CAR_shot_kills":CAR_shot_kills,
-                    "CAR_deaths":self.CAR_deaths.text(),
+                    # Accuracy
                     "CAR_shots_fired":self.CAR_shots_fired.text(),
                     "CAR_shots_hit":self.CAR_shots_hit.text(),
-                    "CAR_orbitals_used":self.CAR_orbitals_used.text(),
+                    # Survivor
+                    "CAR_deaths":self.CAR_deaths.text(),
+                    # Stratagems
+                    "CAR_total_strats_used":self.CAR_total_strats_used.text(),
                     "CAR_def_strats_used":self.CAR_def_strats_used.text(),
                     "CAR_eagle_strats_used":self.CAR_eagle_strats_used.text(),
                     "CAR_supply_strats_used":self.CAR_supply_strats_used.text(),
                     "CAR_reinforce_strats_used":self.CAR_reinforce_strats_used.text(),
-                    "CAR_total_strats_used":self.CAR_total_strats_used.text(),
+                    # Other
+                    "CAR_orbitals_used":self.CAR_orbitals_used.text(),
+                    # Game
                     "CAR_successful_extractions":self.CAR_successful_extractions.text(),
+                    "CAR_samples_collected":self.CAR_samples_collected.text(),
                     "CAR_objectives_completed":self.CAR_objectives_completed.text(),
                     "CAR_missions_played":self.CAR_missions_played.text(),
                     "CAR_missions_won":self.CAR_missions_won.text(),
                     "CAR_inmission_time":self.CAR_inmisison_time.text(),
-                    "CAR_samples_collected":self.CAR_samples_collected.text(),
                     "CAR_total_XP_earned":self.CAR_total_XP_earned.text()
                     }
         CAR_df = pd.DataFrame(data=CAR_data, index=[0])
