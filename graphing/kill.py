@@ -10,17 +10,14 @@ def Create_Kill_Graph(CAR_df):
     # CAR melee kills
     # CAR eagle kills
     # CAR shot kills = CAR total kills - CAR grenade kills - CAR melee kills - CAR eagle kills
-    CAR_total_kills = CAR_df["CAR_enemy_kills"][0] + CAR_df["CAR_friendly_kills"][0]
-    CAR_shot_kills = CAR_total_kills - CAR_df["CAR_grenade_kills"][0] - CAR_df["CAR_melee_kills"][0] - CAR_df["CAR_eagle_kills"][0]
-
     kills_data = {
         "x_labels" : ["Total Kills", "Enemy Kills", "Terminid Kills", 
                       "Automaton Kills", "Friendly Kills", "Grenade Kills", 
                       "Melee Kills", "Eagle Kills", "Shot Kills"
                     ],
-        "stats" : [ CAR_total_kills, CAR_df["CAR_enemy_kills"][0], CAR_df["CAR_terminid_kills"][0],
+        "stats" : [ CAR_df["CAR_total_kills"][0], CAR_df["CAR_enemy_kills"][0], CAR_df["CAR_terminid_kills"][0],
                    CAR_df["CAR_automaton_kills"][0], CAR_df["CAR_friendly_kills"][0], CAR_df["CAR_grenade_kills"][0],
-                   CAR_df["CAR_melee_kills"][0], CAR_df["CAR_eagle_kills"][0], CAR_shot_kills
+                   CAR_df["CAR_melee_kills"][0], CAR_df["CAR_eagle_kills"][0], CAR_df["CAR_shot_kills"][0]
                 ]
     }
 
@@ -29,5 +26,3 @@ def Create_Kill_Graph(CAR_df):
                     text_auto=True)
 
     return fig
-
-    
