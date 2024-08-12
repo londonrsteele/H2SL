@@ -16,6 +16,18 @@ EOM_df = scraper.load_file(sys.argv[1])
 if (EOM_df.empty):
     raise RuntimeError("Empty dataframe at Dash initialization")
 
+# Use Stat_Scraper to get most recent 10 (or less) files
+list_of_old_filenames = scraper.get_last10_filenames("EOM", sys.argv[1])
+
+# Use Stat_Scraper to load most recent 10 files
+list_of_10_dfs = scraper.load_files(list_of_old_filenames)
+
+# Use Stat_Scraper to get the max stats of last 10 missions
+max_last10 = scraper.get_max_stats_last10(list_of_10_dfs, "EOM")
+
+# Use Stat_Scraper to get the max stats of all time
+max_alltime = scraper.get_max_stats_alltime("EOM")
+
 # Create figures
 accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)
 survivor_fig = survivor.Create_Survivor_Graph(EOM_df)
