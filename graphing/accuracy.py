@@ -1,4 +1,5 @@
 import plotly.graph_objects as pltgo
+import plotly.express as pltxp
 
 def Create_Accuracy_Graph(EOM_df):
     # EOM Accuracy = x%
@@ -18,33 +19,32 @@ def Create_Accuracy_Graph(EOM_df):
                 x=shots_data["x"],
                 y=shots_data["Shots"][0],
                 offsetgroup=0,
-                marker_color="#024a70",
-                text=shots_data["Shots"][0]
+                marker_color=pltxp.colors.qualitative.G10[8]
             ),
             pltgo.Bar(
                 name="Shots Hit",
                 x=shots_data["x"],
                 y=shots_data["Shots"][1],
                 offsetgroup=0,
-                marker_color="#051c2c",
-                text=shots_data["Shots"][1]
+                marker_color=pltxp.colors.qualitative.G10[8],
+                text=shots_data["Accuracy"],
+                textfont=dict(
+                    color="white",
+                    family="monospace",
+                    size=25
+                ),
+                marker_pattern_shape="/"
             )
         ],
         layout=pltgo.Layout(
             title="Shots Accuracy",
-            yaxis_title = "Shots"
-        ),
+            xaxis_title = "Shots",
+            font=dict(
+                family="monospace",
+                size=25
+            )
+        )
     )
-    fig.add_annotation(xref="paper", yref="paper", 
-                        x=0.75, y=(EOM_df["eom_accuracy"][0]/100),
-                        text=shots_data["Accuracy"],
-                        arrowhead=1, arrowsize=1, arrowwidth=2,
-                        font=dict(
-                            size=18,
-                            color="White"
-                        ),
-                        arrowcolor="White"
-                        )
     fig.update_xaxes(showticklabels=False)
-    fig.update_traces(textposition="inside")
+    fig.update_traces(textposition="outside", width=0.7)
     return fig
