@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 import pandas as pd
 from PySide6.QtWidgets import QFileDialog
+from assets import SAVE_PATH
 ################################################################
 #
 # Stat_Scraper class
@@ -12,7 +13,7 @@ class Stat_Scraper():
     # Stat_Scraper initialization
     ################################################################
     def __init__(self):
-       self.filenames = sorted(Path("./save_files/").iterdir(), key=os.path.basename, reverse=True)
+       self.filenames = sorted(Path(SAVE_PATH.save_path+"/").iterdir(), key=os.path.basename, reverse=True)
        print(self.filenames)
 
     ################################################################
@@ -119,7 +120,7 @@ class Stat_Scraper():
     def load_file(self, filename):
         # if filename is not an error value
         if (filename != "Error: No File Loaded") & (filename != "ERROR"):
-            return pd.read_csv("./save_files/"+filename)
+            return pd.read_csv(SAVE_PATH.save_path+"/"+filename)
         else:
             # filename is an error value, return an empty df (handled elsewhere)
             return pd.DataFrame()

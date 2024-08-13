@@ -1,5 +1,6 @@
 import pandas as pd
 from PySide6.QtWidgets import (QGridLayout, QPushButton, QWidget, QLabel)
+from graphing import stat_scraper
 ################################################################
 # 
 # Mission_Tab class
@@ -32,8 +33,9 @@ class Mission_Tab(QWidget):
             # If datafile loaded, make "View Dashboard" button disabled
             self.view_dashboard_button.setEnabled(True)
             
-            # load data
-            self.data = pd.read_csv("./save_files/"+datafile)
+            # use Stat_Scraper to load data
+            scraper = stat_scraper.Stat_Scraper()
+            self.data = scraper.load_file(datafile)
 
             # Create data labels
             Accuracy = QLabel("Accuracy: " + str(self.data["eom_accuracy"][0]) + "%")
@@ -98,9 +100,9 @@ class Career_Tab(QWidget):
             # If datafile loaded, make "View Dashboard" button disabled
             self.view_dashboard_button.setEnabled(True)
             
-            # load data
-            self.data = pd.read_csv("./save_files/"+datafile)
-            print(self.data)
+            # use Stat_Scraper to load data
+            scraper = stat_scraper.Stat_Scraper()
+            self.data = scraper.load_file(datafile)
 
             # Create data labels
             Accuracy = QLabel("Enemy kills")

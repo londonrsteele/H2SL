@@ -1,8 +1,8 @@
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import (QMainWindow, QStackedWidget)
+from PySide6.QtWidgets import (QMainWindow, QStackedWidget, QFileDialog)
 from MyWidgets import (Welcome_widget, Log_data_widget, EOM_input_widget,
                        CAR_input_widget, Load_data_widget)
-
+from assets import SAVE_PATH
 ################################################################
 # 
 # MainWindow class
@@ -23,6 +23,8 @@ class MainWindow(QMainWindow):
         self.file_menu = self.menu.addMenu("File")
         # File > Home QAction    
         home_action = self.file_menu.addAction("Home", self.view_Welcome)
+        # File > Change Save File Directory
+        savefile_action = self.file_menu.addAction("Change Save File Directory", self.change_save_dir)
         # File > Exit QAction
         exit_action = self.file_menu.addAction("Exit", self.close)
         exit_action.setShortcut("Ctrl+Q")
@@ -111,3 +113,25 @@ class MainWindow(QMainWindow):
     def go_back_action(self):
         if self.stackedWidget.currentIndex() != 0:
             self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex()-1)
+
+    ################################################################
+    # MainWindow member function: change_save_dir
+    ################################################################
+    def change_save_dir(self):
+        directories = []
+        # open a file explorer window and show only directories
+        file_explorer = QFileDialog(parent=None, caption="Choose a Save File Directory", directory=SAVE_PATH.save_path)
+        file_explorer.setFileMode(QFileDialog.Directory)
+        if file_explorer.exec_():
+            # get selected directory
+            directories = file_explorer.selectedFiles()
+        # check if old_filenames is empty
+        if directories:
+            print("directory = " + str(directories[0]))
+            # not empty, load the first filename(directory) only
+            SAVE_PATH.save_path = directories[0]
+            with open("./assets/SAVE_PATH.py", "w") as savefile:
+                savefile.write("save_path = \""+directories[0] + "\"")
+        else:
+            # note: do not raise an exception here, value gets handled elsewhere
+            return str("Error: No File Loaded")

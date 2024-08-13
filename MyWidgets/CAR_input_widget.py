@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (QFormLayout, QPushButton, QWidget,
                                 QGridLayout, QSpinBox, QMessageBox,
                                 QFrame)
 from assets import stylesheets
+from assets import SAVE_PATH
 ################################################################
 # 
 # CAR_input_widget class
@@ -186,7 +187,7 @@ class CAR_input_widget(QWidget):
         CAR_df = pd.DataFrame(data=CAR_data, index=[0])
 
         # Create csv file
-        file_path = "./save_files/career_savefile_" + car_day_formatted + "_" + car_time_formatted + ".csv"
+        file_path = SAVE_PATH.save_path + "/career_savefile_" + car_day_formatted + "_" + car_time_formatted + ".csv"
         try:
             with open(file_path, "x") as file:
                 file.close()

@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (QFormLayout, QPushButton, QWidget,
                                 QFrame, QComboBox)
 from graphing import metadata
 from assets import stylesheets
+from assets import SAVE_PATH
 ################################################################
 # 
 # EOM_input_widget class
@@ -196,7 +197,7 @@ class EOM_input_widget(QWidget):
         EOM_df = pd.DataFrame(data=EOM_data, index=[0])
 
         # Create csv file
-        file_path = "./save_files/EOM_savefile_" + eom_day_formatted + "_" + eom_time_formatted + ".csv"
+        file_path = SAVE_PATH.save_path + "/EOM_savefile_" + eom_day_formatted + "_" + eom_time_formatted + ".csv"
         try:
             with open(file_path, "x") as file:
                 file.close()
@@ -225,7 +226,7 @@ class EOM_input_widget(QWidget):
         loadout_df = pd.DataFrame(data=loadout_data, index=[0])
 
         # Create csv file
-        file_path = "./save_files/loadout_savefile_" + loadout_day_formatted + "_" + loadout_time_formatted + ".csv"
+        file_path = SAVE_PATH.save_path + "/loadout_savefile_" + loadout_day_formatted + "_" + loadout_time_formatted + ".csv"
         try:
             with open(file_path, "x") as file:
                 file.close()
