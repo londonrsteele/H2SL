@@ -1,35 +1,42 @@
 
 .EOMdashapp-Div--title {
-    font-family: sans-serif;
+    font-family: monospace;
     font-weight: bold;
-    font-size: 6em;
+    font-size: 4em;
     text-align: center;
     height: 100px;
     line-height: 100px;
-    border-bottom: thin lightgrey solid;   
 }
 
-.EOMdashapp-Div--main-column {
+.EOMdashapp-Div--main-box {
     display: grid;
-    grid-template-columns: 33vw 33vw 33vw;
+    grid-template-columns: 66vw 33vw;
     grid-template-rows: 90vh;
 }
 
-.EOMdashapp-Div--sub-column1 {
+.EOMdashapp-Div--LeftMiddle-column {
     display: grid;
-    grid-template-columns: 33vw;
-    grid-template-rows: 30vh 30vh 30vh;
+    grid-template-columns: 66vw;
+    grid-template-rows: 30vh 60vh;
 }
 
-.EOMdashapp-Div--sub-column2 {
+.EOMdashapp-Div--LMC-Top-row {
     display: grid;
-    grid-template-columns: 33vw;
-    grid-template-rows: 45vh 45vh;
+    grid-template-columns: 33vw 33vw;
+    grid-template-rows: 30vh;
+    border: thin lightgrey solid;
 }
 
-.EOMdashapp-Div--grid-block {
+.EOMdashapp-Div--Right-column {
+    display: grid;
+    grid-template-columns: 33vw;
+    grid-template-rows: 15vh 75vh;
+    border: thin lightgrey solid;
+}
+
+.EOMdashapp-Div--gridbox {
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
-    border: thin lightgrey solid;
+    padding: 5px;
 }

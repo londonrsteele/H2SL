@@ -48,63 +48,51 @@ EOM_dashapp.layout = html.Div([
     # Div Level 1 - Title
     html.Div( children = "Most Recent Mission Stats", className="EOMdashapp-Div--title" ),
 
-    # Div Level 1 - Main body - Grid
+    # Div Level 1 - Main Column - Grid
     html.Div( children = [
         
-        # Div Level 2 - Left column
+        # Div Level 2 - Left/Middle column
         html.Div( children= [
 
-            # Div Level 3 - Top rows
+            # Div Level 3 - Top row
             html.Div( children = [
-                dcc.Graph(id="accuracy-graph",
-                        figure=accuracy_fig)
-            ], className="EOMdashapp-Div--grid-block"),
 
-            # Div Level 3 - Middle row
-            html.Div( children = [
-                dcc.Graph(id="survivor-graph",
+                # Div Level 4 - Left gridbox
+                html.Div( children = [
+                    dcc.Graph(id="accuracy-graph",
+                        figure=accuracy_fig)
+                ], className="EOMdashapp-Div--gridbox"),
+
+                # Div Level 4 - Right gridbox
+                html.Div( children = [
+                    dcc.Graph(id="survivor-graph",
                         figure=survivor_fig)
-            ], className="EOMdashapp-Div--grid-block"),
+                ], className="EOMdashapp-Div--gridbox"),
+            ], className="EOMdashapp-Div--LMC-Top-row"),
 
-            # Div Level 3 - Bottom row
+            # Div Level 3 - Middle/Bottom row
             html.Div( children = [
-                dcc.Graph(id="accuracy-graph2",
-                        figure=accuracy_fig)
-            ], className="EOMdashapp-Div--grid-block"),
-        ], className="EOMdashapp-Div--sub-column1"),
+                dcc.Graph(id="survivor-graph2",
+                        figure=survivor_fig)
+            ], className="EOMdashapp-Div--gridbox"),
+        ], className="EOMdashapp-Div--LeftMiddle-column"),
         
-        # Div Level 2 - Middle column
+        # Div Level 2 - Right column
         html.Div( children= [
 
             # Div Level 3 - Top row
             html.Div( children = [
-                dcc.Graph(id="accuracy-graph3",
-                        figure=accuracy_fig)
-            ], className="EOMdashapp-Div--grid-block"),
+                dcc.Graph(id="survivor-graph3",
+                        figure=survivor_fig)
+            ], className="EOMdashapp-Div--gridbox"),
 
             # Div Level 3 - Bottom row
             html.Div( children = [
-                dcc.Graph(id="accuracy-graph5",
-                        figure=accuracy_fig)
-            ], className="EOMdashapp-Div--grid-block"),
-        ], className="EOMdashapp-Div--sub-column2"),
-
-        # Div Level 2 - Middle column
-        html.Div( children= [
-
-            # Div Level 3 - Top row
-            html.Div( children = [
-                dcc.Graph(id="dotplot-graph1",
-                        figure=dotplot_fig)
-            ], className="EOMdashapp-Div--grid-block"),
-
-            # Div Level 3 - Bottom row
-            html.Div( children = [
-                dcc.Graph(id="dotplot-graph2",
-                        figure=dotplot_fig)
-            ], className="EOMdashapp-Div--grid-block"),
-        ], className="EOMdashapp-Div--sub-column2"),
-    ], className="EOMdashapp-Div--main-column")
+                dcc.Graph(id="survivor-graph3",
+                        figure=survivor_fig)
+            ], className="EOMdashapp-Div--gridbox"),
+        ], className="EOMdashapp-Div--Right-column"),
+    ], className="EOMdashapp-Div--main-box")
 ], style={"display":"flex", "flexDirection":"column"})
 
 
