@@ -25,6 +25,7 @@ list_of_ALL_strats = [
     # Other
     "Orbitals Used",
     "Times Reinforcing",
+    "Friendly Fire Damage",
     # Game
     "Successful Extractions",
     "Samples Collected",
@@ -73,6 +74,7 @@ list_of_CAR_strats = [
 
 list_of_EOM_strats = [
     # Kills
+    "Kills",
     "Team Kills",
     "Melee Kills",
     # Accuracy
