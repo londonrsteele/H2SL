@@ -46,26 +46,65 @@ dotplot_fig = dotplot.Create_EOM_Dotplot(alltime_minmax_EOM_list)
 EOM_dashapp.layout = html.Div([
 
     # Div Level 1 - Title
-    html.Div( children = "Most Recent Mission Stats", className="app-Div--title" ),
+    html.Div( children = "Most Recent Mission Stats", className="EOMdashapp-Div--title" ),
 
-    # Div Level 1 - Main body
+    # Div Level 1 - Main body - Grid
     html.Div( children = [
         
         # Div Level 2 - Left column
         html.Div( children= [
-            dcc.Graph(id="accuracy-graph",
-                        figure=accuracy_fig),
-            dcc.Graph(id="survivor-graph",
-                        figure=survivor_fig),
-        ]),
+
+            # Div Level 3 - Top rows
+            html.Div( children = [
+                dcc.Graph(id="accuracy-graph",
+                        figure=accuracy_fig)
+            ], className="EOMdashapp-Div--grid-block"),
+
+            # Div Level 3 - Middle row
+            html.Div( children = [
+                dcc.Graph(id="survivor-graph",
+                        figure=survivor_fig)
+            ], className="EOMdashapp-Div--grid-block"),
+
+            # Div Level 3 - Bottom row
+            html.Div( children = [
+                dcc.Graph(id="accuracy-graph2",
+                        figure=accuracy_fig)
+            ], className="EOMdashapp-Div--grid-block"),
+        ], className="EOMdashapp-Div--sub-column1"),
         
-        # Div Level 2 - Right column
-        html.Div( children = [
-            dcc.Graph(id="dotplot-graph",
-                      figure=dotplot_fig),
- 
-        ], style={"display":"flex", "flexDirection":"column"})
-    ], style={"display":"flex", "flexDirection":"row"})
+        # Div Level 2 - Middle column
+        html.Div( children= [
+
+            # Div Level 3 - Top row
+            html.Div( children = [
+                dcc.Graph(id="accuracy-graph3",
+                        figure=accuracy_fig)
+            ], className="EOMdashapp-Div--grid-block"),
+
+            # Div Level 3 - Bottom row
+            html.Div( children = [
+                dcc.Graph(id="accuracy-graph5",
+                        figure=accuracy_fig)
+            ], className="EOMdashapp-Div--grid-block"),
+        ], className="EOMdashapp-Div--sub-column2"),
+
+        # Div Level 2 - Middle column
+        html.Div( children= [
+
+            # Div Level 3 - Top row
+            html.Div( children = [
+                dcc.Graph(id="dotplot-graph1",
+                        figure=dotplot_fig)
+            ], className="EOMdashapp-Div--grid-block"),
+
+            # Div Level 3 - Bottom row
+            html.Div( children = [
+                dcc.Graph(id="dotplot-graph2",
+                        figure=dotplot_fig)
+            ], className="EOMdashapp-Div--grid-block"),
+        ], className="EOMdashapp-Div--sub-column2"),
+    ], className="EOMdashapp-Div--main-column")
 ], style={"display":"flex", "flexDirection":"column"})
 
 ################################################################

@@ -1,11 +1,35 @@
 
-.app-Div--title {
+.EOMdashapp-Div--title {
     font-family: sans-serif;
     font-weight: bold;
     font-size: 6em;
     text-align: center;
     height: 100px;
     line-height: 100px;
-    border-bottom: thin lightgrey solid;
-    
+    border-bottom: thin lightgrey solid;   
+}
+
+.EOMdashapp-Div--main-column {
+    display: grid;
+    grid-template-columns: 33vw 33vw 33vw;
+    grid-template-rows: 90vh;
+}
+
+.EOMdashapp-Div--sub-column1 {
+    display: grid;
+    grid-template-columns: 33vw;
+    grid-template-rows: 30vh 30vh 30vh;
+}
+
+.EOMdashapp-Div--sub-column2 {
+    display: grid;
+    grid-template-columns: 33vw;
+    grid-template-rows: 45vh 45vh;
+}
+
+.EOMdashapp-Div--grid-block {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    border: thin lightgrey solid;
 }
