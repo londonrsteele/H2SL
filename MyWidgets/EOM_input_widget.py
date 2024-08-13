@@ -98,6 +98,7 @@ class EOM_input_widget(QWidget):
         self.EOM_faction_fought = QComboBox()
         self.EOM_faction_fought.addItems(["Automatons", "Terminids"])
         # line goes here in layout
+        self.EOM_kills = QSpinBox(minimum=0, maximum=1000000000)
         self.EOM_accuracy = QSpinBox(minimum=0, maximum=1000000000)
         self.EOM_shots_fired = QSpinBox(minimum=0, maximum=1000000000)
         self.EOM_shots_hit = QSpinBox(minimum=0, maximum=1000000000)
@@ -117,6 +118,7 @@ class EOM_input_widget(QWidget):
         self.form_layout.addRow(("Mission Type: "), self.EOM_mission_type)
         self.form_layout.addRow(("Faction fought:"), self.EOM_faction_fought)
         self.form_layout.addRow(self.line)
+        self.form_layout.addRow(("Kills: "), self.EOM_kills)
         self.form_layout.addRow(("Accuracy: "), self.EOM_accuracy)
         self.form_layout.addRow(("Shots Fired: "), self.EOM_shots_fired)
         self.form_layout.addRow(("Shots Hit: "), self.EOM_shots_hit)
@@ -176,6 +178,7 @@ class EOM_input_widget(QWidget):
                     "eom_mission":self.EOM_mission_type.currentText(),
                     "eom_faction":self.EOM_faction_fought.currentText(),
                     # Kills
+                    "eom_kills":self.EOM_kills.text(),
                     "eom_team_kills":self.EOM_accidentals.text(),
                     "eom_melee_kills":self.EOM_melee_kills.text(),
                     # Accuracy
