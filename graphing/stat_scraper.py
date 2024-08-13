@@ -14,7 +14,6 @@ class Stat_Scraper():
     ################################################################
     def __init__(self):
        self.filenames = sorted(Path(SAVE_PATH.save_path+"/").iterdir(), key=os.path.basename, reverse=True)
-       print(self.filenames)
 
     ################################################################
     # Stat_Scraper member function: get_files_of_type
@@ -230,3 +229,64 @@ class Stat_Scraper():
             minmax_list.append(minmax)
 
         return minmax_list
+    
+    ################################################################
+    # Stat_Scraper member function: get_dfstatname_from_metadata
+    ################################################################
+    def get_dfstatname_from_metadata(self, metadata_name, type):
+        if type == "EOM":
+            match metadata_name:
+                case "Kills": return "eom_kills"
+                case "Team Kills": return "eom_team_kills"
+                case "Melee Kills": return "eom_melee_kills"
+                case "Accuracy": return "eom_accuracy"
+                case "Shots Fired": return "eom_shots_fired"
+                case "Shots Hit": return "eom_shots_hit"
+                case "Deaths": return "eom_deaths"
+                case "Stims Used": return "eom_stims_used"
+                case "Stratagems Used": return "eom_stratagems_used"
+                case "Times Reinforcing": return "eom_times_reinforcing"
+                case "Friendly Fire Damage": return "eom_friendly_fire_dmg"
+                case "Samples Extracted": return "eom_samples_extracted"
+                case "Distance Traveled": return "eom_distance_traveled"
+                case "": return ""
+        elif type == "CAR":
+            match metadata_name:
+                case "Total Kills": return "CAR_total_kills"
+                case "Enemy Kills": return "CAR_enemy_kills"
+                case "Terminid Kills": return "CAR_terminid_kills"
+                case "Automaton Kills": return "CAR_automaton_kills"
+                case "Grenade Kills": return "CAR_grenade_kills"
+                case "Melee Kills": return "CAR_melee_kills"
+                case "Eagle Kills": return "CAR_eagle_kills"
+                case "Team Kills": return "CAR_team_kills"
+                case "Shot Kills": return "CAR_shot_kills"
+                case "Shots Fired": return "CAR_shots_fired"
+                case "Shots Hit": return "CAR_shots_hit"
+                case "Deaths": return "CAR_deaths"
+                case "Total Stratagems Used": return "CAR_total_strats_used"
+                case "Defensive Stratagems Used": return "CAR_defensive_strats_used"
+                case "Eagle Stratagems Used": return "CAR_eagle_strats_used"
+                case "Supply Stratagems Used": return "CAR_supply_strats_used"
+                case "Reinforce Stratagems Used": return "CAR_reinforce_strats_used"
+                case "Orbitals Used": return "CAR_orbitals_used"
+                case "Successful Extractions": return "CAR_successful_extractions"
+                case "Samples Collected": return "CAR_samples_collected"
+                case "Objectives Completed": return "CAR_objectives_completed"
+                case "Missions Played": return "CAR_missions_played"
+                case "Missions Won": return "CAR_missions_won"
+                case "In-Misison Time": return "CAR_in_mission_time"
+                case "Distance Traveled": return "CAR_distance_traveled"
+                case "Total XP Earned": return "CAR_total_xp_earned"
+                case "": return ""
+
+    ################################################################
+    # Stat_Scraper member function: get_last10_strat_list
+    ################################################################
+    def get_last10_stat_list(self, strat, type, list_of_10_dfs):
+        df_strat = self.get_dfstatname_from_metadata(strat, type)
+        stats_last10 = []
+        for df in list_of_10_dfs:
+            stats_last10.append(df[df_strat][0])
+        print("stats: " + str(stats_last10))
+        return stats_last10
