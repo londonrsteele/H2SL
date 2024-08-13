@@ -27,6 +27,13 @@
     border: thin lightgrey solid;
 }
 
+.EOMdashapp-Div--LMC-Bottom-row {
+    display: grid;
+    grid-template-columns: 66vw;
+    grid-template-rows: 15vh 45vh;
+    border: thin lightgrey solid;
+}
+
 .EOMdashapp-Div--Right-column {
     display: grid;
     grid-template-columns: 33vw;

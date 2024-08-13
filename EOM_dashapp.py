@@ -1,6 +1,6 @@
 import sys
 from dash import *
-from graphing import (stat_scraper, accuracy, survivor, dotplot)
+from graphing import (stat_scraper, accuracy, survivor, dotplot, metadata)
 import graphing.big_graph as big__graph
 
 # Create Dash app
@@ -59,12 +59,14 @@ EOM_dashapp.layout = html.Div([
 
                 # Div Level 4 - Left gridbox
                 html.Div( children = [
+                    # accuracy-graph (standalone)
                     dcc.Graph(id="accuracy-graph",
                         figure=accuracy_fig)
                 ], className="EOMdashapp-Div--gridbox"),
 
                 # Div Level 4 - Right gridbox
                 html.Div( children = [
+                    # survivor-graph (standalone)
                     dcc.Graph(id="survivor-graph",
                         figure=survivor_fig)
                 ], className="EOMdashapp-Div--gridbox"),
@@ -72,9 +74,20 @@ EOM_dashapp.layout = html.Div([
 
             # Div Level 3 - Middle/Bottom row
             html.Div( children = [
-                dcc.Graph(id="survivor-graph2",
-                        figure=survivor_fig)
-            ], className="EOMdashapp-Div--gridbox"),
+                
+                # Div Level 4 - Top row
+                html.Div( children = [
+                    # dropdown - for line-graph
+                    dcc.Dropdown(metadata.list_of_EOM_strats, id="dropdown")
+                ], className="EOMdashapp-Div--gridbox"),
+
+                # Div Level 4 - Bottom row
+                html.Div( children = [
+                    # line-graph (interactive with dropdown)
+                    dcc.Graph(id="line-graph")
+                ], className="EOMdashapp-Div--gridbox"),
+                
+            ], className="EOMdashapp-Div--LMC-Bottom-row"),
         ], className="EOMdashapp-Div--LeftMiddle-column"),
         
         # Div Level 2 - Right column
@@ -82,13 +95,15 @@ EOM_dashapp.layout = html.Div([
 
             # Div Level 3 - Top row
             html.Div( children = [
+                # slider - for dotplot
                 dcc.Graph(id="survivor-graph3",
                         figure=survivor_fig)
             ], className="EOMdashapp-Div--gridbox"),
 
             # Div Level 3 - Bottom row
             html.Div( children = [
-                dcc.Graph(id="survivor-graph3",
+                # dotplot (interactive with slider)
+                dcc.Graph(id="survivor-graph4",
                         figure=survivor_fig)
             ], className="EOMdashapp-Div--gridbox"),
         ], className="EOMdashapp-Div--Right-column"),
@@ -97,10 +112,15 @@ EOM_dashapp.layout = html.Div([
 
 
 ################################################################
-# callback: create_dotplot
+# callback: create_linechart
 ################################################################
-
-
+@EOM_dashapp.callback(
+    Output("line-graph", "figure"),
+    Input("dropdown", "value")
+)
+def update_figure(selected_stat):
+    fig = accuracy_fig(EOM_df)
+    return fig
 
 
 ################################################################
