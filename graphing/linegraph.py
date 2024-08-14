@@ -72,11 +72,6 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
         paper_bgcolor=metadata.dict_of_colors["light-black"],
         plot_bgcolor=metadata.dict_of_colors["black"],
         legend=dict(
-            # x=0.3,
-            # y=0.1,
-            # xref="paper",
-            # yref="container",
-            # orientation="h",
             font=dict(
                 color=metadata.dict_of_colors["white"]
             )
