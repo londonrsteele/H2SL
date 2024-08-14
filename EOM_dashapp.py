@@ -23,6 +23,7 @@ list_of_old_filenames = scraper.get_last10_filenames("EOM", sys.argv[1])
 
 # Use Stat_Scraper to load most recent 10 files
 list_of_10_dfs = scraper.load_files(list_of_old_filenames)
+num_dfs_loaded = len(list_of_10_dfs)
 
 # Use Stat_Scraper to get the max stats of last 10 missions
 min_last10, max_last10 = scraper.get_min_and_max_stats_last10(list_of_10_dfs, "EOM")
@@ -79,15 +80,15 @@ EOM_dashapp.layout = html.Div([
                 
                 # Div Level 4 - Top row
                 html.Div( children = [
-                    # dropdown - for line-graph
-                    dcc.Dropdown(metadata.list_of_EOM_strats, "Kills", id="dropdown")
+                    # line-graph (interactive with dropdown)
+                    dcc.Graph(id="line-graph")
                 ], className="EOMdashapp-Div--gridbox"),
 
                 # Div Level 4 - Bottom row
                 html.Div( children = [
-                    # line-graph (interactive with dropdown)
-                    dcc.Graph(id="line-graph")
-                ], className="EOMdashapp-Div--gridbox"),
+                    # dropdown - for line-graph
+                    dcc.Dropdown(metadata.list_of_EOM_strats, "Kills", clearable=False, id="dropdown")
+                ], className="EOMdashapp-Div--dropdown"),
                 
             ], className="EOMdashapp-Div--LMC-Bottom-row"),
         ], className="EOMdashapp-Div--LeftMiddle-column"),
@@ -98,9 +99,14 @@ EOM_dashapp.layout = html.Div([
             # Div Level 3 - Top row
             html.Div( children = [
                 # slider - for dotplot
-                dcc.Graph(id="survivor-graph3",
-                        figure=survivor_fig)
-            ], className="EOMdashapp-Div--gridbox"),
+                dcc.Slider(
+                    min=-(num_dfs_loaded-1),
+                    max=0,
+                    step=1,
+                    marks={i: f"Last Mission" if i == 0 else str(i) for i in range(-(num_dfs_loaded-1),1)},
+                    value=0
+                )
+            ], className="EOMdashapp-Div--slider"),
 
             # Div Level 3 - Bottom row
             html.Div( children = [
@@ -122,7 +128,8 @@ EOM_dashapp.layout = html.Div([
 )
 def update_linegraph(selected_stat):
     stats_last10 = scraper.get_last10_stat_list(selected_stat, "EOM", list_of_10_dfs)
-    fig = linegraph.Create_LineGraph(stats_last10)
+    stat_alltime_max = scraper.get_max_stat_from_df(selected_stat, "EOM", max_alltime)
+    fig = linegraph.Create_LineGraph(selected_stat, stats_last10, stat_alltime_max)
     return fig
 
 ################################################################
