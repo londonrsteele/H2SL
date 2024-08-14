@@ -21,29 +21,21 @@ if (EOM_df.empty):
 # Use Stat_Scraper to get most recent 10 (or less) files
 list_of_old_filenames = scraper.get_last10_filenames("EOM", sys.argv[1])
 
-# Use Stat_Scraper to load most recent 10 files
+# Use Stat_Scraper to load most recent 10 files and store how many were loaded
 list_of_10_dfs = scraper.load_files(list_of_old_filenames)
 num_dfs_loaded = len(list_of_10_dfs)
 
-# Use Stat_Scraper to get the max stats of last 10 missions
-min_last10, max_last10 = scraper.get_min_and_max_stats_last10(list_of_10_dfs, "EOM")
-
-# Use Stat_Scraper to get the min and  max stats of all time
+# Use Stat_Scraper to get the min and  max stats of all time - used with linechart
+# Called here instead of in linechart callback so files are only scraped 1x
 min_alltime, max_alltime = scraper.get_min_and_max_stats_alltime("EOM")
 
-# Use Stat_Scraper to get the last10 minmax normalized numeric stats (list)
-last10_minmax_EOM_list = scraper.minmax_normalize(min_last10, max_last10, EOM_df, "EOM")
+# Use Stat_Scraper to get the min and max stats of last 10 missions - used with dotplot
+# Called here instead of in dotplot callback so files are only scraped 1x
+min_last10, max_last10 = scraper.get_min_and_max_stats_last10(list_of_10_dfs, "EOM")
 
-# Use Stat_Scraper to get the alltime minmax normalized numeric stats (list)
-alltime_minmax_EOM_list = scraper.minmax_normalize(min_alltime, max_alltime, EOM_df, "EOM")
-
-
-
-
-# Create figures
+# Create static figures
 accuracy_fig = accuracy.Create_Accuracy_Graph(EOM_df)
 survivor_fig = survivor.Create_Survivor_Graph(EOM_df)
-dotplot_fig = dotplot.Create_EOM_Dotplot(alltime_minmax_EOM_list)
 
 # Create dashboard layout 
 EOM_dashapp.layout = html.Div([
@@ -62,14 +54,14 @@ EOM_dashapp.layout = html.Div([
 
                 # Div Level 4 - Left gridbox
                 html.Div( children = [
-                    # accuracy-graph (standalone)
+                    # accuracy-graph (static)
                     dcc.Graph(id="accuracy-graph",
                         figure=accuracy_fig)
                 ], className="EOMdashapp-Div--gridbox"),
 
                 # Div Level 4 - Right gridbox
                 html.Div( children = [
-                    # survivor-graph (standalone)
+                    # survivor-graph (static)
                     dcc.Graph(id="survivor-graph",
                         figure=survivor_fig)
                 ], className="EOMdashapp-Div--gridbox"),
@@ -103,16 +95,16 @@ EOM_dashapp.layout = html.Div([
                     min=-(num_dfs_loaded-1),
                     max=0,
                     step=1,
-                    marks={i: f"Last Mission" if i == 0 else str(i) for i in range(-(num_dfs_loaded-1),1)},
-                    value=0
+                    marks={i: f"Last Mission" if i == 0 else str(i) + " Games" for i in range(-(num_dfs_loaded-1),1)},
+                    value=0,
+                    id="slider"
                 )
             ], className="EOMdashapp-Div--slider"),
 
             # Div Level 3 - Bottom row
             html.Div( children = [
                 # dotplot (interactive with slider)
-                dcc.Graph(id="survivor-graph4",
-                        figure=survivor_fig)
+                dcc.Graph(id="dotplot-graph")
             ], className="EOMdashapp-Div--gridbox"),
         ], className="EOMdashapp-Div--Right-column"),
     ], className="EOMdashapp-Div--main-box")
@@ -120,7 +112,7 @@ EOM_dashapp.layout = html.Div([
 
 
 ################################################################
-# callback: create_linechart
+# callback: create linechart
 ################################################################
 @EOM_dashapp.callback(
     Output("line-graph", "figure"),
@@ -131,6 +123,19 @@ def update_linegraph(selected_stat):
     stat_alltime_max = scraper.get_max_stat_from_df(selected_stat, "EOM", max_alltime)
     fig = linegraph.Create_LineGraph(selected_stat, stats_last10, stat_alltime_max)
     return fig
+
+################################################################
+# callback: create dotplot
+################################################################
+@EOM_dashapp.callback(
+    Output("dotplot-graph", "figure"),
+    Input("slider", "value")
+)
+def update_dotplot(selected_game):
+    minmax_norm_of_selected_game = scraper.minmax_normalize(min_last10, max_last10, list_of_10_dfs[selected_game], "EOM")
+    fig = dotplot.Create_EOM_Dotplot(minmax_norm_of_selected_game)
+    return fig
+
 
 ################################################################
 ################################################################
