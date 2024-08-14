@@ -6,6 +6,7 @@ def Create_Survivor_Graph(EOM_df):
         "x_labels" : ["Deaths", "Stims Used"],
         "x" : [0,1],
         "stats" : [EOM_df["eom_deaths"][0], EOM_df["eom_stims_used"][0]],
+        "colors": [metadata.dict_of_colors["dark-blue"], metadata.dict_of_colors["light-blue"]]
     }
     
     fig = pltgo.Figure(
@@ -14,7 +15,7 @@ def Create_Survivor_Graph(EOM_df):
                 name="Survival Stats",
                 x=survivor_data["x"],
                 y=survivor_data["stats"],
-                marker_color=metadata.dict_of_colors["dark-yellow"],
+                marker_color=survivor_data["colors"],
                 customdata=survivor_data["x_labels"],
                 hovertemplate="%{customdata}: %{y}<extra></extra>"
             )
@@ -22,8 +23,8 @@ def Create_Survivor_Graph(EOM_df):
         layout=pltgo.Layout(
             title="<b>Survival Stats</b>",
             title_x = 0.5,
-            xaxis_title = "<b>Survival Stat</b>",
-            yaxis_title = "<b>Count</b>",
+            xaxis_title = "<b>Survival Stat<br></b>",
+            yaxis_title = "<b><br>Count</b>",
             font=dict(
                 family="monospace",
                 size=25,
@@ -38,21 +39,18 @@ def Create_Survivor_Graph(EOM_df):
                 tickvals=survivor_data["x"],
                 ticktext=survivor_data["x_labels"]
             ),
-            paper_bgcolor=metadata.dict_of_colors["light-black"],
-            plot_bgcolor=metadata.dict_of_colors["black"],
-            legend=dict(
-                x=0.3,
-                y=0.1,
-                xref="paper",
-                yref="container",
-                orientation="h",
-                font=dict(
-                    color=metadata.dict_of_colors["white"]
-                )
-            )
+            paper_bgcolor=metadata.dict_of_colors["black"],
+            plot_bgcolor=metadata.dict_of_colors["light-black"],
         )
     )
-    fig.update_xaxes(ticks="outside", linecolor=metadata.dict_of_colors["black"])
-    fig.update_yaxes(ticks="outside", gridcolor=metadata.dict_of_colors["light-black"])
+    fig.update_xaxes(
+        ticks="outside", 
+        linecolor=metadata.dict_of_colors["grey"],
+    )
+    fig.update_yaxes(
+        ticks="outside", 
+        linecolor=metadata.dict_of_colors["grey"],
+        gridcolor=metadata.dict_of_colors["grey"],
+    )
     fig.update_traces(width=0.5)
     return fig
