@@ -46,67 +46,69 @@ EOM_dashapp.layout = html.Div([
     # Div Level 1 - Main Column - Grid
     html.Div( children = [
         
-        # Div Level 2 - Left/Middle column
+        # Div Level 2 - slider row
+        html.Div( children = [
+            # slider
+            dcc.Slider(
+                min=-(num_dfs_loaded-1),
+                max=0,
+                step=1,
+                marks={i: f"Last Mission" if i == 0 else str(i) + " Games" for i in range(-(num_dfs_loaded-1),1)},
+                value=0,
+                id="slider"
+            )
+        ], className="EOMdashapp-Div--slider"),
+
+        # Div Level 2 - graphs row
         html.Div( children= [
 
-            # Div Level 3 - Top row
+            # Div Level 3 - Left/Middle Column
             html.Div( children = [
 
-                # Div Level 4 - Left gridbox
-                html.Div( children = [
-                    # accuracy-graph (static)
-                    dcc.Graph(id="accuracy-graph",
-                        figure=accuracy_fig)
-                ], className="EOMdashapp-Div--gridbox"),
-
-                # Div Level 4 - Right gridbox
-                html.Div( children = [
-                    # survivor-graph (static)
-                    dcc.Graph(id="survivor-graph",
-                        figure=survivor_fig)
-                ], className="EOMdashapp-Div--gridbox"),
-            ], className="EOMdashapp-Div--LMC-Top-row"),
-
-            # Div Level 3 - Middle/Bottom row
-            html.Div( children = [
-                
                 # Div Level 4 - Top row
                 html.Div( children = [
-                    # line-graph (interactive with dropdown)
-                    dcc.Graph(id="line-graph")
-                ], className="EOMdashapp-Div--gridbox"),
 
-                # Div Level 4 - Bottom row
+                    # Div Level 5 - Left gridbox
+                    html.Div( children = [
+                        # accuracy-graph (static)
+                        dcc.Graph(id="accuracy-graph",
+                            figure=accuracy_fig)
+                    ], className="EOMdashapp-Div--gridbox"),
+
+                    # Div Level 5 - Right gridbox
+                    html.Div( children = [
+                        # survivor-graph (static)
+                        dcc.Graph(id="survivor-graph",
+                            figure=survivor_fig)
+                    ], className="EOMdashapp-Div--gridbox"),
+                ], className="EOMdashapp-Div--LMC-Top-row"),
+
+                # Div Level 4 - Middle/Bottom row
                 html.Div( children = [
-                    # dropdown - for line-graph
-                    dcc.Dropdown(metadata.list_of_EOM_strats, "Kills", clearable=False, id="dropdown")
-                ], className="EOMdashapp-Div--dropdown"),
-                
-            ], className="EOMdashapp-Div--LMC-Bottom-row"),
-        ], className="EOMdashapp-Div--LeftMiddle-column"),
-        
-        # Div Level 2 - Right column
-        html.Div( children= [
+                    
+                    # Div Level 5 - Top row
+                    html.Div( children = [
+                        # line-graph (interactive with dropdown)
+                        dcc.Graph(id="line-graph")
+                    ], className="EOMdashapp-Div--gridbox"),
 
-            # Div Level 3 - Top row
-            html.Div( children = [
-                # slider - for dotplot
-                dcc.Slider(
-                    min=-(num_dfs_loaded-1),
-                    max=0,
-                    step=1,
-                    marks={i: f"Last Mission" if i == 0 else str(i) + " Games" for i in range(-(num_dfs_loaded-1),1)},
-                    value=0,
-                    id="slider"
-                )
-            ], className="EOMdashapp-Div--slider"),
+                    # Div Level 5 - Bottom row
+                    html.Div( children = [
+                        # dropdown - for line-graph
+                        dcc.Dropdown(metadata.list_of_EOM_strats, "Kills", clearable=False, id="dropdown")
+                    ], className="EOMdashapp-Div--dropdown"),
+                    
+                ], className="EOMdashapp-Div--LMC-Bottom-row"),
+            ], className="EOMdashapp-Div--LeftMiddle-column"),
 
-            # Div Level 3 - Bottom row
-            html.Div( children = [
-                # dotplot (interactive with slider)
-                dcc.Graph(id="dotplot-graph")
-            ], className="EOMdashapp-Div--gridbox"),
-        ], className="EOMdashapp-Div--Right-column"),
+            # Div Level 3 - Right column
+            html.Div( children= [
+                html.Div( children = [
+                    # dotplot (interactive with slider)
+                    dcc.Graph(id="dotplot-graph")
+                ], className="EOMdashapp-Div--gridbox"), 
+            ], className="EOMdashapp-Div--Right-column"),
+        ], className="EOMdashapp-Div--graphs-row")
     ], className="EOMdashapp-Div--main-box")
 ], className="EOMdashapp-Div--base")
 
