@@ -1,7 +1,16 @@
+body {
+    background-color: #373836; /* metadata.dict_of_colors["light-black"] */
+}
+
+.EOMdashapp-Div--base {
+    display: flex;
+    flex-direction: column;
+}
 
 .EOMdashapp-Div--title {
     font-family: monospace;
     font-weight: bold;
+    color: #F0EFEA; /* metadata.dict_of_colors["white"] */
     font-size: 4em;
     text-align: center;
     height: 100px;
@@ -24,21 +33,18 @@
     display: grid;
     grid-template-columns: 33vw 33vw;
     grid-template-rows: 30vh;
-    border: thin lightgrey solid;
 }
 
 .EOMdashapp-Div--LMC-Bottom-row {
     display: grid;
     grid-template-columns: 66vw;
     grid-template-rows: 15vh 45vh;
-    border: thin lightgrey solid;
 }
 
 .EOMdashapp-Div--Right-column {
     display: grid;
     grid-template-columns: 33vw;
     grid-template-rows: 15vh 75vh;
-    border: thin lightgrey solid;
 }
 
 .EOMdashapp-Div--gridbox {
