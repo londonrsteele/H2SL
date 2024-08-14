@@ -130,5 +130,6 @@ dict_of_colors = {
     "light-black" : "#373836",
     "grey"  : "#64615F",
     "white" : "#F0EFEA",
-    "dark-yellow": "#685E1F" 
+    "dark-yellow": "#685E1F",
+    "yellow" : "#FFE80A"
 }
