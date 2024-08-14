@@ -1,6 +1,8 @@
 import sys
 from dash import *
-from graphing import (stat_scraper, accuracy, survivor, dotplot, metadata)
+from graphing import (stat_scraper, accuracy, survivor, dotplot, linegraph, metadata)
+import pandas as pd
+import plotly.express as pltxp
 import graphing.big_graph as big__graph
 
 # Create Dash app
@@ -78,7 +80,7 @@ EOM_dashapp.layout = html.Div([
                 # Div Level 4 - Top row
                 html.Div( children = [
                     # dropdown - for line-graph
-                    dcc.Dropdown(metadata.list_of_EOM_strats, id="dropdown")
+                    dcc.Dropdown(metadata.list_of_EOM_strats, "Kills", id="dropdown")
                 ], className="EOMdashapp-Div--gridbox"),
 
                 # Div Level 4 - Bottom row
@@ -108,7 +110,7 @@ EOM_dashapp.layout = html.Div([
             ], className="EOMdashapp-Div--gridbox"),
         ], className="EOMdashapp-Div--Right-column"),
     ], className="EOMdashapp-Div--main-box")
-], style={"display":"flex", "flexDirection":"column"})
+], className="EOMdashapp-Div--base")
 
 
 ################################################################
@@ -118,10 +120,10 @@ EOM_dashapp.layout = html.Div([
     Output("line-graph", "figure"),
     Input("dropdown", "value")
 )
-def update_figure(selected_stat):
-    fig = accuracy_fig(EOM_df)
+def update_linegraph(selected_stat):
+    stats_last10 = scraper.get_last10_stat_list(selected_stat, "EOM", list_of_10_dfs)
+    fig = linegraph.Create_LineGraph(stats_last10)
     return fig
-
 
 ################################################################
 ################################################################
