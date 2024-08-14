@@ -26,7 +26,7 @@ body {
 
 .EOMdashapp-Div--slider {
     display: grid;
-    grid-template-columns: 99vw;
+    grid-template-columns: auto;
     grid-column-start: 1;
     grid-column-end: 3;
     grid-template-rows: 100px;
@@ -47,11 +47,13 @@ body {
     display: grid;
     grid-template-columns: 66vw;
     grid-template-rows: 30vh 50vh;
+    justify-items: center;
 }
 
 .EOMdashapp-Div--LMC-Top-row {
     display: grid;
-    grid-template-columns: 33vw 33vw;
+    grid-template-columns: 30vw 30vw;
+    column-gap: 3vw;
     grid-template-rows: 30vh;
 }
 
