@@ -281,12 +281,18 @@ class Stat_Scraper():
                 case "": return ""
 
     ################################################################
-    # Stat_Scraper member function: get_last10_strat_list
+    # Stat_Scraper member function: get_last10_stat_list
     ################################################################
-    def get_last10_stat_list(self, strat, type, list_of_10_dfs):
-        df_strat = self.get_dfstatname_from_metadata(strat, type)
+    def get_last10_stat_list(self, stat, type, list_of_10_dfs):
+        df_strat = self.get_dfstatname_from_metadata(stat, type)
         stats_last10 = []
         for df in list_of_10_dfs:
             stats_last10.append(df[df_strat][0])
-        print("stats: " + str(stats_last10))
         return stats_last10
+    
+    ################################################################
+    # Stat_Scraper member function: get_max_stat
+    ################################################################
+    def get_max_stat_from_df(self, stat, type, max_stats_df):
+        stat_coded_name = self.get_dfstatname_from_metadata(stat, type)
+        return max_stats_df[stat_coded_name][0]
