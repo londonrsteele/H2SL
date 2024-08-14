@@ -41,7 +41,7 @@ def Create_Accuracy_Graph(EOM_df):
         layout=pltgo.Layout(
             title="<b>Shots Accuracy</b>",
             title_x = 0.5,
-            yaxis_title = "<b>Shots</b>",
+            yaxis_title = "<b><br>Shots</b>",
             font=dict(
                 family="monospace",
                 size=25,
@@ -50,21 +50,23 @@ def Create_Accuracy_Graph(EOM_df):
             hoverlabel={
                 "font_size":18
             },
-            paper_bgcolor=metadata.dict_of_colors["light-black"],
-            plot_bgcolor=metadata.dict_of_colors["black"],
+            paper_bgcolor=metadata.dict_of_colors["black"],
+            plot_bgcolor=metadata.dict_of_colors["light-black"],
             legend=dict(
-                x=0.3,
-                y=0.1,
-                xref="paper",
-                yref="container",
-                orientation="h",
                 font=dict(
                     color=metadata.dict_of_colors["white"]
                 )
             )
         )
     )
-    fig.update_xaxes(showticklabels=False, linecolor=metadata.dict_of_colors["black"])
-    fig.update_yaxes(ticks="outside", gridcolor=metadata.dict_of_colors["light-black"])
+    fig.update_xaxes(
+        showticklabels=False, 
+        linecolor=metadata.dict_of_colors["grey"],
+    )
+    fig.update_yaxes(
+        ticks="outside", 
+        linecolor=metadata.dict_of_colors["grey"],
+        gridcolor=metadata.dict_of_colors["grey"],
+    )
     fig.update_traces(textposition="outside", width=0.5)
     return fig
