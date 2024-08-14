@@ -1,5 +1,5 @@
 import plotly.graph_objects as pltgo
-import plotly.express as pltxp
+from graphing import metadata
 
 def Create_Accuracy_Graph(EOM_df):
     # EOM Accuracy = x%
@@ -19,17 +19,19 @@ def Create_Accuracy_Graph(EOM_df):
                 x=shots_data["x"],
                 y=shots_data["Shots"][0],
                 offsetgroup=0,
-                marker_color=pltxp.colors.qualitative.G10[8]
+                marker_color=metadata.dict_of_colors["grey"],
+                hovertemplate = "Shots Fired: %{y}<extra></extra>"
             ),
             pltgo.Bar(
                 name="Shots Hit",
                 x=shots_data["x"],
                 y=shots_data["Shots"][1],
                 offsetgroup=0,
-                marker_color=pltxp.colors.qualitative.G10[8],
-                text=shots_data["Accuracy"],
+                marker_color=metadata.dict_of_colors["dark-yellow"],
+                hovertemplate = "Shots Hit: %{y}<extra></extra>",
+                text="<b>"+str(shots_data["Accuracy"])+"</b>",
                 textfont=dict(
-                    color="white",
+                    color=metadata.dict_of_colors["white"],
                     family="monospace",
                     size=25
                 ),
@@ -37,14 +39,32 @@ def Create_Accuracy_Graph(EOM_df):
             )
         ],
         layout=pltgo.Layout(
-            title="Shots Accuracy",
-            xaxis_title = "Shots",
+            title="<b>Shots Accuracy</b>",
+            title_x = 0.5,
+            yaxis_title = "<b>Shots</b>",
             font=dict(
                 family="monospace",
-                size=25
+                size=25,
+                color=metadata.dict_of_colors["white"]
+            ),
+            hoverlabel={
+                "font_size":18
+            },
+            paper_bgcolor=metadata.dict_of_colors["light-black"],
+            plot_bgcolor=metadata.dict_of_colors["black"],
+            legend=dict(
+                x=0.3,
+                y=0.1,
+                xref="paper",
+                yref="container",
+                orientation="h",
+                font=dict(
+                    color=metadata.dict_of_colors["white"]
+                )
             )
         )
     )
-    fig.update_xaxes(showticklabels=False)
-    fig.update_traces(textposition="outside", width=0.7)
+    fig.update_xaxes(showticklabels=False, linecolor=metadata.dict_of_colors["black"])
+    fig.update_yaxes(ticks="outside", gridcolor=metadata.dict_of_colors["light-black"])
+    fig.update_traces(textposition="outside", width=0.5)
     return fig
