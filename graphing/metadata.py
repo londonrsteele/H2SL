@@ -126,10 +126,11 @@ list_of_missions = [
 
 dict_of_colors = {
     "black" : "#070707",
-    # "light-black" : "#171715",
     "light-black" : "#373836",
     "grey"  : "#64615F",
     "white" : "#F0EFEA",
     "dark-yellow": "#685E1F",
-    "yellow" : "#FFE80A"
+    "yellow" : "#FFE80A",
+    "dark-blue": "#082844",
+    "light-blue": "#1EC6D8"
 }
