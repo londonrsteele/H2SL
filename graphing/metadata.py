@@ -123,3 +123,12 @@ list_of_missions = [
     "Eliminate Automation Factory Strider",
     "Destroy Command Bunkers"
 ]
+
+dict_of_colors = {
+    "black" : "#070707",
+    # "light-black" : "#171715",
+    "light-black" : "#373836",
+    "grey"  : "#64615F",
+    "white" : "#F0EFEA",
+    "dark-yellow": "#685E1F" 
+}
