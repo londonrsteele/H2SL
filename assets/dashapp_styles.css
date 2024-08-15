@@ -227,7 +227,7 @@ body {
 
 .CARdashapp-Div--Top-row {
     display: grid;
-    grid-template-columns: 21vw 21vw 21vw 21vw;
+    grid-template-columns: 21vw 21vw 21vw 21vw; /* = 84 + 6 = 90 */
     column-gap: 2vw;
     grid-template-rows: 32vh;
     background-color: #070707; /* metadata.dict_of_colors["black"] */;
@@ -251,7 +251,6 @@ body {
 .CARdashapp-Div--Bottom-row {
     display: grid;
     grid-template-columns: 45vw 45vw;
-    column-gap: 5vw;
     grid-template-rows: 48vh;
 }
 

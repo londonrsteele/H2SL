@@ -14,10 +14,7 @@ def Create_Stratagem_Graph(CAR_df):
                    CAR_df["CAR_eagle_strats_used"][0], CAR_df["CAR_supply_strats_used"][0],
                    CAR_df["CAR_reinforce_strats_used"][0]
                 ],
-        "colors": [metadata.dict_of_colors["yellow"], metadata.dict_of_colors["light-blue"],
-                   metadata.dict_of_colors["white"], metadata.dict_of_colors["red"],
-                   metadata.dict_of_colors["dark-yellow"]
-                ]
+        "colors": metadata.dict_of_colors["light-blue"],
     }
 
     fig = pltgo.Figure(
@@ -57,7 +54,7 @@ def Create_Stratagem_Graph(CAR_df):
     fig.update_xaxes(
         ticks="outside", 
         linecolor=metadata.dict_of_colors["grey"],
-        zerolinecolor=metadata.dict_of_colors["grey"]
+        zerolinecolor=metadata.dict_of_colors["light-black"]
     )
     fig.update_yaxes(
         ticks="outside", 
