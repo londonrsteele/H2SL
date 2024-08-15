@@ -73,7 +73,7 @@ dashapp.layout = html.Div([
                 
                 # Div Level 4 - Top row - 3rd gridbox
                 html.Div( children = [
-                    dcc.Graph(id="kills-fig")
+                    dcc.Graph(id="missions-fig")
                 ],className="dashapp-Div--TopRow-gridbox"),
                 
                 # Div Level 4 - Top row - 4th gridbox
@@ -87,7 +87,7 @@ dashapp.layout = html.Div([
 
                 # Div Level 4 - Left gridbox
                 html.Div( children = [
-                    dcc.Graph(id="missions-fig")
+                    dcc.Graph(id="kills-fig")
                 ], className="dashapp-Div--gridbox"), 
                 
                 # Div Level 4 - Middle gridbox

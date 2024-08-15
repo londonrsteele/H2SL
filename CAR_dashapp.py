@@ -184,7 +184,7 @@ def update_accuracy(selected_game):
     Input("slider", "value")
 )
 def update_missions(selected_game):
-    fig = missions.Create_Missions_Graph(list_of_10_dfs, abs(selected_game))
+    fig = missions.Create_Missions_CAR_Graph(list_of_10_dfs, abs(selected_game))
     return fig
 
 ################################################################
