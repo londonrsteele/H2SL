@@ -1,5 +1,6 @@
 import sys
 from dash import *
+import dash_daq as daq
 from graphing import (accuracy, missions, kill, stratagems,
                       metadata, stat_scraper)
 import graphing.big_graph as big__graph
@@ -69,9 +70,30 @@ CAR_dashapp.layout = html.Div([
 
                 # Div Level 4 - 4th gridbox
                 html.Div( children=[
-                    
-                ], className="CARdashapp-Div--gridbox")
+
+                    # Div Level 5 - LED Display (TOP)
+                    html.Div( children= [
+                        daq.LEDDisplay(
+                            id="mission-LED-display",
+                            label="In-Mission Time",
+                            value="000:00:00",
+                            color=metadata.dict_of_colors["yellow"],
+                            backgroundColor=metadata.dict_of_colors["light-black"]
+                        )
+                    ], className="CARdashapp-Div--gridbox"),
+                    # Div Level 5 - LED Display (BOTTOM)
+                    html.Div( children=[
+                        daq.LEDDisplay(
+                            id="xp-LED-display",
+                            label="Total XP Earned",
+                            value="0",
+                            color=metadata.dict_of_colors["red"],
+                            backgroundColor=metadata.dict_of_colors["light-black"]
+                        )
+                    ], className="CARdashapp-Div--gridbox")
+                ], className="CARdashapp-Div--4th-gridbox")
             ], className="CARdashapp-Div--Top-row"),
+
             # Div Level 3 - Bottom row
             html.Div( children=[
                 
@@ -135,6 +157,27 @@ def update_missions(selected_game):
     fig = missions.Create_Missions_Graph(list_of_10_dfs, abs(selected_game))
     return fig
 
+################################################################
+# callback: create in-mission time
+################################################################
+@CAR_dashapp.callback(
+    Output("mission-LED-display", "value"),
+    Input("slider", "value")
+)
+def update_inmission_time(selected_game):
+    inmission_time = list_of_10_dfs[abs(selected_game)]["CAR_inmission_time"][0]
+    return inmission_time
+
+################################################################
+# callback: create total xp earned
+################################################################
+@CAR_dashapp.callback(
+    Output("xp-LED-display", "value"),
+    Input("slider", "value")
+)
+def update_total_xp_earned(selected_game):
+    total_xp_earned = list_of_10_dfs[abs(selected_game)]["CAR_total_XP_earned"][0]
+    return total_xp_earned
 
 ################################################################
 ################################################################
