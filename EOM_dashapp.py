@@ -1,9 +1,6 @@
 import sys
 from dash import *
 from graphing import (stat_scraper, accuracy, survivor, dotplot, linegraph, metadata)
-import pandas as pd
-import plotly.express as pltxp
-import graphing.big_graph as big__graph
 
 # Create Dash app
 EOM_dashapp = Dash()
