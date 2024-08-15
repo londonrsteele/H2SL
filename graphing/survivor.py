@@ -6,7 +6,7 @@ def Create_Survivor_Graph(EOM_df):
         "x_labels" : ["Deaths", "Stims Used"],
         "x" : [0,1],
         "stats" : [EOM_df["eom_deaths"][0], EOM_df["eom_stims_used"][0]],
-        "colors": [metadata.dict_of_colors["dark-blue"], metadata.dict_of_colors["light-blue"]]
+        "colors": [metadata.dict_of_colors["red"], metadata.dict_of_colors["light-blue"]]
     }
     
     fig = pltgo.Figure(

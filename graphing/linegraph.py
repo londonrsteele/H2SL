@@ -9,9 +9,9 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
     x_list = []
     for i in range(-len(stats_last10)+1,0):
         if i == -1:
-            x_list.append(str(i) +"\nGame")
+            x_list.append(str(i) +" Game")
         else:
-            x_list.append(str(i) +"\nGames")
+            x_list.append(str(i) +" Games")
     x_list.append("Last Mission")
     # Make list to represent max_all_time line
     max_all_time_list = []
@@ -58,8 +58,8 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
     fig.update_layout(
         title="<b>Statistics Over Last " + str(len(stats_last10)) + " Games</b>",
         title_x=0.5,
-        xaxis_title="<b>Last " + str(len(stats_last10)) + " Games</b>",
-        yaxis_title="<b>" +  selected_stat + "</b>",
+        xaxis_title="<b>Last " + str(len(stats_last10)) + " Games<br></b>",
+        yaxis_title="<b><br>" +  selected_stat + "</b>",
         font=dict(
                 family="monospace",
                 size=25,
@@ -69,8 +69,8 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
         hoverlabel={
             "font_size":18
         },
-        paper_bgcolor=metadata.dict_of_colors["light-black"],
-        plot_bgcolor=metadata.dict_of_colors["black"],
+        paper_bgcolor=metadata.dict_of_colors["dark-blue"],
+        plot_bgcolor=metadata.dict_of_colors["light-black"],
         legend=dict(
             font=dict(
                 color=metadata.dict_of_colors["white"]
@@ -80,13 +80,13 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
     fig.update_xaxes(
         ticks="outside",
         showspikes=True, 
-        linecolor=metadata.dict_of_colors["black"], 
-        gridcolor=metadata.dict_of_colors["light-black"]
+        linecolor=metadata.dict_of_colors["light-black"], 
+        gridcolor=metadata.dict_of_colors["grey"]
     )
     fig.update_yaxes(
         ticks="outside", 
-        linecolor=metadata.dict_of_colors["black"], 
-        gridcolor=metadata.dict_of_colors["light-black"]
+        linecolor=metadata.dict_of_colors["light-black"], 
+        gridcolor=metadata.dict_of_colors["grey"]
     )
     fig.update_traces(textposition="top center")
     return fig
