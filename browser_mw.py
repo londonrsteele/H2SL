@@ -61,8 +61,8 @@ if __name__ == "__main__":
 
     # QMainWindow using QWidget as central widget
     window = BrowserMW()
-    # window.showMaximized()
-    window.resize(1920, 1080)
+    window.showMaximized()
+    # window.resize(1920, 1080)
     window.setWindowTitle("Helldivers 2 Stats Logger Dashboard")
     window.show()
 
