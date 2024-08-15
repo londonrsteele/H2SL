@@ -13,19 +13,26 @@ def Create_Missions_Graph(list_of_10dfs, selected_log):
             previous_log_percent_won = int(previous_log_wins/previous_log_played*100)
         else:
             previous_log_percent_won = 0
-    # if no previous log file exists, set previous_log_wins and previous_log_percent = 0
+        previous_log_successful_extractions = previous_log["CAR_successful_extractions"][0]
+        previous_log_objectives_completed = previous_log["CAR_objectives_completed"][0]
+    # if no previous log file exists, set previous stats = 0
     else:
         previous_log_wins = 0
         previous_log_percent_won = 0
-    
+        previous_log_successful_extractions = 0
+        previous_log_objectives_completed = 0
+
     # Get current log's stats
     CAR_wins = CAR_df["CAR_missions_won"][0]
     CAR_played = CAR_df["CAR_missions_played"][0]
     if CAR_played != 0:
-        percent_won = int(CAR_wins/CAR_played*100)
+        CAR_percent_won = int(CAR_wins/CAR_played*100)
     else:
-        percent_won = 0
-    
+        CAR_percent_won = 0
+
+    CAR_successful_extractions = CAR_df["CAR_successful_extractions"][0]
+    CAR_objectives_completed = CAR_df["CAR_objectives_completed"][0]
+
     # Create figure
     fig = pltgo.Figure()
     # Raw games number
@@ -33,7 +40,7 @@ def Create_Missions_Graph(list_of_10dfs, selected_log):
         pltgo.Indicator(
             title={"text":"Missions Won"},
             mode="gauge+number+delta",
-            domain={ "x": [0,1], "y": [0.6,1]},
+            domain={ "x": [0,0.4], "y": [0.6,1]},
             value=CAR_wins,
             gauge={
                 "axis": {"range": [0, CAR_played], "tickcolor": metadata.dict_of_colors["grey"]},
@@ -50,16 +57,45 @@ def Create_Missions_Graph(list_of_10dfs, selected_log):
         pltgo.Indicator(
             title={"text":"Percent Won"},
             mode="gauge+number+delta",
-            domain={ "x": [0,1], "y": [0,0.4]},
-            value=percent_won,
+            domain={ "x": [0.6,1], "y": [0.6,1]},
+            value=CAR_percent_won,
             gauge={
                 "axis": {"range": [0, 100], "tickcolor": metadata.dict_of_colors["grey"]},
                 "bar": {"color" : metadata.dict_of_colors["yellow"]}
+            },
+            number={
+                "suffix": "%"
             },
             delta={
                 "reference": previous_log_percent_won,
                 "relative": False,
                 "suffix": "%"
+            }
+        )
+    )
+    # Successful Extractions (number and delta)
+    fig.add_trace(
+        pltgo.Indicator(
+            title={"text":"Successful Extractions"},
+            mode="number+delta",
+            domain={ "x": [0,0.4], "y": [0,0.4]},
+            value=CAR_successful_extractions,
+            delta={
+                "reference": previous_log_successful_extractions,
+                "relative": False,
+            }
+        )
+    )
+    # Objectives completed (number and delta)
+    fig.add_trace(
+        pltgo.Indicator(
+            title={"text":"Objectives Completed"},
+            mode="number+delta",
+            domain={ "x": [0.6,1], "y": [0,0.4]},
+            value=CAR_objectives_completed,
+            delta={
+                "reference": previous_log_objectives_completed,
+                "relative": False,
             }
         )
     )
