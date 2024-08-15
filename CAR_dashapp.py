@@ -55,7 +55,7 @@ CAR_dashapp.layout = html.Div([
                 
                 # Div Level 4 - 1st gridbox
                 html.Div( children=[
-
+                    dcc.Graph(id="accuracy-fig")
                 ], className="CARdashapp-Div--gridbox"),
 
                 # Div Level 4 - 2nd gridbox
@@ -114,7 +114,16 @@ def update_stratagems(selected_game):
     fig = stratagems.Create_Stratagem_Graph(list_of_10_dfs[abs(selected_game)])
     return fig
 
-
+################################################################
+# callback: create accuracy
+################################################################
+@CAR_dashapp.callback(
+    Output("accuracy-fig", "figure"),
+    Input("slider", "value")
+)
+def update_accuracy(selected_game):
+    fig = accuracy.Create_Accuracy_Graph(list_of_10_dfs[abs(selected_game)], "CAR")
+    return fig
 
 ################################################################
 ################################################################

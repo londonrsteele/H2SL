@@ -115,7 +115,7 @@ EOM_dashapp.layout = html.Div([
     Input("slider", "value")
 )
 def update_accuracy(selected_game):
-    fig = accuracy.Create_Accuracy_Graph(list_of_10_dfs[abs(selected_game)])
+    fig = accuracy.Create_Accuracy_Graph(list_of_10_dfs[abs(selected_game)], "EOM")
     return fig
 
 ################################################################

@@ -1,17 +1,36 @@
 import plotly.graph_objects as pltgo
 from graphing import metadata
 
-def Create_Accuracy_Graph(EOM_df):
-    # EOM Accuracy = x%
-    # EOM Shots Fired = y
-    # EOM Shots Hit = z
-    shots_data = {
-        "x" : [0, 0],
-        "Shots" : [EOM_df["eom_shots_fired"], EOM_df["eom_shots_hit"]],
-        "labels" : ["Shots Fired", "Shots Hit"],
-        "Accuracy": str("Accuracy = " + str(EOM_df["eom_accuracy"][0]) + "%")
-    }
-    
+def Create_Accuracy_Dataset(df, type):
+    if type == "EOM":
+        # EOM Accuracy = x%
+        # EOM Shots Fired = y
+        # EOM Shots Hit = z
+        shots_data = {
+            "x" : [0, 0],
+            "Shots" : [df["eom_shots_fired"], df["eom_shots_hit"]],
+            "labels" : ["Shots Fired", "Shots Hit"],
+            "Accuracy": str("Accuracy = " + str(df["eom_accuracy"][0]) + "%")
+        }
+    elif type == "CAR":
+        # CAR Shots Fired = y
+        # CAR Shots Hit = z
+        # CAR Accuracy = CAR Shots Fired / CAR Shots Hit
+        shots_data = {
+            "x" : [0, 0],
+            "Shots" : [df["CAR_shots_fired"], df["CAR_shots_hit"]],
+            "labels" : ["Shots Fired", "Shots Hit"],
+            "Accuracy": str("Accuracy = " + str(int(df["CAR_shots_hit"][0]/df["CAR_shots_fired"][0]*100)) + "%")
+        }
+
+    return shots_data
+   
+
+def Create_Accuracy_Graph(df, type):
+    # Create dataset to use for graph
+    shots_data=Create_Accuracy_Dataset(df, type)
+
+    # Create figure
     fig = pltgo.Figure(
         data=[
             pltgo.Bar(
