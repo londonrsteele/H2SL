@@ -20,9 +20,6 @@ def Create_Stratagem_Graph(CAR_df):
                 ]
     }
 
-    # fig = pltxp.bar(stratagems_data, x="x_labels", y="stats",
-    #                 labels={"x_labels":"Stratagems Used", "stats":"Count"},
-    #                 text_auto=True)
     fig = pltgo.Figure(
         data=[
             pltgo.Bar(
@@ -70,6 +67,4 @@ def Create_Stratagem_Graph(CAR_df):
     )
     fig.update_traces(width=0.5)
     return fig
-    return fig
-
     
