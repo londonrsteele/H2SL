@@ -43,14 +43,14 @@ def Create_EOM_Dotplot(minmaxed_stats):
         xaxis_tickformat=".0%",
         font=dict(
             family="sans-serif",
-            size=25,
+            size=18,
             color=metadata.dict_of_colors["white"]
         ),
         paper_bgcolor=metadata.dict_of_colors["black"],
         plot_bgcolor=metadata.dict_of_colors["light-black"],
         hovermode="closest",
         hoverlabel={
-            "font_size":18
+            "font_size":14
         }
     )
     fig.update_xaxes(

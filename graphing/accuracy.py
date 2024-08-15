@@ -68,11 +68,11 @@ def Create_Accuracy_Graph(df, type):
             yaxis_title = "<b><br>Shots</b>",
             font=dict(
                 family="sans-serif",
-                size=25,
+                size=18,
                 color=metadata.dict_of_colors["white"]
             ),
             hoverlabel={
-                "font_size":18
+                "font_size":14
             },
             paper_bgcolor=metadata.dict_of_colors["black"],
             plot_bgcolor=metadata.dict_of_colors["light-black"],

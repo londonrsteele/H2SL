@@ -48,11 +48,11 @@ def Create_Kill_Graph(CAR_df):
             yaxis_title = "<b><br>Count</b>",
             font=dict(
                 family="sans-serif",
-                size=25,
+                size=18,
                 color=metadata.dict_of_colors["white"]
             ),
             hoverlabel={
-                "font_size":18
+                "font_size":14
             },
             hovermode="x",
             xaxis=dict(

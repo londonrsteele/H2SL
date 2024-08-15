@@ -90,7 +90,7 @@ body {
     justify-items: center;
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 18px;
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */
     background-color: #082844; /* metadata.dict_of_colors["dark-blue"] */
 }
@@ -180,12 +180,12 @@ body {
     font-family: sans-serif;
     font-weight: bold;
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */
-    font-size: 25px;
+    font-size: 18px;
 }
 
 /* Below is for Titles of LED Displays */
 label {
-    font-size: 25px !important;
+    font-size: 18px !important;
 }
 
 /*******************************/
@@ -243,10 +243,29 @@ label {
     justify-items: center;
 }
 
+.dashapp-Div--TopRow-gridbox {
+    display: grid;
+    grid-template-columns: 21vw;
+    grid-template-rows: 32vh;
+    padding: 5px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: #F0EFEA; /* metadata.dict_of_colors["white"] */
+    font-size: 18px;
+}
+
 .dashapp-Div--BottomRow {
     display: grid;
     grid-template-columns: 30vw 30vw 30vw;
+    column-gap: 3vw;
     grid-template-rows: 48vh;
+    justify-items: center;
+}
+
+.dashapp-Div--MiddleBox {
+    display: grid;
+    grid-template-columns: 30vw;
+    grid-template-rows: 45vh 3vh;
     justify-items: center;
 }
 
@@ -258,12 +277,26 @@ label {
     font-family: sans-serif;
     font-weight: bold;
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */
-    font-size: 25px;
+    font-size: 18px;
+}
+
+.dashapp-Div--dropdown {
+    display: grid;
+    grid-template-columns: 25vw;
+    grid-template-rows: 5vh;
+    padding: 5px;
+    align-items: top;
+    justify-items: center;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    color: #F0EFEA; /* metadata.dict_of_colors["white"] */
+    background-color: #082844; /* metadata.dict_of_colors["dark-blue"] */
 }
 
 /* Below is for Titles of LED Displays */
 label {
-    font-size: 25px !important;
+    font-size: 18px !important;
 }
 
 /* Below is CSS for dcc.Slider */
@@ -317,7 +350,7 @@ label {
 }
 
 .rc-slider-mark-text {
-    font-size: 25px;
+    font-size: 18px;
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */
     font-family: monospace;
 }
@@ -326,7 +359,7 @@ label {
 
 .dash-dropdown {
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */
-    width: 45vw;
+    width: 30vw;
 }
 
 .Select-control {

@@ -67,12 +67,12 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
         yaxis_title="<b><br>" +  selected_stat + "</b>",
         font=dict(
                 family="sans-serif",
-                size=25,
+                size=18,
                 color=metadata.dict_of_colors["white"]
             ),
         hovermode="x unified",
         hoverlabel={
-            "font_size":18
+            "font_size":14
         },
         paper_bgcolor=metadata.dict_of_colors["dark-blue"],
         plot_bgcolor=metadata.dict_of_colors["light-black"],
