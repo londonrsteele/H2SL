@@ -58,9 +58,10 @@ body {
 }
 
 .EOMdashapp-Div--LMC-Bottom-row {
+    background-color: #082844; /* metadata.dict_of_colors["dark-blue"] */
     display: grid;
-    grid-template-columns: 66vw;
-    grid-template-rows: 40vh 10vh;
+    grid-template-columns: 63vw;
+    grid-template-rows: 45vh 5vh;
 }
 
 .EOMdashapp-Div--Right-column {
@@ -78,8 +79,8 @@ body {
 
 .EOMdashapp-Div--dropdown {
     display: grid;
-    grid-template-columns: 66vw;
-    grid-template-rows: 12vh;
+    grid-template-columns: 63vw;
+    grid-template-rows: 5vh;
     padding: 5px;
     align-items: top;
     justify-items: center;
@@ -87,6 +88,7 @@ body {
     font-weight: bold;
     font-size: 25px;
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */
+    background-color: #082844; /* metadata.dict_of_colors["dark-blue"] */
 }
 
 /* Below is CSS for dcc.Slider */
