@@ -49,7 +49,7 @@ EOM_dashapp.layout = html.Div([
                 min=-(num_dfs_loaded-1),
                 max=0,
                 step=1,
-                marks={i: f"Last Mission" if i == 0 else str(i) + " Games" for i in range(-(num_dfs_loaded),1)},
+                marks={i: f"Last Mission" if i == 0 else str(i) + " Games" for i in range(-(num_dfs_loaded-1),1)},
                 value=0,
                 id="slider"
             )

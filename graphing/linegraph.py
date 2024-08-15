@@ -13,15 +13,20 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
         else:
             x_list.append(str(i) +" Games")
     x_list.append("Last Mission")
+    
     # Make list to represent max_all_time line
     max_all_time_list = []
     for i in range(-len(stats_last10)+1,1):
         max_all_time_list.append(max_all_time)
+    
     # Make list to represent average line
     average_list = []
     average = sum(stats_last10)/len(stats_last10)
     for i in range(-len(stats_last10)+1,1):
         average_list.append(int(average))
+    
+    # Need to reverse the dataframe so it's in oldest -> newest order
+    bkwd_stats_last10 = stats_last10[::-1]
     
     # Create the Figure
     fig = pltgo.Figure()
@@ -39,7 +44,7 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
         pltgo.Scatter(
             name="Stat Over Time",
             x=x_list,
-            y=stats_last10,
+            y=bkwd_stats_last10,
             mode="lines+markers",
             line=dict(color=metadata.dict_of_colors["white"], width=5),
             hovertemplate = "Game Stat: %{y}<extra></extra>"
