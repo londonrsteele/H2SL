@@ -31,7 +31,7 @@ num_CAR_dfs_loaded = len(list_of_10_CAR_dfs)
 # Use Stat_Scraper to get the min and  max stats of all time - used with linechart
 # Called here instead of in linechart callback so files are only scraped 1x
 min_alltime_EOM, max_alltime_EOM = scraper.get_min_and_max_stats_alltime("EOM")
-min_alltime_EOM, max_alltime_EOM = scraper.get_min_and_max_stats_alltime("CAR")
+min_alltime_CAR, max_alltime_CAR = scraper.get_min_and_max_stats_alltime("CAR")
 
 # Create dashboard layout 
 dashapp.layout = html.Div([
@@ -63,27 +63,49 @@ dashapp.layout = html.Div([
 
                 # Div Level 4 - Top row - 1st gridbox
                 html.Div( children = [
-                ],className="dashapp-Div--gridbox"),
+                    dcc.Graph(id="survivor-fig")
+                ],className="dashapp-Div--TopRow-gridbox"),
+                
                 # Div Level 4 - Top row - 2nd gridbox
                 html.Div( children = [
-                ],className="dashapp-Div--gridbox"),
+                    dcc.Graph(id="accuracy-fig")
+                ],className="dashapp-Div--TopRow-gridbox"),
+                
                 # Div Level 4 - Top row - 3rd gridbox
                 html.Div( children = [
-                ],className="dashapp-Div--gridbox"),
+                    dcc.Graph(id="kills-fig")
+                ],className="dashapp-Div--TopRow-gridbox"),
+                
                 # Div Level 4 - Top row - 4th gridbox
                 html.Div( children = [
-                ],className="dashapp-Div--gridbox")
+                    dcc.Graph(id="stratagems-fig")
+                ],className="dashapp-Div--TopRow-gridbox")
             ], className="dashapp-Div--TopRow"),
 
             # Div Level 3 - Bottom Row
             html.Div( children= [
-                
+
                 # Div Level 4 - Left gridbox
                 html.Div( children = [
+                    dcc.Graph(id="missions-fig")
                 ], className="dashapp-Div--gridbox"), 
+                
                 # Div Level 4 - Middle gridbox
                 html.Div( children = [
-                ], className="dashapp-Div--gridbox"), 
+                    
+                    # Div Level 5 - Line Graph
+                    html.Div( children=[
+                        dcc.Graph(id="line-graph")
+                    ], className="dashapp-Div--gridbox"),
+
+                    # Div Level 5 - Dropdown
+                    html.Div( children = [
+                        # dropdown - for line-graph
+                        dcc.Dropdown(metadata.list_of_EOM_strats, "Kills", clearable=False, id="dropdown")
+                    ], className="dashapp-Div--dropdown"),
+
+                ], className="dashapp-Div--MiddleBox"), 
+                
                 # Div Level 4 - Right gridbox
                 html.Div( children = [
                 ], className="dashapp-Div--gridbox"), 
@@ -92,7 +114,73 @@ dashapp.layout = html.Div([
     ], className="dashapp-Div--main-box")
 ], className="dashapp-Div--base")
 
+################################################################
+# callback: create accuracy - EOM data
+################################################################
+@dashapp.callback(
+    Output("accuracy-fig", "figure"),
+    Input("slider", "value")
+)
+def update_accuracy(selected_game):
+    fig = accuracy.Create_Accuracy_Graph(list_of_10_EOM_dfs[abs(selected_game)], "EOM")
+    return fig
 
+################################################################
+# callback: create kill - CAR data (most recent only)
+################################################################
+@dashapp.callback(
+    Output("kills-fig", "figure"),
+    Input("slider", "value")
+)
+def update_kills(selected_game):
+    fig = kill.Create_Kill_Graph(list_of_10_CAR_dfs[0])
+    return fig
+
+################################################################
+# callback: create stratagem - CAR data (most recent only)
+################################################################
+@dashapp.callback(
+    Output("stratagems-fig", "figure"),
+    Input("slider", "value")
+)
+def update_stratagems(selected_game):
+    fig = stratagems.Create_Stratagem_Graph(list_of_10_CAR_dfs[0])
+    return fig
+
+################################################################
+# callback: create survival - EOM data
+################################################################
+@dashapp.callback(
+    Output("survivor-fig", "figure"),
+    Input("slider", "value")
+)
+def update_survivor(selected_game):
+    fig = survivor.Create_Survivor_Graph(list_of_10_EOM_dfs[abs(selected_game)])
+    return fig
+
+################################################################
+# callback: create missions CAR data (most recent only)
+################################################################
+@dashapp.callback(
+    Output("missions-fig", "figure"),
+    Input("slider", "value")
+)
+def update_missions(selected_game):
+    fig = missions.Create_Missions_Graph(list_of_10_CAR_dfs, 0)
+    return fig
+
+################################################################
+# callback: create linechart - EOM data
+################################################################
+@dashapp.callback(
+    Output("line-graph", "figure"),
+    Input("dropdown", "value")
+)
+def update_linegraph(selected_stat):
+    stats_last10 = scraper.get_last10_stat_list(selected_stat, "EOM", list_of_10_EOM_dfs)
+    stat_alltime_max = scraper.get_max_stat_from_df(selected_stat, "EOM", max_alltime_EOM)
+    fig = linegraph.Create_LineGraph(selected_stat, stats_last10, stat_alltime_max)
+    return fig
 
 ################################################################
 ################################################################
