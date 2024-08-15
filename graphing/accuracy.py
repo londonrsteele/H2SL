@@ -16,11 +16,16 @@ def Create_Accuracy_Dataset(df, type):
         # CAR Shots Fired = y
         # CAR Shots Hit = z
         # CAR Accuracy = CAR Shots Fired / CAR Shots Hit
+        if(df["CAR_shots_fired"][0] == 0):
+            accuracy = 0
+        else:
+            accuracy = int(df["CAR_shots_hit"][0]/df["CAR_shots_fired"][0]*100)
+
         shots_data = {
             "x" : [0, 0],
             "Shots" : [df["CAR_shots_fired"], df["CAR_shots_hit"]],
             "labels" : ["Shots Fired", "Shots Hit"],
-            "Accuracy": str("Accuracy = " + str(int(df["CAR_shots_hit"][0]/df["CAR_shots_fired"][0]*100)) + "%")
+            "Accuracy": str("Accuracy = " + str(accuracy) + "%")
         }
 
     return shots_data
