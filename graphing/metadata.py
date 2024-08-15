@@ -1,3 +1,5 @@
+import matplotlib.colors as mplcolors
+
 list_of_ALL_strats = [
     # Kills
     "Total Kills", # curated
@@ -133,6 +135,20 @@ dict_of_colors = {
     "yellow" : "#FFE80A",
     "dark-blue": "#082844",
     "light-blue": "#1EC6D8",
-    "dark-red": "72000d",
+    "dark-red": "#72000d",
     "red": "#930012"
 }
+
+def convert_to_rgb(color):
+    r = int(color[1:3], 16)
+    g = int(color[3:5], 16)
+    b = int(color[5:7], 16)
+    return "rgb("+str(r)+","+str(g)+","+str(b)+")"
+
+color_scale = [
+    [0.0, convert_to_rgb(dict_of_colors["black"])], 
+    [0.25, convert_to_rgb(dict_of_colors["red"])],
+    [0.50, convert_to_rgb(dict_of_colors["yellow"])],
+    [0.75, convert_to_rgb(dict_of_colors["light-blue"])],
+    [1.0, convert_to_rgb(dict_of_colors["white"])] 
+]
