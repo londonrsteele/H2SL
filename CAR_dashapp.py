@@ -98,7 +98,7 @@ CAR_dashapp.layout = html.Div([
                             id="orbitals-LED-display",
                             label="Orbitals Used",
                             value="0",
-                            color=metadata.dict_of_colors["grey"],
+                            color=metadata.dict_of_colors["white"],
                             backgroundColor=metadata.dict_of_colors["light-black"]
                         )
                     ], className="CARdashapp-Div--gridbox"),
