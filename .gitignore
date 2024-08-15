@@ -23,3 +23,4 @@ graphing/__pycache__/stat_scraper.cpython-311.pyc
 graphing/__pycache__/dotplot.cpython-311.pyc
 assets/__pycache__/SAVE_PATH.cpython-311.pyc
 graphing/__pycache__/linegraph.cpython-311.pyc
+.vscode/settings.json
