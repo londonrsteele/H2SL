@@ -142,7 +142,7 @@ class Stat_Scraper():
         # skip past the non-numeric data entries at beginning of save files
         if type == "EOM":
             start_index = 4
-        if type == "career":
+        if type == "CAR":
             start_index = 2
         if type == "loadout":
             start_index = 2
@@ -178,7 +178,7 @@ class Stat_Scraper():
         # skip past the non-numeric data entries at beginning of save files
         if type == "EOM":
             start_index = 4
-        if type == "career":
+        if type == "CAR":
             start_index = 2
         if type == "loadout":
             start_index = 2
@@ -209,7 +209,7 @@ class Stat_Scraper():
         # skip past the non-numeric data entries at beginning of save files
         if type == "EOM":
             start_index = 4
-        if type == "career":
+        if type == "CAR":
             start_index = 2
         if type == "loadout":
             start_index = 2
