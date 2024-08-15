@@ -231,7 +231,8 @@ label {
 .dashapp-Div--graphs-row {
     display: grid;
     grid-template-columns: 99vw;
-    grid-template-rows: 32vh 48vh;
+    grid-template-rows: 30vh 46vh;
+    row-gap: 2vh;
     justify-items: center;
 }
 
@@ -239,14 +240,14 @@ label {
     display: grid;
     grid-template-columns: 21vw 21vw 21vw 21vw; /* = 84 + 6 = 90 */
     column-gap: 2vw;
-    grid-template-rows: 32vh;
+    grid-template-rows: 30vh;
     justify-items: center;
 }
 
 .dashapp-Div--TopRow-gridbox {
     display: grid;
     grid-template-columns: 21vw;
-    grid-template-rows: 32vh;
+    grid-template-rows: 30vh;
     padding: 5px;
     font-family: sans-serif;
     font-weight: bold;
@@ -256,17 +257,33 @@ label {
 
 .dashapp-Div--BottomRow {
     display: grid;
-    grid-template-columns: 30vw 30vw 30vw;
-    column-gap: 3vw;
-    grid-template-rows: 48vh;
-    justify-items: center;
+    grid-template-columns: 40vw 40vw 14vw;
+    column-gap: 1vw;
+    grid-template-rows: 46vh;
 }
+
+.dashapp-Div--LeftBox {
+    display: grid;
+    grid-template-columns: 40vw;
+    grid-template-rows: 46vh;
+    background-color: #082844; /* metadata.dict_of_colors["dark-blue"] */
+}
+
 
 .dashapp-Div--MiddleBox {
     display: grid;
-    grid-template-columns: 30vw;
-    grid-template-rows: 45vh 3vh;
+    grid-template-columns: 40vw;
+    grid-template-rows: 42vh 4vh;
+    background-color: #082844; /* metadata.dict_of_colors["dark-blue"] */
+}
+
+.dashapp-Div--RightBox {
+    display: grid;
+    grid-template-columns: 14vw;
+    grid-template-rows: 9vh 9hv 9vh 9vh 9vh;
     justify-items: center;
+    align-items: center;
+    background-color: #070707; /* metadata.dict_of_colors["black"] */;
 }
 
 .dashapp-Div--gridbox {
@@ -283,10 +300,10 @@ label {
 .dashapp-Div--dropdown {
     display: grid;
     grid-template-columns: 25vw;
-    grid-template-rows: 5vh;
+    grid-template-rows: 4vh;
     padding: 5px;
     align-items: top;
-    justify-items: center;
+    justify-self: center;
     font-family: sans-serif;
     font-weight: bold;
     font-size: 18px;
@@ -297,6 +314,9 @@ label {
 /* Below is for Titles of LED Displays */
 label {
     font-size: 18px !important;
+    color: #F0EFEA; /* metadata.dict_of_colors["white"] */
+    font-family: sans-serif;
+    font-weight: bold;
 }
 
 /* Below is CSS for dcc.Slider */
@@ -359,7 +379,7 @@ label {
 
 .dash-dropdown {
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */
-    width: 30vw;
+    width: 25vw;
 }
 
 .Select-control {

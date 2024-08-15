@@ -108,10 +108,8 @@ dashapp.layout = html.Div([
                 
                 # Div Level 4 - Right gridbox
                 html.Div( children = [
-                    
-                    # Div Level 5 - left column
-                    html.Div( children= [
-                        # Div Level 6 - LED Display (TOP)
+
+                        # Div Level 5 - LED Display (TOP)
                         html.Div( children= [
                             daq.LEDDisplay(
                                 id="deaths-LED-display",
@@ -122,7 +120,8 @@ dashapp.layout = html.Div([
                                 size=64
                             )
                         ], className="CARdashapp-Div--LeftBox"),
-                        # Div Level 6 - LED Display (BOTTOM)
+                        
+                        # Div Level 5 - LED Display (2nd)
                         html.Div( children=[
                             daq.LEDDisplay(
                                 id="extractions-LED-display",
@@ -132,12 +131,9 @@ dashapp.layout = html.Div([
                                 backgroundColor=metadata.dict_of_colors["light-black"],
                                 size=64
                             )
-                        ], className="CARdashapp-Div--gridbox")
-                    ], className="dashapp-Div--RightBox-Right"),    
-
-                    # Div Level 5 - right column
-                    html.Div( children=[
-                        # Div Level 6 - LED Display (TOP)
+                        ], className="CARdashapp-Div--gridbox"),
+                       
+                        # Div Level 5 - LED Display (3rd)
                         html.Div( children= [
                             daq.LEDDisplay(
                                 id="orbitals-LED-display",
@@ -147,7 +143,8 @@ dashapp.layout = html.Div([
                                 backgroundColor=metadata.dict_of_colors["light-black"]
                             )
                         ], className="CARdashapp-Div--gridbox"),
-                        # Div Level 6 - LED Display (MIDDLE)
+                        
+                        # Div Level 5 - LED Display (4th)
                         html.Div( children= [
                             daq.LEDDisplay(
                                 id="mission-LED-display",
@@ -157,7 +154,8 @@ dashapp.layout = html.Div([
                                 backgroundColor=metadata.dict_of_colors["light-black"]
                             )
                         ], className="CARdashapp-Div--gridbox"),
-                        # Div Level 6 - LED Display (BOTTOM)
+                        
+                        # Div Level 5 - LED Display (BOTTOM)
                         html.Div( children=[
                             daq.LEDDisplay(
                                 id="xp-LED-display",
@@ -167,7 +165,7 @@ dashapp.layout = html.Div([
                                 backgroundColor=metadata.dict_of_colors["light-black"]
                             )
                         ], className="CARdashapp-Div--gridbox")
-                    ], className="dashapp-Div--RightBox-Right")
+                    # ], className="dashapp-Div--RightBox-Right")
                 ], className="dashapp-Div--RightBox"), 
             ], className="dashapp-Div--BottomRow"),
         ], className="dashapp-Div--graphs-row")
@@ -250,7 +248,7 @@ def update_linegraph(selected_stat):
     Input("slider", "value")
 )
 def update_deaths(selected_game):
-    deaths = list_of_10_CAR_dfs[abs(selected_game)]["CAR_deaths"][0]
+    deaths = list_of_10_CAR_dfs[0]["CAR_deaths"][0]
     return deaths
 
 ################################################################
