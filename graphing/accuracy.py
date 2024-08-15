@@ -62,11 +62,13 @@ def Create_Accuracy_Graph(EOM_df):
     fig.update_xaxes(
         showticklabels=False, 
         linecolor=metadata.dict_of_colors["grey"],
+        zerolinecolor=metadata.dict_of_colors["grey"]
     )
     fig.update_yaxes(
         ticks="outside", 
-        linecolor=metadata.dict_of_colors["grey"],
         gridcolor=metadata.dict_of_colors["grey"],
+        linecolor=metadata.dict_of_colors["grey"],
+        zerolinecolor=metadata.dict_of_colors["grey"]
     )
     fig.update_traces(textposition="outside", width=0.5)
     return fig

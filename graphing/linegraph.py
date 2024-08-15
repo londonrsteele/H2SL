@@ -81,11 +81,13 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
         ticks="outside",
         showspikes=True, 
         linecolor=metadata.dict_of_colors["light-black"], 
+        zerolinecolor=metadata.dict_of_colors["light-black"],
         gridcolor=metadata.dict_of_colors["grey"]
     )
     fig.update_yaxes(
-        ticks="outside", 
+        ticks="outside",
         linecolor=metadata.dict_of_colors["light-black"], 
+        zerolinecolor=metadata.dict_of_colors["light-black"],
         gridcolor=metadata.dict_of_colors["grey"]
     )
     fig.update_traces(textposition="top center")

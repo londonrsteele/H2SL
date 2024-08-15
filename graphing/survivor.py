@@ -46,11 +46,13 @@ def Create_Survivor_Graph(EOM_df):
     fig.update_xaxes(
         ticks="outside", 
         linecolor=metadata.dict_of_colors["grey"],
+        zerolinecolor=metadata.dict_of_colors["grey"]
     )
     fig.update_yaxes(
         ticks="outside", 
-        linecolor=metadata.dict_of_colors["grey"],
         gridcolor=metadata.dict_of_colors["grey"],
+        linecolor=metadata.dict_of_colors["grey"],
+        zerolinecolor=metadata.dict_of_colors["grey"]
     )
     fig.update_traces(width=0.5)
     return fig
