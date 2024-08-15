@@ -23,16 +23,13 @@ list_of_old_filenames = scraper.get_last10_filenames("CAR", sys.argv[2])
 list_of_10_dfs = scraper.load_files(list_of_old_filenames)
 num_dfs_loaded = len(list_of_10_dfs)
 
-# Create figures
-kills_fig = kill.Create_Kill_Graph(CAR_df)
-stratagems_fig = stratagems.Create_Stratagem_Graph(CAR_df)
 # TODO: RC-TR-RC (top right square)
 
 # Create dashboard layout 
 CAR_dashapp.layout = html.Div([
 
     # Div Level 1 - Title
-    html.Div( children = "Most Recent Mission Stats", className="CARdashapp-Div--title" ),
+    html.Div( children = "Most Recent Career Stats", className="CARdashapp-Div--title" ),
 
     # Div Level 1 - Main body
     html.Div( children = [
@@ -44,7 +41,7 @@ CAR_dashapp.layout = html.Div([
                 min=-(num_dfs_loaded-1),
                 max=0,
                 step=1,
-                marks={i: f"Last Career Log" if i == 0 else str(i) + " Logs" for i in range(-(num_dfs_loaded),1)},
+                marks={i: f"Last Log" if i == 0 else str(i) + " Logs" for i in range(-(num_dfs_loaded-1),1)},
                 value=0,
                 id="slider"
             )
@@ -81,17 +78,43 @@ CAR_dashapp.layout = html.Div([
                 
                 # Div Level 4 - left grid box
                 html.Div( children=[
-                    
+                    # kills fig (interactive with slider)
+                    dcc.Graph(id="kills-fig")
                 ], className="CARdashapp-Div--gridbox"),
 
                 # Div Level 4 - right grid box
                 html.Div( children=[
-                    
+                    # stratagems fig (interactive with slider)
+                    dcc.Graph(id="stratagems-fig")
                 ], className="CARdashapp-Div--gridbox")
             ], className="CARdashapp-Div--Bottom-row"),
-        ], className="CARdashapp--graphs-row"),
+        ], className="CARdashapp-Div--graphs-row"),
     ], className="CARdashapp-Div--main-box")
 ], className="CARdashapp-Div--base")
+
+################################################################
+# callback: create kill
+################################################################
+@CAR_dashapp.callback(
+    Output("kills-fig", "figure"),
+    Input("slider", "value")
+)
+def update_kills(selected_game):
+    fig = kill.Create_Kill_Graph(list_of_10_dfs[abs(selected_game)])
+    return fig
+
+################################################################
+# callback: create stratagem
+################################################################
+@CAR_dashapp.callback(
+    Output("stratagems-fig", "figure"),
+    Input("slider", "value")
+)
+def update_stratagems(selected_game):
+    fig = stratagems.Create_Stratagem_Graph(list_of_10_dfs[abs(selected_game)])
+    return fig
+
+
 
 ################################################################
 ################################################################
