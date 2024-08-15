@@ -122,4 +122,4 @@ def update_stratagems(selected_game):
 ################################################################
 ################################################################
 if __name__ == "__main__":
-    CAR_dashapp.run(debug=True,port=8050)
+    CAR_dashapp.run(debug=True,port=8051)
