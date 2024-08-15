@@ -1,5 +1,6 @@
 import sys
 from dash import *
+import dash_daq as daq
 from graphing import (accuracy, survivor, linegraph,
                     missions, kill, stratagems,
                     metadata, stat_scraper)
@@ -103,12 +104,71 @@ dashapp.layout = html.Div([
                         # dropdown - for line-graph
                         dcc.Dropdown(metadata.list_of_EOM_strats, "Kills", clearable=False, id="dropdown")
                     ], className="dashapp-Div--dropdown"),
-
                 ], className="dashapp-Div--MiddleBox"), 
                 
                 # Div Level 4 - Right gridbox
                 html.Div( children = [
-                ], className="dashapp-Div--gridbox"), 
+                    
+                    # Div Level 5 - left column
+                    html.Div( children= [
+                        # Div Level 6 - LED Display (TOP)
+                        html.Div( children= [
+                            daq.LEDDisplay(
+                                id="deaths-LED-display",
+                                label="Deaths",
+                                value="0",
+                                color=metadata.dict_of_colors["yellow"],
+                                backgroundColor=metadata.dict_of_colors["light-black"],
+                                size=64
+                            )
+                        ], className="CARdashapp-Div--LeftBox"),
+                        # Div Level 6 - LED Display (BOTTOM)
+                        html.Div( children=[
+                            daq.LEDDisplay(
+                                id="extractions-LED-display",
+                                label="Successful Extractions",
+                                value="0",
+                                color=metadata.dict_of_colors["light-blue"],
+                                backgroundColor=metadata.dict_of_colors["light-black"],
+                                size=64
+                            )
+                        ], className="CARdashapp-Div--gridbox")
+                    ], className="dashapp-Div--RightBox-Right"),    
+
+                    # Div Level 5 - right column
+                    html.Div( children=[
+                        # Div Level 6 - LED Display (TOP)
+                        html.Div( children= [
+                            daq.LEDDisplay(
+                                id="orbitals-LED-display",
+                                label="Orbitals Used",
+                                value="0",
+                                color=metadata.dict_of_colors["white"],
+                                backgroundColor=metadata.dict_of_colors["light-black"]
+                            )
+                        ], className="CARdashapp-Div--gridbox"),
+                        # Div Level 6 - LED Display (MIDDLE)
+                        html.Div( children= [
+                            daq.LEDDisplay(
+                                id="mission-LED-display",
+                                label="In-Mission Time",
+                                value="000:00:00",
+                                color=metadata.dict_of_colors["yellow"],
+                                backgroundColor=metadata.dict_of_colors["light-black"]
+                            )
+                        ], className="CARdashapp-Div--gridbox"),
+                        # Div Level 6 - LED Display (BOTTOM)
+                        html.Div( children=[
+                            daq.LEDDisplay(
+                                id="xp-LED-display",
+                                label="Total XP Earned",
+                                value="0",
+                                color=metadata.dict_of_colors["red"],
+                                backgroundColor=metadata.dict_of_colors["light-black"]
+                            )
+                        ], className="CARdashapp-Div--gridbox")
+                    ], className="dashapp-Div--RightBox-Right")
+                ], className="dashapp-Div--RightBox"), 
             ], className="dashapp-Div--BottomRow"),
         ], className="dashapp-Div--graphs-row")
     ], className="dashapp-Div--main-box")
@@ -159,7 +219,7 @@ def update_survivor(selected_game):
     return fig
 
 ################################################################
-# callback: create missions CAR data (most recent only)
+# callback: create missions - CAR data (most recent only)
 ################################################################
 @dashapp.callback(
     Output("missions-fig", "figure"),
@@ -181,6 +241,62 @@ def update_linegraph(selected_stat):
     stat_alltime_max = scraper.get_max_stat_from_df(selected_stat, "EOM", max_alltime_EOM)
     fig = linegraph.Create_LineGraph(selected_stat, stats_last10, stat_alltime_max)
     return fig
+
+################################################################
+# callback: create deaths - CAR data (most recent only)
+################################################################
+@dashapp.callback(
+    Output("deaths-LED-display", "value"),
+    Input("slider", "value")
+)
+def update_deaths(selected_game):
+    deaths = list_of_10_CAR_dfs[abs(selected_game)]["CAR_deaths"][0]
+    return deaths
+
+################################################################
+# callback: create orbitals - CAR data (most recent only)
+################################################################
+@dashapp.callback(
+    Output("orbitals-LED-display", "value"),
+    Input("slider", "value")
+)
+def update_orbitals(selected_game):
+    orbitals = list_of_10_CAR_dfs[0]["CAR_orbitals_used"][0]
+    return orbitals
+
+################################################################
+# callback: create in-mission time - CAR data (most recent only)
+################################################################
+@dashapp.callback(
+    Output("extractions-LED-display", "value"),
+    Input("slider", "value")
+)
+def update_inmission_time(selected_game):
+    successful_extractions = list_of_10_CAR_dfs[0]["CAR_successful_extractions"][0]
+    return successful_extractions
+
+################################################################
+# callback: create in-mission time - CAR data (most recent only)
+################################################################
+@dashapp.callback(
+    Output("mission-LED-display", "value"),
+    Input("slider", "value")
+)
+def update_inmission_time(selected_game):
+    inmission_time = list_of_10_CAR_dfs[0]["CAR_inmission_time"][0]
+    return inmission_time
+
+################################################################
+# callback: create total xp earned - CAR data (most recent only)
+################################################################
+@dashapp.callback(
+    Output("xp-LED-display", "value"),
+    Input("slider", "value")
+)
+def update_total_xp_earned(selected_game):
+    total_xp_earned = list_of_10_CAR_dfs[0]["CAR_total_XP_earned"][0]
+    return total_xp_earned
+
 
 ################################################################
 ################################################################
