@@ -1,6 +1,7 @@
 import sys
 from dash import *
-from graphing import (accuracy, survivor, kill, stratagems, metadata, stat_scraper)
+from graphing import (accuracy, missions, kill, stratagems,
+                      metadata, stat_scraper)
 import graphing.big_graph as big__graph
 
 # Create Dash app
@@ -22,8 +23,6 @@ list_of_old_filenames = scraper.get_last10_filenames("CAR", sys.argv[2])
 # Use Stat_Scraper to load most recent 10 files and store how many were loaded
 list_of_10_dfs = scraper.load_files(list_of_old_filenames)
 num_dfs_loaded = len(list_of_10_dfs)
-
-# TODO: RC-TR-RC (top right square)
 
 # Create dashboard layout 
 CAR_dashapp.layout = html.Div([
@@ -65,7 +64,7 @@ CAR_dashapp.layout = html.Div([
 
                 # Div Level 4 - 3rd gridbox
                 html.Div( children=[
-                    
+                    dcc.Graph(id="missions-fig")
                 ], className="CARdashapp-Div--gridbox"),
 
                 # Div Level 4 - 4th gridbox
@@ -124,6 +123,18 @@ def update_stratagems(selected_game):
 def update_accuracy(selected_game):
     fig = accuracy.Create_Accuracy_Graph(list_of_10_dfs[abs(selected_game)], "CAR")
     return fig
+
+################################################################
+# callback: create missions
+################################################################
+@CAR_dashapp.callback(
+    Output("missions-fig", "figure"),
+    Input("slider", "value")
+)
+def update_missions(selected_game):
+    fig = missions.Create_Missions_Graph(list_of_10_dfs, abs(selected_game))
+    return fig
+
 
 ################################################################
 ################################################################
