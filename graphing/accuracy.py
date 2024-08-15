@@ -43,7 +43,7 @@ def Create_Accuracy_Graph(EOM_df):
             title_x = 0.5,
             yaxis_title = "<b><br>Shots</b>",
             font=dict(
-                family="monospace",
+                family="sans-serif",
                 size=25,
                 color=metadata.dict_of_colors["white"]
             ),

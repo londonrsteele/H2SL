@@ -9,7 +9,7 @@ body {
 
 .EOMdashapp-Div--title {
     background-color: #070707; /* metadata.dict_of_colors["black"] */;
-    font-family: monospace;
+    font-family: sans-serif;
     font-weight: bold;
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */
     font-size: 4em;
@@ -84,7 +84,7 @@ body {
     padding: 5px;
     align-items: top;
     justify-items: center;
-    font-family: monospace;
+    font-family: sans-serif;
     font-weight: bold;
     font-size: 25px;
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */

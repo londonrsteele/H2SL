@@ -26,7 +26,7 @@ def Create_Survivor_Graph(EOM_df):
             xaxis_title = "<b>Survival Stat<br></b>",
             yaxis_title = "<b><br>Count</b>",
             font=dict(
-                family="monospace",
+                family="sans-serif",
                 size=25,
                 color=metadata.dict_of_colors["white"]
             ),

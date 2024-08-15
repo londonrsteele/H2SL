@@ -61,7 +61,7 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
         xaxis_title="<b>Last " + str(len(stats_last10)) + " Games<br></b>",
         yaxis_title="<b><br>" +  selected_stat + "</b>",
         font=dict(
-                family="monospace",
+                family="sans-serif",
                 size=25,
                 color=metadata.dict_of_colors["white"]
             ),
