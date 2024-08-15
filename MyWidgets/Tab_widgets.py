@@ -105,10 +105,10 @@ class Career_Tab(QWidget):
             self.data = scraper.load_file(datafile)
 
             # Create data labels
-            Accuracy = QLabel("Enemy kills")
+            Enemy_Kills = QLabel("Enemy kills: " + str(self.data["CAR_enemy_kills"][0]))
 
             # Add data labels
-            self.layout.addWidget(Accuracy)
+            self.layout.addWidget(Enemy_Kills)
         
         # Add view dashboard button to layout last
         self.layout.addWidget(self.view_dashboard_button, 6, 0, 1, 2)
