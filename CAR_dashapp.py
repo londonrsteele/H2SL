@@ -3,7 +3,6 @@ from dash import *
 import dash_daq as daq
 from graphing import (accuracy, missions, kill, stratagems,
                       metadata, stat_scraper)
-import graphing.big_graph as big__graph
 
 # Create Dash app
 CAR_dashapp = Dash()
