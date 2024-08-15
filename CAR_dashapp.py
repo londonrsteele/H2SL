@@ -10,11 +10,18 @@ CAR_dashapp = Dash()
 scraper = stat_scraper.Stat_Scraper()
 
 # Use Stat_Scraper to load desired focus CAR_df
-CAR_df = scraper.load_file(sys.argv[1])
+CAR_df = scraper.load_file(sys.argv[2])
 
 # If _df is empty, don't run Dash
 if (CAR_df.empty):
     raise RuntimeError("Empty dataframe at Dash initialization")
+
+# Use Stat_Scraper to get most recent 10 (or less) files
+list_of_old_filenames = scraper.get_last10_filenames("CAR", sys.argv[2])
+
+# Use Stat_Scraper to load most recent 10 files and store how many were loaded
+list_of_10_dfs = scraper.load_files(list_of_old_filenames)
+num_dfs_loaded = len(list_of_10_dfs)
 
 # Create figures
 kills_fig = kill.Create_Kill_Graph(CAR_df)
@@ -25,41 +32,66 @@ stratagems_fig = stratagems.Create_Stratagem_Graph(CAR_df)
 CAR_dashapp.layout = html.Div([
 
     # Div Level 1 - Title
-    html.Div( children = "Most Recent Mission Stats", className="app-Div--title" ),
+    html.Div( children = "Most Recent Mission Stats", className="CARdashapp-Div--title" ),
 
     # Div Level 1 - Main body
     html.Div( children = [
         
-        # Div Level 2 - Left column
-        html.Div( children= [
-            dcc.Graph(id="kills-graph",
-                        figure=kills_fig)
-        ]),
-        
-        # Div Level 2 - Right column
+        # Div Level 2 - slider row
         html.Div( children = [
+            # slider
+            dcc.Slider(
+                min=-(num_dfs_loaded-1),
+                max=0,
+                step=1,
+                marks={i: f"Last Career Log" if i == 0 else str(i) + " Logs" for i in range(-(num_dfs_loaded),1)},
+                value=0,
+                id="slider"
+            )
+        ], className="CARdashapp-Div--slider"),
 
-            # Div Level 3 - Right column top row
-            html.Div( children = [
-
-                # Div Level 4 - Right column top row left column 
-                html.Div( children = [
-                    dcc.Graph(id="stratagem-graph",
-                              figure=stratagems_fig)
-                ]),
-
-                # Div Level 4 - Right column top row right column
-                html.Div( children = "RCTRRC")
+        # Div Level 2 - graphs row
+        html.Div( children= [
             
-            ], style={"display":"flex", "flexDirection":"row"}),
+            # Div Level 3 - Top row
+            html.Div( children=[
+                
+                # Div Level 4 - 1st gridbox
+                html.Div( children=[
 
-            # Div Level 3 - Right column bottom row
-            html.Div( children = [
+                ], className="CARdashapp-Div--gridbox"),
 
-            ], style={"display":"flex", "flexDirection":"column"})
-        ], style={"display":"flex", "flexDirection":"column"})
-    ], style={"display":"flex", "flexDirection":"row"})
-], style={"display":"flex", "flexDirection":"column"})
+                # Div Level 4 - 2nd gridbox
+                html.Div( children=[
+                    
+                ], className="CARdashapp-Div--gridbox"),
+
+                # Div Level 4 - 3rd gridbox
+                html.Div( children=[
+                    
+                ], className="CARdashapp-Div--gridbox"),
+
+                # Div Level 4 - 4th gridbox
+                html.Div( children=[
+                    
+                ], className="CARdashapp-Div--gridbox")
+            ], className="CARdashapp-Div--Top-row"),
+            # Div Level 3 - Bottom row
+            html.Div( children=[
+                
+                # Div Level 4 - left grid box
+                html.Div( children=[
+                    
+                ], className="CARdashapp-Div--gridbox"),
+
+                # Div Level 4 - right grid box
+                html.Div( children=[
+                    
+                ], className="CARdashapp-Div--gridbox")
+            ], className="CARdashapp-Div--Bottom-row"),
+        ], className="CARdashapp--graphs-row"),
+    ], className="CARdashapp-Div--main-box")
+], className="CARdashapp-Div--base")
 
 ################################################################
 ################################################################

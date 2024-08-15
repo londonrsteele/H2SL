@@ -1,7 +1,11 @@
 body {
     background-color: #373836; /* metadata.dict_of_colors["light-black"] */
 }
-
+/****************************/
+/****************************/
+/* BELOW IS FOR EOM DASHAPP */
+/****************************/
+/****************************/
 .EOMdashapp-Div--base {
     display: flex;
     flex-direction: column;
@@ -147,6 +151,8 @@ body {
     font-family: monospace;
 }
 
+/* below is for dcc.Dropdown */
+
 .dash-dropdown {
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */
     width: 45vw;
@@ -170,4 +176,71 @@ body {
 .Select-menu-outer {
     background-color: #070707; /* metadata.dict_of_colors["black"] */
     color: #F0EFEA; /* metadata.dict_of_colors["white"] */    
+}
+
+/****************************/
+/****************************/
+/* BELOW IS FOR CAR DASHAPP */
+/****************************/
+/****************************/
+.CARdashapp-Div--base {
+    display: flex;
+    flex-direction: column;
+}
+
+.CARdashapp-Div--title {
+    background-color: #070707; /* metadata.dict_of_colors["black"] */;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: #F0EFEA; /* metadata.dict_of_colors["white"] */
+    font-size: 4em;
+    text-align: center;
+    height: 100px;
+    line-height: 100px;
+}
+
+.CARdashapp-Div--main-box {
+    display: grid;
+    grid-template-columns: 99vw;
+    grid-template-rows: 120px 80vh;
+}
+
+.CARdashapp-Div--slider {
+    display: grid;
+    grid-template-columns: auto;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-template-rows: 100px;
+    height: 100px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 20px;
+    align-items: center;
+}
+
+.CARdashapp-Div--graphs-row {
+    display: grid;
+    grid-template-columns: 66vw 33vw;
+    grid-template-rows: 32vh 48vh;
+}
+
+.CARdashapp-Div--Top-row {
+    display: grid;
+    grid-template-columns: 20vw 20vw 20vw 20vw;
+    column-gap: 3vw;
+    grid-template-rows: 32vh;
+}
+
+.CARdashapp-Div--Bottom-row {
+    display: grid;
+    grid-template-columns: 42vw 42vw;
+    column-gap: 6vw;
+    grid-template-rows: 48vh;
+}
+
+.CARdashapp-Div--gridbox {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    padding: 5px;
 }
