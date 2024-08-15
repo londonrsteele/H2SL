@@ -52,7 +52,7 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
     )
     fig.add_trace(
         pltgo.Scatter(
-            name="Last "+ str(len(stats_last10)) + " Games Average",
+            name="Last "+ str(len(stats_last10)) + " Games Avg",
             x=x_list,
             y=average_list,
             mode="lines",
