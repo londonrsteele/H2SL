@@ -248,7 +248,7 @@ class Load_data_widget(QWidget):
         if CAR_datafile == "":
             CAR_datafile = "ERROR"
     
-        print("Opening Dashboard...")
+        print("Opening Misison Dashboard...")
 
         # open new browser window (for Dash)
         #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
@@ -268,7 +268,7 @@ class Load_data_widget(QWidget):
         if CAR_datafile == "":
             CAR_datafile = "ERROR"
         
-        print("Opening Dashboard...")
+        print("Opening Career Dashboard...")
 
         # open new browser window (for Dash)
         #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
