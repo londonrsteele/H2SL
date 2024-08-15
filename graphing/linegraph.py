@@ -85,6 +85,7 @@ def Create_LineGraph(selected_stat, stats_last10, max_all_time):
     fig.update_xaxes(
         ticks="outside",
         showspikes=True, 
+        spikecolor=metadata.dict_of_colors["white"],
         linecolor=metadata.dict_of_colors["light-black"], 
         zerolinecolor=metadata.dict_of_colors["light-black"],
         gridcolor=metadata.dict_of_colors["grey"]
