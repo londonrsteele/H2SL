@@ -230,6 +230,14 @@ body {
     grid-template-columns: 21vw 21vw 21vw 21vw;
     column-gap: 2vw;
     grid-template-rows: 32vh;
+    background-color: #070707; /* metadata.dict_of_colors["black"] */;
+}
+
+.CARdashapp-Div--3rd-gridbox {
+    display: grid;
+    grid-template-columns: 20vw;
+    grid-template-rows: 16vh 16vh;
+    align-items: center;
 }
 
 .CARdashapp-Div--4th-gridbox {

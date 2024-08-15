@@ -60,13 +60,34 @@ CAR_dashapp.layout = html.Div([
 
                 # Div Level 4 - 2nd gridbox
                 html.Div( children=[
-                    
+                    dcc.Graph(id="missions-fig")                    
                 ], className="CARdashapp-Div--gridbox"),
 
                 # Div Level 4 - 3rd gridbox
                 html.Div( children=[
-                    dcc.Graph(id="missions-fig")
-                ], className="CARdashapp-Div--gridbox"),
+                    # Div Level 5 - LED Display (TOP)
+                    html.Div( children= [
+                        daq.LEDDisplay(
+                            id="deaths-LED-display",
+                            label="Deaths",
+                            value="0",
+                            color=metadata.dict_of_colors["yellow"],
+                            backgroundColor=metadata.dict_of_colors["light-black"],
+                            size=64
+                        )
+                    ], className="CARdashapp-Div--gridbox"),
+                    # Div Level 5 - LED Display (BOTTOM)
+                    html.Div( children=[
+                        daq.LEDDisplay(
+                            id="extractions-LED-display",
+                            label="Successful Extractions",
+                            value="0",
+                            color=metadata.dict_of_colors["light-blue"],
+                            backgroundColor=metadata.dict_of_colors["light-black"],
+                            size=64
+                        )
+                    ], className="CARdashapp-Div--gridbox")
+                ], className="CARdashapp-Div--3rd-gridbox"),
 
                 # Div Level 4 - 4th gridbox
                 html.Div( children=[
@@ -74,10 +95,10 @@ CAR_dashapp.layout = html.Div([
                     # Div Level 5 - LED Display (TOP)
                     html.Div( children= [
                         daq.LEDDisplay(
-                            id="extractions-LED-display",
-                            label="Successful Extractions",
+                            id="orbitals-LED-display",
+                            label="Orbitals Used",
                             value="0",
-                            color=metadata.dict_of_colors["light-blue"],
+                            color=metadata.dict_of_colors["grey"],
                             backgroundColor=metadata.dict_of_colors["light-black"]
                         )
                     ], className="CARdashapp-Div--gridbox"),
@@ -166,6 +187,28 @@ def update_accuracy(selected_game):
 def update_missions(selected_game):
     fig = missions.Create_Missions_Graph(list_of_10_dfs, abs(selected_game))
     return fig
+
+################################################################
+# callback: create deaths
+################################################################
+@CAR_dashapp.callback(
+    Output("deaths-LED-display", "value"),
+    Input("slider", "value")
+)
+def update_deaths(selected_game):
+    deaths = list_of_10_dfs[abs(selected_game)]["CAR_deaths"][0]
+    return deaths
+
+################################################################
+# callback: create orbitals
+################################################################
+@CAR_dashapp.callback(
+    Output("orbitals-LED-display", "value"),
+    Input("slider", "value")
+)
+def update_orbitals(selected_game):
+    orbitals = list_of_10_dfs[abs(selected_game)]["CAR_orbitals_used"][0]
+    return orbitals
 
 ################################################################
 # callback: create in-mission time
