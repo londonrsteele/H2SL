@@ -16,12 +16,22 @@ class BrowserMW(QMainWindow):
     def __init__(self):
         super().__init__()
         self.browser = QWebEngineView()
-        self.browser.setUrl("http://127.0.0.1:8050/")
         self.setCentralWidget(self.browser)
         self.show()
 
     ################################################################
-    # Browser_me member function: set_Pid
+    # Browser_mw member function: set_URL
+    ################################################################
+    def set_URL(self, type):
+        if type == "EOM":
+            self.browser.setUrl("http://127.0.0.1:8050/")
+        elif type == "CAR":
+            self.browser.setUrl("http://127.0.0.1:8051/")
+        elif type == "BOTH":
+            self.browser.setUrl("http://127.0.0.1:8052/")
+
+    ################################################################
+    # Browser_mw member function: set_Pid
     ################################################################
     def set_Pid(self, pid):
         print("Dash running on pid " + str(pid))
@@ -70,6 +80,7 @@ if __name__ == "__main__":
     # Open appropriate Dash script and save pid
     dash_process = subprocess.Popen(["python", dashapp, sys.argv[2], sys.argv[3]])
     window.set_Pid(dash_process.pid)
+    window.set_URL(sys.argv[1])
 
     # Execute Qt application
     sys.exit(app.exec())
