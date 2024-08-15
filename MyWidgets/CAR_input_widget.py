@@ -146,8 +146,8 @@ class CAR_input_widget(QWidget):
         car_time_formatted = self.CAR_logtime.time().toString("H_m")
 
         # Calculate Total Kills and Shot Kills
-        CAR_total_kills = self.CAR_enemy_kills + self.CAR_friendly_kills
-        CAR_shot_kills = CAR_total_kills - self.CAR_grenade_kills - self.CAR_melee_kills - self.CAR_eagle_kills
+        CAR_total_kills = int(self.CAR_enemy_kills.text()) + int(self.CAR_friendly_kills.text())
+        CAR_shot_kills = CAR_total_kills - int(self.CAR_grenade_kills.text()) - int(self.CAR_melee_kills.text()) - int(self.CAR_eagle_kills.text())
 
         # Put data from form into Pandas DataFrame
         CAR_data = {"CAR_date":self.CAR_date.text(),
