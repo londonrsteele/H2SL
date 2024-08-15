@@ -90,11 +90,11 @@ class Load_data_widget(QWidget):
         self.view_buttons_box = QGroupBox()
         self.view_buttons_box_layout = QHBoxLayout()
         self.view_buttons_box.setStyleSheet(stylesheets.Big_Buttons_Box)
-        self.view_EOM_button = QPushButton("View Mission Data", self)
+        self.view_EOM_button = QPushButton("Mission Dashboard", self)
         self.view_EOM_button.setStyleSheet(stylesheets.Big_Buttons)
-        self.view_CAR_button = QPushButton("View Career Data", self)
+        self.view_CAR_button = QPushButton("Career Dashboard", self)
         self.view_CAR_button.setStyleSheet(stylesheets.Big_Buttons)
-        self.view_BOTH_button = QPushButton("View Dashboard", self)
+        self.view_BOTH_button = QPushButton("Mixed Dashboard", self)
         self.view_BOTH_button.setStyleSheet(stylesheets.Big_Buttons)
         self.view_buttons_box_layout.addWidget(self.view_EOM_button)
         self.view_buttons_box_layout.addWidget(self.view_CAR_button)
@@ -111,8 +111,8 @@ class Load_data_widget(QWidget):
         self.CAR_filename_box.textChanged.connect(self.restrict_buttons)
 
         # If buttons available, connect them!
-        self.view_EOM_button.clicked.connect(self.view_EOM_data)
-        self.view_CAR_button.clicked.connect(self.view_CAR_data)
+        self.view_EOM_button.clicked.connect(self.view_EOM_dashboard)
+        self.view_CAR_button.clicked.connect(self.view_CAR_dashboard)
         self.view_BOTH_button.clicked.connect(self.view_dashboard)
 
         # Set up outer layout
@@ -193,46 +193,6 @@ class Load_data_widget(QWidget):
             self.view_BOTH_button.setDisabled(True)
         else:
             self.view_BOTH_button.setEnabled(True)
-
-    ################################################################
-    # Load_data_widget member function: view_EOM_data
-    ################################################################
-    def view_EOM_data(self):
-        # get paths for appropriate save files
-        EOM_datafile = self.EOM_filename_box.text()
-        CAR_datafile = self.CAR_filename_box.text()
-        
-        print("Opening Data Viewer...")
-
-        # open new data view window
-        self.View_Data_mw = Data_mw.Data_mw(EOM_datafile, CAR_datafile, "EOM")
-        self.View_Data_mw.setStyleSheet(stylesheets.Text)
-        self.View_Data_mw.resize(800, 600)
-        self.View_Data_mw.show()
-
-        # handle "View Dashboard" button
-        self.View_Data_mw.Mission_Tab.view_dashboard_button.clicked.connect(self.view_EOM_dashboard)
-        self.View_Data_mw.Career_Tab.view_dashboard_button.clicked.connect(self.view_CAR_dashboard)
-
-    ################################################################
-    # Load_data_widget member function: view_EOM_data
-    ################################################################
-    def view_CAR_data(self):
-        # get paths for appropriate save files
-        EOM_datafile = self.EOM_filename_box.text()
-        CAR_datafile = self.CAR_filename_box.text()
-
-        print("Opening Data Viewer...")
-
-        # open new data view window
-        self.View_Data_mw = Data_mw.Data_mw(EOM_datafile, CAR_datafile, "CAR")
-        self.View_Data_mw.setStyleSheet(stylesheets.Text)
-        self.View_Data_mw.resize(800, 600)
-        self.View_Data_mw.show()
-
-        # handle "View Dashboard" button
-        self.View_Data_mw.Mission_Tab.view_dashboard_button.clicked.connect(self.view_EOM_dashboard)
-        self.View_Data_mw.Career_Tab.view_dashboard_button.clicked.connect(self.view_CAR_dashboard)
 
     ################################################################
     # Load_data_widget member function: view_EOM_dashboard
