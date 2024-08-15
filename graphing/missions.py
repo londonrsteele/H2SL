@@ -13,13 +13,13 @@ def Create_Missions_Graph(list_of_10dfs, selected_log):
             previous_log_percent_won = int(previous_log_wins/previous_log_played*100)
         else:
             previous_log_percent_won = 0
-        previous_log_successful_extractions = previous_log["CAR_successful_extractions"][0]
+        previous_log_samples_collected = previous_log["CAR_samples_collected"][0]
         previous_log_objectives_completed = previous_log["CAR_objectives_completed"][0]
     # if no previous log file exists, set previous stats = 0
     else:
         previous_log_wins = 0
         previous_log_percent_won = 0
-        previous_log_successful_extractions = 0
+        previous_log_samples_collected = 0
         previous_log_objectives_completed = 0
 
     # Get current log's stats
@@ -29,8 +29,7 @@ def Create_Missions_Graph(list_of_10dfs, selected_log):
         CAR_percent_won = int(CAR_wins/CAR_played*100)
     else:
         CAR_percent_won = 0
-
-    CAR_successful_extractions = CAR_df["CAR_successful_extractions"][0]
+    CAR_samples_collected = CAR_df["CAR_samples_collected"][0]
     CAR_objectives_completed = CAR_df["CAR_objectives_completed"][0]
 
     # Create figure
@@ -76,12 +75,12 @@ def Create_Missions_Graph(list_of_10dfs, selected_log):
     # Successful Extractions (number and delta)
     fig.add_trace(
         pltgo.Indicator(
-            title={"text":"Successful Extractions"},
+            title={"text":"Samples Collected"},
             mode="number+delta",
             domain={ "x": [0,0.4], "y": [0,0.4]},
-            value=CAR_successful_extractions,
+            value=CAR_samples_collected,
             delta={
-                "reference": previous_log_successful_extractions,
+                "reference": previous_log_samples_collected,
                 "relative": False,
             }
         )

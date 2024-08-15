@@ -235,7 +235,9 @@ body {
 .CARdashapp-Div--4th-gridbox {
     display: grid;
     grid-template-columns: 20vw;
-    grid-template-rows: 16vh 16vh;
+    grid-template-rows: 10vh 10vh 10vh;
+    row-gap: 1vh;
+    align-items: center;
 }
 
 .CARdashapp-Div--Bottom-row {

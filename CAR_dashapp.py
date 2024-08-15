@@ -74,6 +74,16 @@ CAR_dashapp.layout = html.Div([
                     # Div Level 5 - LED Display (TOP)
                     html.Div( children= [
                         daq.LEDDisplay(
+                            id="extractions-LED-display",
+                            label="Successful Extractions",
+                            value="0",
+                            color=metadata.dict_of_colors["light-blue"],
+                            backgroundColor=metadata.dict_of_colors["light-black"]
+                        )
+                    ], className="CARdashapp-Div--gridbox"),
+                    # Div Level 5 - LED Display (MIDDLE)
+                    html.Div( children= [
+                        daq.LEDDisplay(
                             id="mission-LED-display",
                             label="In-Mission Time",
                             value="000:00:00",
@@ -156,6 +166,17 @@ def update_accuracy(selected_game):
 def update_missions(selected_game):
     fig = missions.Create_Missions_Graph(list_of_10_dfs, abs(selected_game))
     return fig
+
+################################################################
+# callback: create in-mission time
+################################################################
+@CAR_dashapp.callback(
+    Output("extractions-LED-display", "value"),
+    Input("slider", "value")
+)
+def update_inmission_time(selected_game):
+    successful_extractions = list_of_10_dfs[abs(selected_game)]["CAR_successful_extractions"][0]
+    return successful_extractions
 
 ################################################################
 # callback: create in-mission time
