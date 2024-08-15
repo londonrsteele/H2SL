@@ -3,7 +3,7 @@ from PySide6.QtCore import Qt, QDateTime
 from PySide6.QtWidgets import (QFormLayout, QPushButton, QWidget,
                                 QGroupBox, QDateEdit, QTimeEdit,
                                 QGridLayout, QSpinBox, QMessageBox,
-                                QFrame)
+                                QFrame, QLineEdit)
 from assets import stylesheets
 from assets import SAVE_PATH
 ################################################################
@@ -101,7 +101,7 @@ class CAR_input_widget(QWidget):
         self.CAR_objectives_completed = QSpinBox(minimum=0, maximum=1000000000)
         self.CAR_missions_played = QSpinBox(minimum=0, maximum=1000000000)
         self.CAR_missions_won = QSpinBox(minimum=0, maximum=1000000000)
-        self.CAR_inmisison_time = QSpinBox(minimum=0, maximum=1000000000)
+        self.CAR_inmisison_time = QLineEdit(placeholderText="000:00:00")
         self.CAR_samples_collected = QSpinBox(minimum=0, maximum=1000000000)
         self.CAR_total_XP_earned = QSpinBox(minimum=0, maximum=1000000000)
 
