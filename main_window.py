@@ -3,6 +3,7 @@ from PySide6.QtWidgets import (QMainWindow, QStackedWidget, QFileDialog)
 from MyWidgets import (Welcome_widget, Log_data_widget, EOM_input_widget,
                        CAR_input_widget, Load_data_widget)
 from assets import SAVE_PATH
+from filedoctor import assets_dir
 ################################################################
 # 
 # MainWindow class
@@ -31,7 +32,7 @@ class MainWindow(QMainWindow):
 
         # Back button
         back_action = self.menu.addAction("Back", self.go_back_action)
-        back_icon = QIcon("./assets/left.png")
+        back_icon = QIcon(assets_dir+"/left.png")
         back_action.setIcon(back_icon)
 
         # Create widgets
@@ -130,7 +131,7 @@ class MainWindow(QMainWindow):
             print("directory = " + str(directories[0]))
             # not empty, load the first filename(directory) only
             SAVE_PATH.save_path = directories[0]
-            with open("./assets/SAVE_PATH.py", "w") as savefile:
+            with open(assets_dir+"/SAVE_PATH.py", "w") as savefile:
                 savefile.write("save_path = \""+directories[0] + "\"")
         else:
             # note: do not raise an exception here, value gets handled elsewhere

@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (QVBoxLayout, QHBoxLayout, QPushButton, QWidget,
                                 QGroupBox, QLabel, QLineEdit)
 from assets import stylesheets
 from graphing import stat_scraper
+from filedoctor import browser_mw_path
 ################################################################
 # 
 # Load_data_widget class
@@ -211,7 +212,7 @@ class Load_data_widget(QWidget):
 
         # open new browser window (for Dash)
         #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
-        subprocess.Popen(["python", "browser_mw.py", "EOM", str(EOM_datafile), str(CAR_datafile)])
+        subprocess.Popen(["python", browser_mw_path, "EOM", str(EOM_datafile), str(CAR_datafile)])
 
     ################################################################
     # Load_data_widget member function: view_CAR_dashboard
@@ -231,7 +232,7 @@ class Load_data_widget(QWidget):
 
         # open new browser window (for Dash)
         #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
-        subprocess.Popen(["python", "browser_mw.py", "CAR", str(EOM_datafile), str(CAR_datafile)])
+        subprocess.Popen(["python", browser_mw_path, "CAR", str(EOM_datafile), str(CAR_datafile)])
 
     ################################################################
     # Load_data_widget member function: view_dashboard
@@ -251,5 +252,5 @@ class Load_data_widget(QWidget):
 
         # open new browser window (for Dash)
         #  argv1 = EOM/CAR/BOTH, argv2 = EOM_datafile, argv3 = CAR_datafile 
-        subprocess.Popen(["python", "browser_mw.py", "BOTH", str(EOM_datafile), str(CAR_datafile)])
+        subprocess.Popen(["python", browser_mw_path, "BOTH", str(EOM_datafile), str(CAR_datafile)])
 

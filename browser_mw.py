@@ -4,6 +4,7 @@ import signal
 import subprocess
 from PySide6.QtWidgets import (QApplication, QMainWindow)
 from PySide6.QtWebEngineWidgets import QWebEngineView
+from filedoctor import (EOMdashapp_path, CARdashapp_path, dashapp_path)
 ################################################################
 # 
 # Browser_mw class
@@ -70,11 +71,11 @@ if __name__ == "__main__":
     #   If == "EOM", sys.argv[3] == "ERROR"
     #   If == "CAR", sys.argv[2] == "ERROR"
     if sys.argv[1] == "EOM":
-        dashapp = "EOM_dashapp.py"
+        dashapp = EOMdashapp_path
     elif sys.argv[1] == "CAR":
-        dashapp = "CAR_dashapp.py"
+        dashapp = CARdashapp_path
     elif sys.argv[1] == "BOTH":
-        dashapp = "dashapp.py"
+        dashapp = dashapp_path
     else:
         raise RuntimeError("ERROR: Cannot Start Dash")
     
